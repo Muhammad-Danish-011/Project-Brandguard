@@ -15,7 +15,7 @@ var dashRoutes = [
   },
   {
     path: "/user-page",
-    name: "User Input",
+    name: "scheduling information",
     icon: "users_single-02",
     component: <UserPage />,
     layout: "/admin",

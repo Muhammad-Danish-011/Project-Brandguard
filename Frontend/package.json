@@ -13,6 +13,7 @@
     "perfect-scrollbar": "1.5.5",
     "react": "^18.2.0",
     "react-chartjs-2": "3.3.0",
+    "react-datepicker": "^4.25.0",
     "react-dom": ">=16.8.0",
     "react-modal": "^3.16.1",
     "react-notification-alert": "0.0.13",

@@ -12,20 +12,19 @@ import {
 } from "reactstrap";
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 import axios from "axios";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+
+import { Label } from 'reactstrap';
+
+
 
 
 function UserPage() {
   const [formData, setFormData] = useState({
-    company: "",
-    username: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    address: "",
-    city: "",
-    country: "",
-    postalCode: "",
-    aboutMe: "",
+    startDate: null,
+    endDate: null,
   });
 
   const resetFormData = () => {
@@ -94,7 +93,7 @@ function UserPage() {
           <Col md="8">
             <Card >
               <CardHeader>
-                <h5 className="title">User Information </h5>
+                <h5 className="title">Provide Information Regarding Schedule :</h5>
               </CardHeader>
               <CardBody>
                 <Form>
@@ -115,7 +114,7 @@ function UserPage() {
     </Col>
   </Row>
 
-  {/* New Row for Exact Page URL */}
+
   <Row>
     <Col md="12">
       <FormGroup>
@@ -149,21 +148,40 @@ function UserPage() {
 
  
   <Row>
-    <Col md="12">
-      <FormGroup>
-        <label>Time Duration for Ad (in days)</label>
-        <Input
-          cols="80"
-          placeholder="Time Duration"
-          type="positive number"
-          name="time_duration"
-          value={formData.time_duration}
-          onChange={handleInputChange}
-        />
-      </FormGroup>
-    </Col>
-  </Row>
-                  
+      <Col md="12">
+        <FormGroup>
+          <Label>Select Dates for Ad</Label>
+          <div>
+            <Row>
+              <Col md="6">
+                <Label>Start Date</Label>
+                <DatePicker
+                  selected={formData.startDate}
+                  onChange={(date) => handleDateChange('startDate', date)}
+                  selectsStart
+                  startDate={formData.startDate}
+                  endDate={formData.endDate}
+                  dateFormat="yyyy-MM-dd"
+                />
+              </Col>
+              <Col md="6">
+                <Label>End Date</Label>
+                <DatePicker
+                  selected={formData.endDate}
+                  onChange={(date) => handleDateChange('endDate', date)}
+                  selectsEnd
+                  startDate={formData.startDate}
+                  endDate={formData.endDate}
+                  dateFormat="yyyy-MM-dd"
+                  minDate={formData.startDate}
+                />
+              </Col>
+            </Row>
+          </div>
+        </FormGroup>
+      </Col>
+    </Row>
+            
                         <Button
                           className="btn-neutral btn-icon btn-round"
                           onClick={()=>{
