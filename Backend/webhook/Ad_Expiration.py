@@ -115,7 +115,7 @@ def webhook_handler():
 #------------------------------------------------------------
 #add user information in database 
 
-@app.route('/ad-expiration-post', methods=['GET','POST'])
+@app.route('/ad-expiration-post', methods=['GET', 'POST'])
 def receive_Ad_Tracking_Data():
     if request.method == 'POST':
         data = request.json
@@ -128,8 +128,8 @@ def receive_Ad_Tracking_Data():
 
         if ad_id is not None and expiration_date is not None:
             # Convert date strings to datetime objects
-            start_date = datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%SZ')
-            expiration_date = datetime.strptime(expiration_date, '%Y-%m-%dT%H:%M:%SZ')
+            start_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')  # Updated format
+            expiration_date = datetime.strptime(expiration_date, '%Y-%m-%d %H:%M:%S')  # Updated format
 
             # Create or update the AdTracking record
             ad = AdTracking.query.get(ad_id) or AdTracking()
