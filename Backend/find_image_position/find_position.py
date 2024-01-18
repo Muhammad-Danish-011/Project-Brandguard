@@ -12,7 +12,17 @@ def find_image_position(screenshot_path, reference_image_path):
 
     # Use template matching to find the location of the reference image
     result = cv2.matchTemplate(screenshot_gray, reference_image_gray, cv2.TM_CCOEFF_NORMED)
-    _, _, _, max_loc = cv2.minMaxLoc(result)
+
+    # Define a threshold
+    threshold = 0.8
+    locations = np.where(result >= threshold)
+    locations = list(zip(*locations[::-1]))  # Switch x and y coordinates to (x, y)
+
+    if not locations:
+        return "Reference image not found."
+
+    # For simplicity, take the first location found above the threshold
+    max_loc = locations[0]
 
     # Determine the position of the reference image
     height, width = reference_image_gray.shape
@@ -37,14 +47,16 @@ def find_image_position(screenshot_path, reference_image_path):
 
     # Print only the true positions
     true_positions = [key for key, value in position_names.items() if value]
-    print("Reference image position:", ', '.join(true_positions))
+    return "Reference image position: " + ', '.join(true_positions)
 
-# Example usage
-screenshot_path = '/home/shahzaibkhan/work/brandguard/webdriver_mvp_xloop/screenshots/Kokan - 20240116200720/screenshot_20240116200819.png'
-# reference_image_path = '/home/shahzaibkhan/work/brandguard/img_comp/ad_banner_template.png'
-reference_image_path = '/home/shahzaibkhan/work/brandguard/img_comp/ad_banner_template.png'
+# Note: This function now returns a string, either the position or a message that the image was not found.
 
-find_image_position(screenshot_path, reference_image_path)
+# Example usage (assuming you have valid paths for the screenshot and reference image)
+screenshot_path = '/home/shahzaibkhan/work/brandguard/img_comp/website_screenshot.png'
+# reference_image_path = '/home/shahzaibkhan/work/brandguard/img_comp/ad_banner_short.jpeg'
 
-# position = find_image_position(screenshot_path, reference_image_path)
-# print("Reference image position:", position)
+
+reference_image_path = '/home/shahzaibkhan/work/brandguard/img_comp/lwl-ad-300X600.jpg'
+
+
+print(find_image_position(screenshot_path, reference_image_path))
