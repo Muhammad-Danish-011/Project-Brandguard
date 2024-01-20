@@ -1,0 +1,6 @@
+postgres=# CREATE DATABASE brandguard_db;
+CREATE USER brandguard WITH PASSWORD 'brandguard';
+ALTER ROLE username SET client_encoding TO 'utf8';
+ALTER ROLE username SET default_transaction_isolation TO 'read committed';
+ALTER ROLE username SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE brandguard_db TO brandguard;
