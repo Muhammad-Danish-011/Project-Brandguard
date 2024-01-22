@@ -1,7 +1,3 @@
-To update the README file with instructions for running your Flask application using Flask-Migrate and the `.env` file, you can modify the "How to Run" section as follows:
-
----
-
 # How to Run
 
 To run your Flask application with the specified configuration, follow these steps:
