@@ -29,6 +29,6 @@ If you need to create the database tables, you can use the Flask shell:
 flask shell
 
 from app.extensions import db
-from app.models.models import Post, Question
+from app.models.models import *
 
 db.create_all()

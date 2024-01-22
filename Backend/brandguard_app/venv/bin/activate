@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/shahzaibkhan/work/brandguard/large-flask-app-template/venv"
+VIRTUAL_ENV="/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
