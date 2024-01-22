@@ -1,0 +1,11 @@
+# techtarget.py:<br>
+ in file scraping is preformed and extract all images in iframe <br>
+ the slider image or the main body images are not scrap in this code
+ can test on multiple website
+<br><br>
+
+# universal_headless.py:<br>
+same scraping work but modified <br>
+add headless mode<br>
+the slider image or the main body images are  scraped in this code<br>
+
