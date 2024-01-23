@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import AuthBackground from "assets/images/auth/AuthBackground";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -52,7 +51,6 @@ const Register = () => {
         minHeight: "100vh",
       }}
     >
-      <AuthBackground />
 
       <Card style={{ width: "400px", padding: "16px" }}>
         <Typography variant="h2">Scheduling for Ad:</Typography>
@@ -99,7 +97,7 @@ const Register = () => {
                   onChange={(e) => handleInputChange(e, "adImage")}
                 />
               </Grid>
-              <Grid container spacing={4} item xs={8}>
+              <Grid container spacing={3} item xs={12}>
                 <Grid item xs={12}>
                   <Typography variant="h6">Select Date Range</Typography>
                 </Grid>
