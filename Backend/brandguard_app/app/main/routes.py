@@ -4,6 +4,7 @@ from app.models.models import *
 from app.main import bp
 from datetime import datetime  # Corrected import statement
 from app.utils.example_app import get_website_urls
+from app.utils.img_grabber import run_img_grabber
 
 @bp.route('/')
 def index():
@@ -17,6 +18,16 @@ def hello():
 def get_websites_route():
     urls = get_website_urls()
     return jsonify(urls)
+
+@bp.route('/trigger-img-grabber')
+def trigger_img_grabber():
+    # Retrieve a URL from the database (adjust the query as needed)
+    website = Websites.query.first()
+    if website:
+        run_img_grabber(website.WebsiteURL)
+        return jsonify({"message": "Image grabber triggered successfully"})
+    else:
+        return jsonify({"error": "No website found"}), 404
 
 # Create a new Campaign
 @bp.route('/campaigns', methods=['POST'])

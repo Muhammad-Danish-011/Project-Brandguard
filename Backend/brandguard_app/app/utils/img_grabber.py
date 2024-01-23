@@ -4,6 +4,8 @@ import time
 from selenium_stealth import stealth
 import os
 from datetime import datetime
+from webdriver_manager.chrome import ChromeDriverManager
+from app.models.models import Websites
 
 def fullpage_screenshot(driver, folder, file):
     """Capture a full-page screenshot using JavaScript"""
@@ -45,45 +47,45 @@ def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
 
         time.sleep(interval_seconds)
 
-# Chrome options
-options = webdriver.ChromeOptions()
-options.add_argument("start-maximized")
-options.add_argument("--headless")
-options.add_experimental_option("excludeSwitches", ["enable-automation"])
-options.add_experimental_option('useAutomationExtension', False)
+def setup_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("start-maximized")
+    options.add_argument("--headless")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
 
-chrome_driver_path = 'chromedriver_linux64/chromedriver'
+    # Use ChromeDriverManager().install() to get the path
+    chromedriver_path = ChromeDriverManager().install()
+    # Use the obtained path directly with webdriver.Chrome()
 
-service = Service(chrome_driver_path)
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
 
-# Initialize WebDriver
-driver = webdriver.Chrome(options=options, service=service)
 
-# Apply stealth settings
-stealth(driver,
-        languages=["en-US", "en"],
-        vendor="Google Inc.",
-        platform="Win32",
-        webgl_vendor="Intel Inc.",
-        renderer="Intel Iris OpenGL Engine",
-        fix_hairline=True)
+    stealth(driver,
+            languages=["en-US", "en"],
+            vendor="Google Inc.",
+            platform="Win32",
+            webgl_vendor="Intel Inc.",
+            renderer="Intel Iris OpenGL Engine",
+            fix_hairline=True)
 
-# URL to capture
-url = "https://test.kokaneducation.com/a-comprehensive-guide-to-web-scraping-with-selenium-and-scrapy/"
-web_name = "Kokan"
+    return driver
 
-# Create subfolder dynamically with website name and current date and time
-current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-folder_name = f"{web_name} - {current_datetime}"
+def get_website_urls():
+    websites = Websites.query.all()
+    urls = [website.WebsiteURL for website in websites]
+    return urls
 
-# Full path to the subfolder
-full_folder_path = os.path.join("screenshots", folder_name)
+def run_img_grabber(url):
+    driver = setup_driver()
 
-# Open the URL
-driver.get(url)
+    web_name = "OLX"
 
-# Capture screenshots every 10 seconds for 1 minute (default)
-capture_screenshots(driver, full_folder_path, interval_seconds=10, duration_minutes=1)
+    current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
+    folder_name = f"{web_name} - {current_datetime}"
+    full_folder_path = os.path.join("screenshots", folder_name)
 
-# Quit the WebDriver
-driver.quit()
+    driver.get(url)
+    capture_screenshots(driver, full_folder_path, interval_seconds=10, duration_minutes=1)
+    driver.quit()
