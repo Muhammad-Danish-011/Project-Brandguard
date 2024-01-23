@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { Button, Card, CardHeader, CardContent, Grid, Input, TextField, Typography } from '@mui/material';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  Grid,
+  Input,
+  TextField,
+  Typography,
+} from "@mui/material";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import AuthBackground from "assets/images/auth/AuthBackground";
+import Logo from '../../components/Logo/Logo';
 const Register = () => {
   const [formData, setFormData] = useState({
-    webUrl: '',
-    exactPageUrl: '',
+    webUrl: "",
+    exactPageUrl: "",
     adImage: null,
     startDate: null,
-    endDate: null
+    endDate: null,
   });
 
   const [showPopup, setShowPopup] = useState(false);
@@ -18,7 +28,7 @@ const Register = () => {
     const { value, files } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === 'adImage' ? files[0] : value
+      [name]: name === "adImage" ? files[0] : value,
     }));
   };
 
@@ -36,18 +46,20 @@ const Register = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        backgroundImage: `url(${'../../assets/logo.png'})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
       }}
     >
-      <Card style={{ width: '400px', padding: '16px' }}>
+      <AuthBackground />
+
+      <Card style={{ width: "400px", padding: "16px" }}>
+        
         <Typography variant="h2">Scheduling for Ad:</Typography>
+       
         <CardHeader />
+        <Logo />
         <CardContent>
           <form>
             <Grid container spacing={3}>
@@ -59,8 +71,10 @@ const Register = () => {
                   type="url"
                   name="webUrl"
                   value={formData.webUrl}
-                  onChange={(e) => handleInputChange(e, 'webUrl')}
-                  disabled={formData.exactPageUrl && formData.exactPageUrl.trim() !== ''}
+                  onChange={(e) => handleInputChange(e, "webUrl")}
+                  disabled={
+                    formData.exactPageUrl && formData.exactPageUrl.trim() !== ""
+                  }
                   variant="outlined"
                   margin="normal"
                 />
@@ -73,14 +87,18 @@ const Register = () => {
                   type="url"
                   name="exactPageUrl"
                   value={formData.exactPageUrl}
-                  onChange={(e) => handleInputChange(e, 'exactPageUrl')}
-                  disabled={formData.webUrl && formData.webUrl.trim() !== ''}
+                  onChange={(e) => handleInputChange(e, "exactPageUrl")}
+                  disabled={formData.webUrl && formData.webUrl.trim() !== ""}
                   variant="outlined"
                   margin="normal"
                 />
               </Grid>
               <Grid item xs={12}>
-                <Input type="file" name="adImage" onChange={(e) => handleInputChange(e, 'adImage')} />
+                <Input
+                  type="file"
+                  name="adImage"
+                  onChange={(e) => handleInputChange(e, "adImage")}
+                />
               </Grid>
               <Grid container spacing={3} item xs={12}>
                 <Grid item xs={16}>
@@ -90,7 +108,7 @@ const Register = () => {
                   {/* Start Date Picker */}
                   <DatePicker
                     selected={formData.startDate}
-                    onChange={(date) => handleInputChange(date, 'startDate')}
+                    onChange={(date) => handleInputChange(date, "startDate")}
                     selectsStart
                     startDate={formData.startDate}
                     endDate={formData.endDate}
@@ -101,7 +119,7 @@ const Register = () => {
                   {/* End Date Picker */}
                   <DatePicker
                     selected={formData.endDate}
-                    onChange={(date) => handleInputChange(date, 'endDate')}
+                    onChange={(date) => handleInputChange(date, "endDate")}
                     selectsEnd
                     startDate={formData.startDate}
                     endDate={formData.endDate}
@@ -110,34 +128,47 @@ const Register = () => {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" color="primary" onClick={handleSaveClick} fullWidth>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSaveClick}
+                  fullWidth
+                >
                   Save
                 </Button>
+                
               </Grid>
             </Grid>
           </form>
+          
         </CardContent>
       </Card>
       {showPopup && (
         <div
           style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            padding: '16px',
-            background: '#fff',
-            boxShadow: '0 0 20px rgba(5, 5, 5, 5)',
-            borderRadius: '16px',
-            textAlign: 'center'
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            padding: "16px",
+            background: "#fff",
+            boxShadow: "0 0 20px rgba(5, 5, 5, 5)",
+            borderRadius: "16px",
+            textAlign: "center",
           }}
         >
           <Typography variant="h2" gutterBottom>
             Data Saved Successfully!
           </Typography>
-          <Button variant="contained" color="primary" onClick={closePopup} style={{ marginTop: '10px' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={closePopup}
+            style={{ marginTop: "10px" }}
+          >
             Close
           </Button>
+
         </div>
       )}
     </div>
