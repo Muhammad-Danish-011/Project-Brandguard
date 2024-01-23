@@ -4,5 +4,5 @@ Flask-SQLAlchemy
 psycopg2-binary
 python-dotenv
 SQLAlchemy
-selenium4
+selenium
 selenium_stealth
