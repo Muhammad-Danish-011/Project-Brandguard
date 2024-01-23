@@ -56,11 +56,11 @@ def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
     options.add_experimental_option('useAutomationExtension', False)
 
 # chrome_driver_path = ChromeDriverManager().install()
-    chrome_driver_path='./chromedriver_linux64/chromedriver'
-    service = Service(chrome_driver_path)
+    # chrome_driver_path='./chromedriver_linux64/chromedriver'
+    # service = Service(chrome_driver_path)
 
     # Initialize WebDriver
-    driver = webdriver.Chrome(options=options, service=service)
+    driver = webdriver.Chrome(ChromeDriverManager().install())
 
     # Apply stealth settings
     stealth(driver,
@@ -122,14 +122,14 @@ def capture_screenshot_by_compainid(compainID):
         options.add_experimental_option('useAutomationExtension', False)
 
     # chrome_driver_path = ChromeDriverManager().install()
-        chrome_driver_path='/home/muhammadmoizkhan/selenium_webdriver/chromedriver'
-        service = Service(chrome_driver_path)
+        # chrome_driver_path='/home/muhammadmoizkhan/selenium_webdriver/chromedriver'
+        # service = Service(chrome_driver_path)
 
         # Initialize WebDriver
-        driver = webdriver.Chrome(options=options, service=service)
+        driver = webdriver.Chrome(ChromeDriverManager().install())
 
         # Initialize the driver here or earlier in your code
-       
+
         campaign = Campaigns.query.filter_by(id=compainID).first()
 
         if campaign:

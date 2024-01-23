@@ -234,5 +234,5 @@ def capture_screenshot_api(compainID):
 
 @bp.route('/interval_time/<int:id>', methods = ['GET'])
 def interval_time(id):
-   get_time =get_interval_time(id)
+   get_time = get_interval_time(id)
    return jsonify(get_time)
