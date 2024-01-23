@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models.models import *
 from app.main import bp
 from datetime import datetime  # Corrected import statement
+from app.utils.example_app import get_website_urls
 
 @bp.route('/')
 def index():
@@ -11,6 +12,11 @@ def index():
 @bp.route('/hello/')
 def hello():
     return 'Hello, World!'
+
+@bp.route('/get-websites')
+def get_websites_route():
+    urls = get_website_urls()
+    return jsonify(urls)
 
 # Create a new Campaign
 @bp.route('/campaigns', methods=['POST'])
