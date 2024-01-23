@@ -12,7 +12,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AuthBackground from "assets/images/auth/AuthBackground";
-import Logo from '../../components/Logo/Logo';
+
 const Register = () => {
   const [formData, setFormData] = useState({
     webUrl: "",
@@ -55,11 +55,10 @@ const Register = () => {
       <AuthBackground />
 
       <Card style={{ width: "400px", padding: "16px" }}>
-        
         <Typography variant="h2">Scheduling for Ad:</Typography>
-       
+
         <CardHeader />
-        <Logo />
+
         <CardContent>
           <form>
             <Grid container spacing={3}>
@@ -100,22 +99,24 @@ const Register = () => {
                   onChange={(e) => handleInputChange(e, "adImage")}
                 />
               </Grid>
-              <Grid container spacing={3} item xs={12}>
-                <Grid item xs={16}>
+              <Grid container spacing={4} item xs={8}>
+                <Grid item xs={12}>
                   <Typography variant="h6">Select Date Range</Typography>
                 </Grid>
-                <Grid item xs={16}>
+                <Grid item xs={12}>
                   {/* Start Date Picker */}
                   <DatePicker
+                   
                     selected={formData.startDate}
                     onChange={(date) => handleInputChange(date, "startDate")}
                     selectsStart
                     startDate={formData.startDate}
                     endDate={formData.endDate}
                     placeholderText="Start Date"
+                    
                   />
                 </Grid>
-                <Grid item xs={16}>
+                <Grid item xs={12}>
                   {/* End Date Picker */}
                   <DatePicker
                     selected={formData.endDate}
@@ -136,11 +137,9 @@ const Register = () => {
                 >
                   Save
                 </Button>
-                
               </Grid>
             </Grid>
           </form>
-          
         </CardContent>
       </Card>
       {showPopup && (
@@ -168,7 +167,6 @@ const Register = () => {
           >
             Close
           </Button>
-
         </div>
       )}
     </div>
