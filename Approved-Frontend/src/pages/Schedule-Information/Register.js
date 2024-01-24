@@ -30,7 +30,19 @@ const Register = () => {
       [name]: name === "adImage" ? files[0] : value,
     }));
   };
+  const handleStartDateChange = (newDate) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      startDate: newDate,
+    }));
+  };
 
+  const handleEndDateChange = (newDate) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      endDate: newDate,
+    }));
+  };
   const handleSaveClick = () => {
     // Your save logic goes here
     // You can implement your save logic, API calls, etc.
@@ -48,7 +60,7 @@ const Register = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
+        minHeight: "10vh",
       }}
     >
 
@@ -106,7 +118,7 @@ const Register = () => {
                   <DatePicker
                    
                     selected={formData.startDate}
-                    onChange={(date) => handleInputChange(date, "startDate")}
+                    onChange={(date) => handleStartDateChange(date, "startDate")}
                     selectsStart
                     startDate={formData.startDate}
                     endDate={formData.endDate}
@@ -118,7 +130,8 @@ const Register = () => {
                   {/* End Date Picker */}
                   <DatePicker
                     selected={formData.endDate}
-                    onChange={(date) => handleInputChange(date, "endDate")}
+                    onChange={(date) => handleEndDateChange(date, "endDate")}
+                    
                     selectsEnd
                     startDate={formData.startDate}
                     endDate={formData.endDate}
