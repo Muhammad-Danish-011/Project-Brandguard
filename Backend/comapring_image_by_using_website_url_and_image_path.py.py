@@ -5,29 +5,42 @@ import cv2
 import numpy as np
 from io import BytesIO
 from PIL import Image
-from requests.exceptions import ConnectionError, HTTPError
-import time
-
 from urllib.parse import urljoin
 
 
-def download_images(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+def download_images_from_url(url):
     images = []
-
-    for img in soup.find_all('img'):
-        # Construct the absolute URL
-        image_url = urljoin(url, img['src'])
-        print(image_url)
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
         
-        try:
-            img_response = requests.get(image_url)
-            img = Image.open(BytesIO(img_response.content))
-            img = img.convert('RGB')
-            images.append(np.array(img))
-        except Exception as e:
-            print(f"Failed to download {image_url}: {e}")
+        for img in soup.find_all('img'):
+            # Check if 'src' attribute exists in the 'img' tag
+            if 'src' in img.attrs:
+                # Construct the absolute URL
+                image_url = urljoin(url, img['src'])
+                print(image_url)
+                
+                try:
+                    img_response = requests.get(image_url)
+                    img = Image.open(BytesIO(img_response.content))
+                    img = img.convert('RGB')
+                    images.append(np.array(img))
+                except Exception as e:
+                    print(f"Failed to download {image_url}: {e}")
+            else:
+                image_url = urljoin(url, img['data-src'])
+                try:
+                    img_response = requests.get(image_url)
+                    img = Image.open(BytesIO(img_response.content))
+                    img = img.convert('RGB')
+                    images.append(np.array(img))
+                except Exception as e:
+                    print(f"Failed to download {image_url}: {e}")
+                # print("Skipping image without 'src' attribute.")
+
+    except Exception as e:
+        print(f"Failed to fetch content from {url}: {e}")
 
     return images
 
@@ -51,19 +64,17 @@ def compare_images(base_image, images, size=(100, 100)):
     return False
 
 
-
-# Load your image
-your_image = Image.open('overlay.jpg')
+#
+your_image = Image.open('321.jpg')
 
 # Download images from the webpage
 
-webpage_url = 'https://docs.opencv.org/4.x/d0/d86/tutorial_py_image_arithmetics.html'
-downloaded_images = download_images(webpage_url)
+webpage_url = 'https://www.techtarget.com/searchitoperations/definition/Docker'
+downloaded_images = download_images_from_url(webpage_url)
 
 # Compare your image with each downloaded image
 is_found = compare_images(your_image, downloaded_images)
 
 print("Image found on webpage:", is_found)
-
 
 
