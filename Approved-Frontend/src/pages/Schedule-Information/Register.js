@@ -13,46 +13,53 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    webUrl: "",
-    exactPageUrl: "",
-    adImage: null,
-    startDate: null,
-    endDate: null,
-  });
-
+  const [webUrls, setWebUrls] = useState([""]);
+  const [exactPageUrls, setExactPageUrls] = useState([""]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleInputChange = (e, name) => {
-    const { value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === "adImage" ? files[0] : value,
-    }));
+  const handleInputChange = (e, name, index) => {
+    const { value } = e.target;
+
+    if (name === "webUrls") {
+      const newWebUrls = [...webUrls];
+      newWebUrls[index] = value;
+      setWebUrls(newWebUrls);
+    } else if (name === "exactPageUrls") {
+      const newExactPageUrls = [...exactPageUrls];
+      newExactPageUrls[index] = value;
+      setExactPageUrls(newExactPageUrls);
+    }
+    // handle other input changes here
   };
+
+  const addUrlField = (name) => {
+    if (name === "webUrls") {
+      setWebUrls([...webUrls, ""]);
+    } else if (name === "exactPageUrls") {
+      setExactPageUrls([...exactPageUrls, ""]);
+    }
+    // add other conditions for different fields
+  };
+
   const handleStartDateChange = (newDate) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      startDate: newDate,
-    }));
+    setStartDate(newDate);
   };
 
   const handleEndDateChange = (newDate) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      endDate: newDate,
-    }));
+    setEndDate(newDate);
   };
+
   const handleSaveClick = () => {
-    // Your save logic goes here
-    // You can implement your save logic, API calls, etc.
-    // For now, let's just show the popup
     setShowPopup(true);
+    // Add your save logic here (e.g., API calls)
   };
 
   const closePopup = () => {
     setShowPopup(false);
   };
+
 
   return (
     <div
@@ -63,7 +70,6 @@ const Register = () => {
         minHeight: "10vh",
       }}
     >
-
       <Card style={{ width: "400px", padding: "16px" }}>
         <Typography variant="h2">Scheduling for Ad:</Typography>
 
@@ -71,37 +77,67 @@ const Register = () => {
 
         <CardContent>
           <form>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Web URL"
-                  placeholder="Web URL"
-                  type="url"
-                  name="webUrl"
-                  value={formData.webUrl}
-                  onChange={(e) => handleInputChange(e, "webUrl")}
-                  disabled={
-                    formData.exactPageUrl && formData.exactPageUrl.trim() !== ""
-                  }
-                  variant="outlined"
-                  margin="normal"
-                />
+            <Grid container spacing={1}>
+              {/* Web URLs */}
+              <Grid container spacing={2}>
+                {webUrls.map((url, index) => (
+                  <Grid item xs={12} key={index}>
+                    <TextField
+                      fullWidth
+                      label={`Web URL ${index + 1}`}
+                      placeholder="Web URL"
+                      type="url"
+                      value={url}
+                      onChange={(e) => handleInputChange(e, "webUrls", index)}
+                      disabled={exactPageUrls[index] && exactPageUrls[index].trim() !== ""}
+
+                      variant="outlined"
+                      margin="normal"
+                    />
+                  </Grid>
+                ))}
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={() => addUrlField("webUrls")}
+                  >
+                    Add URL
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Exact Page URL"
-                  placeholder="Exact Page URL"
-                  type="url"
-                  name="exactPageUrl"
-                  value={formData.exactPageUrl}
-                  onChange={(e) => handleInputChange(e, "exactPageUrl")}
-                  disabled={formData.webUrl && formData.webUrl.trim() !== ""}
-                  variant="outlined"
-                  margin="normal"
-                />
+
+              {/* Exact Page URLs */}
+              <Grid container spacing={2}>
+                {exactPageUrls.map((url, index) => (
+                  <Grid item xs={12} key={index}>
+                    <TextField
+                      fullWidth
+                      label={`Exact URL ${index + 1}`}
+                      placeholder="Exact URL"
+                      type="url"
+                      value={url}
+                      onChange={(e) => handleInputChange(e, "exactPageUrls", index)}
+                      disabled={webUrls[index] && webUrls[index].trim() !== ""}
+                      variant="outlined"
+                      margin="normal"
+                    />
+                  </Grid>
+                ))}
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={() => addUrlField("exactPageUrls")}
+                  >
+                    Add URL
+                  </Button>
+                </Grid>
               </Grid>
+
+              {/* Ad Image */}
               <Grid item xs={12}>
                 <Input
                   type="file"
@@ -109,36 +145,35 @@ const Register = () => {
                   onChange={(e) => handleInputChange(e, "adImage")}
                 />
               </Grid>
+
+              {/* Date Range */}
               <Grid container spacing={3} item xs={12}>
                 <Grid item xs={12}>
                   <Typography variant="h6">Select Date Range</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  {/* Start Date Picker */}
                   <DatePicker
-                   
-                    selected={formData.startDate}
-                    onChange={(date) => handleStartDateChange(date, "startDate")}
+                    selected={startDate}
+                    onChange={(date) => handleStartDateChange(date)}
                     selectsStart
-                    startDate={formData.startDate}
-                    endDate={formData.endDate}
+                    startDate={startDate}
+                    endDate={endDate}
                     placeholderText="Start Date"
-                    
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {/* End Date Picker */}
                   <DatePicker
-                    selected={formData.endDate}
-                    onChange={(date) => handleEndDateChange(date, "endDate")}
-                    
+                    selected={endDate}
+                    onChange={(date) => handleEndDateChange(date)}
                     selectsEnd
-                    startDate={formData.startDate}
-                    endDate={formData.endDate}
+                    startDate={startDate}
+                    endDate={endDate}
                     placeholderText="End Date"
                   />
                 </Grid>
               </Grid>
+
+              {/* Save Button */}
               <Grid item xs={12}>
                 <Button
                   variant="contained"
