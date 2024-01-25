@@ -130,3 +130,11 @@
 2024-01-25 11:48:16,445 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
 2024-01-25 11:48:16,755 [INFO] Screenshots captured successfully
 2024-01-25 11:48:16,757 [INFO] 127.0.0.1 - - [25/Jan/2024 11:48:16] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-25 12:41:55,458 [INFO] Scheduler started
+2024-01-25 12:41:55,459 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-25 12:41:55,459 [INFO] Scheduler has been shut down
+2024-01-25 12:43:05,177 [INFO] Scheduler started
+2024-01-25 12:43:05,179 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-25 12:43:05,179 [INFO] Scheduler has been shut down
+2024-01-25 12:43:21,790 [INFO] Scheduler started
+2024-01-25 12:43:27,223 [INFO] Scheduler started
