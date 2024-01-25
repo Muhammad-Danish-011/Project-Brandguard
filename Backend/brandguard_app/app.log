@@ -138,3 +138,252 @@
 2024-01-25 12:43:05,179 [INFO] Scheduler has been shut down
 2024-01-25 12:43:21,790 [INFO] Scheduler started
 2024-01-25 12:43:27,223 [INFO] Scheduler started
+2024-01-25 23:08:53,901 [INFO] Scheduler started
+2024-01-25 23:08:53,902 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 23:08:53,902 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 23:16:36,904 [INFO] Scheduler has been shut down
+2024-01-25 23:18:07,098 [INFO] Scheduler started
+2024-01-25 23:18:07,099 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 23:18:07,099 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 23:18:11,577 [INFO] ====== WebDriver manager ======
+2024-01-25 23:18:11,624 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:18:11,972 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:18:12,310 [INFO] There is no [linux64] chromedriver "121.0.6167.85" for browser google-chrome "121.0.6167" in cache
+2024-01-25 23:18:12,310 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:18:13,022 [INFO] WebDriver version 121.0.6167.85 selected
+2024-01-25 23:18:13,023 [INFO] Modern chrome version https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
+2024-01-25 23:18:13,024 [INFO] About to download new driver from https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
+2024-01-25 23:18:13,637 [INFO] Driver downloading response is 200
+2024-01-25 23:18:16,291 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:18:16,717 [INFO] Driver has been saved in cache [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85]
+2024-01-25 23:18:20,681 [INFO] Capturing screenshots for CampaignID 
+2024-01-25 23:18:25,963 [INFO] Capturing screenshots for CampaignID 
+2024-01-25 23:18:27,875 [INFO] Scheduler has been shut down
+2024-01-25 23:18:48,437 [INFO] Scheduler started
+2024-01-25 23:18:48,438 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 23:18:48,438 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 23:18:53,404 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-25 23:18:53,405 [INFO] 127.0.0.1 - - [25/Jan/2024 23:18:53] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-25 23:21:53,405 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 23:21:53 PKT)" (scheduled at 2024-01-25 23:21:53.404537+05:00)
+2024-01-25 23:21:53,405 [INFO] ====== WebDriver manager ======
+2024-01-25 23:21:53,462 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:21:53,821 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:21:54,158 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-25 23:21:54,773 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 23:24:53 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 141, in capture_screenshot_by_compainid
+    campaign = Campaigns.query.filter_by(CampaignID=CompainID).first()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/flask_sqlalchemy/model.py", line 31, in __get__
+    cls, session=cls.__fsa__.session()  # type: ignore[arg-type]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/sqlalchemy/orm/scoping.py", line 217, in __call__
+    sess = self.registry()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/sqlalchemy/util/_collections.py", line 640, in __call__
+    key = self.scopefunc()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/flask_sqlalchemy/session.py", line 102, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/werkzeug/local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-01-25 23:24:53,405 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 23:27:53 PKT)" (scheduled at 2024-01-25 23:24:53.404537+05:00)
+2024-01-25 23:24:53,405 [INFO] ====== WebDriver manager ======
+2024-01-25 23:24:53,450 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:24:53,816 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:24:54,158 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-25 23:24:54,767 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 23:27:53 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 141, in capture_screenshot_by_compainid
+    campaign = Campaigns.query.filter_by(CampaignID=CompainID).first()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/flask_sqlalchemy/model.py", line 31, in __get__
+    cls, session=cls.__fsa__.session()  # type: ignore[arg-type]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/sqlalchemy/orm/scoping.py", line 217, in __call__
+    sess = self.registry()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/sqlalchemy/util/_collections.py", line 640, in __call__
+    key = self.scopefunc()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/flask_sqlalchemy/session.py", line 102, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/werkzeug/local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-01-25 23:27:53,404 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 23:30:53 PKT)" (scheduled at 2024-01-25 23:27:53.404537+05:00)
+2024-01-25 23:27:53,405 [INFO] ====== WebDriver manager ======
+2024-01-25 23:27:53,456 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:27:53,806 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 23:27:54,147 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-25 23:27:54,757 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 23:30:53 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 141, in capture_screenshot_by_compainid
+    campaign = Campaigns.query.filter_by(CampaignID=CompainID).first()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/flask_sqlalchemy/model.py", line 31, in __get__
+    cls, session=cls.__fsa__.session()  # type: ignore[arg-type]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/sqlalchemy/orm/scoping.py", line 217, in __call__
+    sess = self.registry()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/sqlalchemy/util/_collections.py", line 640, in __call__
+    key = self.scopefunc()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/flask_sqlalchemy/session.py", line 102, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/werkzeug/local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-01-25 23:29:08,414 [INFO] Scheduler has been shut down
+2024-01-26 00:28:18,462 [INFO] Scheduler started
+2024-01-26 00:28:18,463 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-26 00:28:18,463 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-26 00:28:25,263 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-26 00:28:25,263 [INFO] 127.0.0.1 - - [26/Jan/2024 00:28:25] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-26 00:31:25,263 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-26 00:31:25 PKT)" (scheduled at 2024-01-26 00:31:25.263374+05:00)
+2024-01-26 00:31:25,268 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-26 00:34:25 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 126, in capture_screenshot_by_compainid
+    with create_app().app_context():
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/__init__.py", line 19, in create_app
+    scheduler.start()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/schedulers/background.py", line 35, in start
+    BaseScheduler.start(self, *args, **kwargs)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/schedulers/base.py", line 153, in start
+    raise SchedulerAlreadyRunningError
+apscheduler.schedulers.SchedulerAlreadyRunningError: Scheduler is already running
+2024-01-26 00:34:25,263 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-26 00:37:25 PKT)" (scheduled at 2024-01-26 00:34:25.263374+05:00)
+2024-01-26 00:34:25,267 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-26 00:37:25 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 126, in capture_screenshot_by_compainid
+    with create_app().app_context():
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/__init__.py", line 19, in create_app
+    scheduler.start()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/schedulers/background.py", line 35, in start
+    BaseScheduler.start(self, *args, **kwargs)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/schedulers/base.py", line 153, in start
+    raise SchedulerAlreadyRunningError
+apscheduler.schedulers.SchedulerAlreadyRunningError: Scheduler is already running
+2024-01-26 00:34:47,088 [INFO] Scheduler has been shut down
+2024-01-26 00:34:48,838 [INFO] Scheduler started
+2024-01-26 00:34:48,839 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-26 00:34:48,839 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-26 00:34:52,739 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-26 00:34:52,739 [INFO] 127.0.0.1 - - [26/Jan/2024 00:34:52] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-26 00:37:52,739 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-26 00:37:52 PKT)" (scheduled at 2024-01-26 00:37:52.739089+05:00)
+2024-01-26 00:37:52,743 [INFO] ====== WebDriver manager ======
+2024-01-26 00:37:52,793 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 00:37:53,143 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 00:37:53,478 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 00:37:54,179 [INFO] WebDriver version 121.0.6167.85 selected
+2024-01-26 00:37:54,180 [INFO] Modern chrome version https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
+2024-01-26 00:37:54,180 [INFO] About to download new driver from https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
+2024-01-26 00:37:54,798 [INFO] Driver downloading response is 200
+2024-01-26 00:37:57,174 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 00:37:57,617 [INFO] Driver has been saved in cache [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85]
+2024-01-26 00:38:01,538 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:06,438 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:11,289 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:16,240 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:21,106 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:25,736 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:30,360 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:35,510 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:40,511 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:45,169 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:49,820 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:54,453 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 00:38:59,523 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f3217586050>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/2694d5d704f208045c0b4f391c46789c/screenshot
+2024-01-26 00:38:59,524 [WARNING] Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f321a456a70>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/2694d5d704f208045c0b4f391c46789c/screenshot
+2024-01-26 00:38:59,524 [WARNING] Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f321a4c7490>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/2694d5d704f208045c0b4f391c46789c/screenshot
+2024-01-26 00:38:59,527 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-26 00:40:52 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 203, in _new_conn
+    sock = connection.create_connection(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 395, in request
+    self.endheaders()
+  File "/usr/lib/python3.10/http/client.py", line 1278, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.10/http/client.py", line 1038, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.10/http/client.py", line 976, in send
+    self.connect()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 243, in connect
+    self.sock = self._new_conn()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 218, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f321a4c6b30>: Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 167, in capture_screenshot_by_compainid
+    capture_screenshots(driver, full_folder_path, interval_seconds=interval_time, duration_minutes=1)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 60, in capture_screenshots
+    fullpage_screenshot(driver, folder, file_name)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 50, in fullpage_screenshot
+    driver.save_screenshot(file_path)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 825, in save_screenshot
+    return self.get_screenshot_as_file(filename)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 801, in get_screenshot_as_file
+    png = self.get_screenshot_as_png()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 835, in get_screenshot_as_png
+    return b64decode(self.get_screenshot_as_base64().encode("ascii"))
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 846, in get_screenshot_as_base64
+    return self.execute(Command.SCREENSHOT)["value"]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 342, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 297, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 318, in _request
+    response = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/_request_methods.py", line 110, in request
+    return self.request_encode_url(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/_request_methods.py", line 143, in request_encode_url
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=54031): Max retries exceeded with url: /session/2694d5d704f208045c0b4f391c46789c/screenshot (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f321a4c6b30>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2024-01-26 00:38:59,529 [INFO] Scheduler has been shut down

@@ -4,7 +4,7 @@ from app.extensions import db, migrate,scheduler
 from app.main import bp as main_bp
 import atexit
 
-def create_app(config_class=Config):
+def create_app(config_class=Config, start_scheduler=True):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
@@ -15,8 +15,10 @@ def create_app(config_class=Config):
     # Register blueprints here
     app.register_blueprint(main_bp)
 
-    # Start the scheduler
-    scheduler.start()
-    atexit.register(lambda: scheduler.shutdown())
+    if start_scheduler:
+        # Start the scheduler only if not already started
+        if not scheduler.running:
+            scheduler.start()
+            atexit.register(lambda: scheduler.shutdown())
 
     return app

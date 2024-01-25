@@ -229,7 +229,7 @@ def get_urls():
 @bp.route('/screenshot/<int:campaignID>', methods=['GET'])
 def capture_screenshot_api(campaignID):
     try:
-        result = capture_screenshot_by_compainid(campaignID)
+        result = schedule_screenshot_capture(campaignID)
         return jsonify(result)
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
@@ -246,7 +246,7 @@ def interval_time(campainID):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return {"error": str(e)}, 500
-    
+
 @bp.route('/get_website/<int:compainID>', methods=['GET'])
 def getwebsite(campainID):
     try:

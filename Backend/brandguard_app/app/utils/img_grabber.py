@@ -7,9 +7,8 @@ from datetime import datetime
 from app.models.models import *
 from webdriver_manager.chrome import ChromeDriverManager
 from flask import jsonify
-import traceback 
+import traceback
 from app.extensions import scheduler
-import atexit
 import logging
 
 
@@ -97,7 +96,7 @@ def get_interval_time(compainID):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return {"error": str(e)}, 500
-    
+
 
 
 
@@ -121,8 +120,10 @@ def generate_screenshot_path(website_url, campaign_id, timestamp, extension):
     return f"{str(campaign_id).zfill(3)}_{str(timestamp).zfill(3)}_{timestamp}.{extension}"
 
 def capture_screenshot_by_compainid(CompainID):
-    try:
-        
+    # try:
+    from app import create_app
+
+    with create_app().app_context():
         options = webdriver.ChromeOptions()
         options.add_argument("start-maximized")
         options.add_argument("--headless")
@@ -137,7 +138,7 @@ def capture_screenshot_by_compainid(CompainID):
         driver = webdriver.Chrome(options=options, service=service)
 
         # Initialize the driver here or earlier in your code
-       
+
         campaign = Campaigns.query.filter_by(CampaignID=CompainID).first()
         print(campaign)
 
@@ -168,7 +169,7 @@ def capture_screenshot_by_compainid(CompainID):
 
         # Quit the WebDriver
         driver.quit()
-          # Create a new Screenshots object and save it to the database
+            # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
             CampaignID=CompainID,
             WebsiteID=website_id,  # Replace with the actual WebsiteID
@@ -182,9 +183,9 @@ def capture_screenshot_by_compainid(CompainID):
         logging.info("Screenshots captured successfully")
         return {"status": "Screenshots captured successfully"}
 
-        
-    except Exception as e:
-        return {"error": str(e)}
+
+    # except Exception as e:
+    #     return {"error": str(e)}
 
 
 def schedule_screenshot_capture(CompainID):
