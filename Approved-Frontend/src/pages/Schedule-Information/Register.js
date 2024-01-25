@@ -31,7 +31,7 @@ const Register = () => {
       newExactPageUrls[index] = value;
       setExactPageUrls(newExactPageUrls);
     }
-    // handle other input changes here
+    
   };
 
   const addUrlField = (name) => {
@@ -40,7 +40,7 @@ const Register = () => {
     } else if (name === "exactPageUrls") {
       setExactPageUrls([...exactPageUrls, ""]);
     }
-    // add other conditions for different fields
+   
   };
 
   const handleStartDateChange = (newDate) => {
@@ -53,7 +53,7 @@ const Register = () => {
 
   const handleSaveClick = () => {
     setShowPopup(true);
-    // Add your save logic here (e.g., API calls)
+    
   };
 
   const closePopup = () => {
@@ -102,6 +102,7 @@ const Register = () => {
                     color="primary"
                     fullWidth
                     onClick={() => addUrlField("webUrls")}
+                    
                   >
                     Add URL
                   </Button>
@@ -194,7 +195,7 @@ const Register = () => {
             position: "fixed",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -50%)",
+           // transform: "translate(-50%, -50%)",
             padding: "16px",
             background: "#fff",
             boxShadow: "0 0 20px rgba(5, 5, 5, 5)",
@@ -209,7 +210,7 @@ const Register = () => {
             variant="contained"
             color="primary"
             onClick={closePopup}
-            style={{ marginTop: "10px" }}
+            style={{ marginTop: "5px" }}
           >
             Close
           </Button>
