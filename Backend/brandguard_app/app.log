@@ -1,0 +1,132 @@
+2024-01-25 11:06:30,159 [INFO] Scheduler started
+2024-01-25 11:06:30,161 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:06:30,161 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:06:34,179 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-25 11:06:34,180 [INFO] 127.0.0.1 - - [25/Jan/2024 11:06:34] "GET /screenshot/2 HTTP/1.1" 200 -
+2024-01-25 11:08:10,276 [INFO] Scheduler has been shut down
+2024-01-25 11:08:25,768 [INFO] Scheduler started
+2024-01-25 11:08:25,769 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:08:25,769 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:08:28,187 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-25 11:08:28,188 [INFO] 127.0.0.1 - - [25/Jan/2024 11:08:28] "GET /screenshot/2 HTTP/1.1" 200 -
+2024-01-25 11:09:28,188 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:09:28 PKT)" (scheduled at 2024-01-25 11:09:28.187499+05:00)
+2024-01-25 11:09:28,188 [INFO] Capturing screenshots for CampaignID 2
+2024-01-25 11:09:28,189 [INFO] ====== WebDriver manager ======
+2024-01-25 11:09:28,240 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:09:28,946 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:09:29,194 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:09:29,363 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:10:28 PKT)" executed successfully
+2024-01-25 11:10:28,188 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:11:28 PKT)" (scheduled at 2024-01-25 11:10:28.187499+05:00)
+2024-01-25 11:10:28,188 [INFO] Capturing screenshots for CampaignID 2
+2024-01-25 11:10:28,188 [INFO] ====== WebDriver manager ======
+2024-01-25 11:10:28,241 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:10:28,513 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:10:28,864 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:10:29,039 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:11:28 PKT)" executed successfully
+2024-01-25 11:11:28,187 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:12:28 PKT)" (scheduled at 2024-01-25 11:11:28.187499+05:00)
+2024-01-25 11:11:28,188 [INFO] Capturing screenshots for CampaignID 2
+2024-01-25 11:11:28,188 [INFO] ====== WebDriver manager ======
+2024-01-25 11:11:28,243 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:11:28,989 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:11:29,257 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:11:29,453 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:12:28 PKT)" executed successfully
+2024-01-25 11:12:28,188 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:13:28 PKT)" (scheduled at 2024-01-25 11:12:28.187499+05:00)
+2024-01-25 11:12:28,188 [INFO] Capturing screenshots for CampaignID 2
+2024-01-25 11:12:28,188 [INFO] ====== WebDriver manager ======
+2024-01-25 11:12:28,242 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:12:28,477 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:12:28,810 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:12:29,014 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-25 11:13:28 PKT)" executed successfully
+2024-01-25 11:13:14,812 [INFO] Scheduler has been shut down
+2024-01-25 11:14:07,806 [INFO] Scheduler started
+2024-01-25 11:14:07,807 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:14:07,807 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:14:16,752 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-25 11:14:16,752 [INFO] 127.0.0.1 - - [25/Jan/2024 11:14:16] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-25 11:17:16,752 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:17:16 PKT)" (scheduled at 2024-01-25 11:17:16.751911+05:00)
+2024-01-25 11:17:16,753 [INFO] Capturing screenshots for CampaignID 1
+2024-01-25 11:17:16,754 [INFO] ====== WebDriver manager ======
+2024-01-25 11:17:16,817 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:17:17,457 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:17:17,755 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:17:17,962 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:20:16 PKT)" executed successfully
+2024-01-25 11:20:16,752 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:23:16 PKT)" (scheduled at 2024-01-25 11:20:16.751911+05:00)
+2024-01-25 11:20:16,753 [INFO] Capturing screenshots for CampaignID 1
+2024-01-25 11:20:16,753 [INFO] ====== WebDriver manager ======
+2024-01-25 11:20:16,822 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:20:17,145 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:20:17,761 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:20:17,930 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:23:16 PKT)" executed successfully
+2024-01-25 11:23:16,752 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:26:16 PKT)" (scheduled at 2024-01-25 11:23:16.751911+05:00)
+2024-01-25 11:23:16,753 [INFO] Capturing screenshots for CampaignID 1
+2024-01-25 11:23:16,753 [INFO] ====== WebDriver manager ======
+2024-01-25 11:23:16,830 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:23:17,459 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:23:18,069 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:23:18,257 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:26:16 PKT)" executed successfully
+2024-01-25 11:25:58,471 [INFO] Scheduler has been shut down
+2024-01-25 11:27:32,019 [INFO] Scheduler started
+2024-01-25 11:27:32,020 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:27:32,020 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:27:36,757 [INFO] Capturing screenshots for CampaignID 1
+2024-01-25 11:27:36,757 [INFO] ====== WebDriver manager ======
+2024-01-25 11:27:36,802 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:27:37,573 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:27:38,191 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:28:46,742 [INFO] ====== WebDriver manager ======
+2024-01-25 11:28:46,796 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:28:47,218 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:28:47,664 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:28:47,926 [INFO] Screenshots captured successfully
+2024-01-25 11:28:47,928 [INFO] 127.0.0.1 - - [25/Jan/2024 11:28:47] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-25 11:37:43,115 [INFO] Scheduler has been shut down
+2024-01-25 11:37:47,563 [INFO] Scheduler started
+2024-01-25 11:37:47,564 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:37:47,564 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:37:58,061 [INFO] ====== WebDriver manager ======
+2024-01-25 11:37:58,114 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:37:58,973 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:37:59,358 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:38:03,959 [INFO] Capturing screenshots for CampaignID 
+2024-01-25 11:38:38,517 [INFO] Capturing screenshots for CampaignID 
+2024-01-25 11:39:08,547 [INFO] ====== WebDriver manager ======
+2024-01-25 11:39:08,623 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:39:09,047 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:39:09,969 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:39:10,313 [INFO] Screenshots captured successfully
+2024-01-25 11:39:10,315 [INFO] 127.0.0.1 - - [25/Jan/2024 11:39:10] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-25 11:41:46,686 [INFO] Scheduler has been shut down
+2024-01-25 11:42:22,110 [INFO] Scheduler started
+2024-01-25 11:42:22,111 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:42:22,111 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:42:24,411 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-25 11:42:24,412 [INFO] 127.0.0.1 - - [25/Jan/2024 11:42:24] "GET /screenshot1/1 HTTP/1.1" 200 -
+2024-01-25 11:45:24,411 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:45:24 PKT)" (scheduled at 2024-01-25 11:45:24.411337+05:00)
+2024-01-25 11:45:24,412 [INFO] ====== WebDriver manager ======
+2024-01-25 11:45:24,463 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:45:24,904 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:45:25,527 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:45:25,713 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:03:00], next run at: 2024-01-25 11:48:24 PKT)" executed successfully
+2024-01-25 11:46:49,979 [INFO] Scheduler has been shut down
+2024-01-25 11:47:05,270 [INFO] Scheduler started
+2024-01-25 11:47:05,271 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-25 11:47:05,271 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-25 11:47:07,235 [INFO] ====== WebDriver manager ======
+2024-01-25 11:47:07,301 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:47:07,534 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:47:07,773 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:47:11,543 [INFO] Capturing screenshots for CampaignID 
+2024-01-25 11:47:45,903 [INFO] Capturing screenshots for CampaignID 
+2024-01-25 11:48:15,933 [INFO] ====== WebDriver manager ======
+2024-01-25 11:48:16,000 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:48:16,228 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-25 11:48:16,445 [INFO] Driver [/home/muhammadmoizkhan/.wdm/drivers/chromedriver/linux64/113.0.5672.63/chromedriver] found in cache
+2024-01-25 11:48:16,755 [INFO] Screenshots captured successfully
+2024-01-25 11:48:16,757 [INFO] 127.0.0.1 - - [25/Jan/2024 11:48:16] "GET /screenshot/1 HTTP/1.1" 200 -

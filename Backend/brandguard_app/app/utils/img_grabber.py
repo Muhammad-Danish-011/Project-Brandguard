@@ -7,6 +7,21 @@ from datetime import datetime
 from app.models.models import *
 from webdriver_manager.chrome import ChromeDriverManager
 from flask import jsonify
+import traceback 
+from app.extensions import scheduler
+import atexit
+import logging
+
+
+# Configure logging (usually done in your Flask app initialization)
+logging.basicConfig(
+    level=logging.INFO,  # Set the logging level (e.g., INFO, DEBUG)
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler('app.log'),  # Log to a file
+        logging.StreamHandler()  # Log to the console
+    ]
+)
 
 def fullpage_screenshot(driver, folder, file):
     """Capture a full-page screenshot using JavaScript"""
@@ -44,7 +59,8 @@ def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
         timestamp = time.strftime("%Y%m%d%H%M%S")
         file_name = f"screenshot_{timestamp}.png"
         fullpage_screenshot(driver, folder, file_name)
-        print(f"Screenshot captured: {file_name}")
+        logging.info(f"Capturing screenshots for CampaignID ")
+        # print(f"Screenshot captured: {file_name}")
 
         time.sleep(interval_seconds)
 
@@ -56,11 +72,11 @@ def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
     options.add_experimental_option('useAutomationExtension', False)
 
 # chrome_driver_path = ChromeDriverManager().install()
-    # chrome_driver_path='./chromedriver_linux64/chromedriver'
-    # service = Service(chrome_driver_path)
+    chrome_driver_path=ChromeDriverManager().install()
+    service = Service(chrome_driver_path)
 
     # Initialize WebDriver
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver = webdriver.Chrome(options=options, service=service)
 
     # Apply stealth settings
     stealth(driver,
@@ -70,71 +86,65 @@ def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
             webgl_vendor="Intel Inc.",
             renderer="Intel Iris OpenGL Engine",
             fix_hairline=True)
-    driver.get(url)
-    # URL to capture
-url = "https://test.kokaneducation.com/a-comprehensive-guide-to-web-scraping-with-selenium-and-scrapy/"
-web_name = "Kokan"
-
-# Create subfolder dynamically with website name and current date and time
-current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-folder_name = f"{web_name} - {current_datetime}"
-
-# Full path to the subfolder
-full_folder_path = os.path.join("screenshots", folder_name)
-
-# Open the URL
-# driver.get(url)
-
-# # Capture screenshots every 10 seconds for 1 minute (default)
-# capture_screenshots(driver, full_folder_path, interval_seconds=10, duration_minutes=1)
-
-# # Quit the WebDriver
-# driver.quit()
-
-# # Replace this with your data retrieval logic
-# # @bp.route('/campaigns/<compainid>', methods=['GET'])
-# def get_campaign_details(compainid):
-#     campaign = Campaigns.query.filter_by(id=compainid).first()
-#     if campaign:
-#         websites = Websites.query.filter_by(CampaignID=campaign.id).all()
-#         website_urls = [website.WebsiteURL for website in websites]
-#         return jsonify(IntervalTime=campaign.IntervalTime,WebsiteURLs=website_urls)
-#         # return jsonify(CampaignName=campaign.CampaignName, StartDate=campaign.StartDate.strftime('%Y-%m-%d %H:%M:%S'),
-#         #                EndDate=campaign.EndDate.strftime('%Y-%m-%d %H:%M:%S'), IntervalTime=campaign.IntervalTime,
-#         #                Status=campaign.Status, WebsiteURLs=website_urls)
-#     else:
-#         return jsonify(message='Campaign not found'), 404
 
 def get_interval_time(compainID):
-    campaign = Campaigns.query.filter_by(id=compainID).first()
-    print(campaign)
-    if campaign is not None:
-        IntervalTime = campaign.IntervalTime
-        return IntervalTime
-
-
-def capture_screenshot_by_compainid(compainID):
     try:
+        campaign = Campaigns.query.filter_by(CampaignID=compainID).first()
+        if campaign:
+            return {"IntervalTime": campaign.IntervalTime}
+        else:
+            return {"error": "Campaign not found"}, 404
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
+    
+
+
+
+def get_website(campaign_id):
+    try:
+        campaign = Campaigns.query.filter_by(CampaignID=campaign_id).first()
+        print(campaign)
+        if campaign:
+            website_url = Websites.query.filter_by(CampaignID=campaign_id).first()
+            if website_url:
+                response_data = {"website": website_url.WebsiteURL}
+                return (response_data)
+            else:
+                return ({"error": "Website URL not found"}), 404
+        else:
+            return jsonify({"error": "Campaign not found"}), 404
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return jsonify({"error": str(e)}), 500
+def generate_screenshot_path(website_url, campaign_id, timestamp, extension):
+    return f"{str(campaign_id).zfill(3)}_{str(timestamp).zfill(3)}_{timestamp}.{extension}"
+
+def capture_screenshot_by_compainid(CompainID):
+    try:
+        
         options = webdriver.ChromeOptions()
         options.add_argument("start-maximized")
         options.add_argument("--headless")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option('useAutomationExtension', False)
 
-    # chrome_driver_path = ChromeDriverManager().install()
-        # chrome_driver_path='/home/muhammadmoizkhan/selenium_webdriver/chromedriver'
-        # service = Service(chrome_driver_path)
+        chrome_driver_path = ChromeDriverManager().install()
+        # chrome_driver_path='./chromedriver'
+        service = Service(chrome_driver_path)
 
         # Initialize WebDriver
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = webdriver.Chrome(options=options, service=service)
 
         # Initialize the driver here or earlier in your code
-
-        campaign = Campaigns.query.filter_by(id=compainID).first()
+       
+        campaign = Campaigns.query.filter_by(CampaignID=CompainID).first()
+        print(campaign)
 
         if campaign:
-            website_url = Websites.query.filter_by(CampaignID=campaign.id).first()
+            website_url = Websites.query.filter_by(CampaignID=CompainID).first()
             if website_url:
+                website_id = website_url.WebsiteID
                 website_url = website_url.WebsiteURL
                 interval_time = campaign.IntervalTime
             else:
@@ -154,10 +164,29 @@ def capture_screenshot_by_compainid(compainID):
 
         # Capture screenshots at the specified interval for the given duration
         capture_screenshots(driver, full_folder_path, interval_seconds=interval_time, duration_minutes=1)
+        screenshot_path = generate_screenshot_path(website_url, CompainID, current_datetime, 'png')
 
         # Quit the WebDriver
         driver.quit()
+          # Create a new Screenshots object and save it to the database
+        screenshot = Screenshots(
+            CampaignID=CompainID,
+            WebsiteID=website_id,  # Replace with the actual WebsiteID
+            Extension='png',  # Replace with the actual extension
+            Timestamp=current_datetime,
+            FilePath=screenshot_path
+        )
 
+        db.session.add(screenshot)
+        db.session.commit()
+        logging.info("Screenshots captured successfully")
         return {"status": "Screenshots captured successfully"}
+
+        
     except Exception as e:
         return {"error": str(e)}
+
+
+def schedule_screenshot_capture(CompainID):
+    scheduler.add_job(capture_screenshot_by_compainid, 'interval', minutes=3, args=[CompainID])
+    return "Screenshots will be captured as scheduled"

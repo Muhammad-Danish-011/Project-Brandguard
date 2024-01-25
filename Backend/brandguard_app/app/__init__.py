@@ -1,9 +1,8 @@
 from flask import Flask
 from config import Config
-from app.extensions import db, migrate
-from dotenv import load_dotenv
-
-load_dotenv()
+from app.extensions import db, migrate,scheduler
+from app.main import bp as main_bp
+import atexit
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -11,14 +10,13 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app,db)
 
     # Register blueprints here
-    from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
-    @app.route('/test/')
-    def test_page():
-        return '<h1>Testing the Flask Application Factory Pattern</h1>'
+    # Start the scheduler
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
 
     return app

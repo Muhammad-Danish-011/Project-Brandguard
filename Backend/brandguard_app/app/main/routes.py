@@ -226,13 +226,32 @@ def get_urls():
 
 
 # Define an API endpoint to capture screenshots by compainID
-@bp.route('/screenshot/<compainID>', methods=['GET'])
-def capture_screenshot_api(compainID):
-    result = capture_screenshot_by_compainid(compainID)
-    return jsonify(result)
+@bp.route('/screenshot/<int:campaignID>', methods=['GET'])
+def capture_screenshot_api(campaignID):
+    try:
+        result = capture_screenshot_by_compainid(campaignID)
+        return jsonify(result)
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
 
 
-@bp.route('/interval_time/<int:id>', methods = ['GET'])
-def interval_time(id):
-   get_time = get_interval_time(id)
-   return jsonify(get_time)
+
+
+@bp.route('/interval_time/<int:compainID>', methods=['GET'])
+def interval_time(campainID):
+    try:
+        result = get_interval_time(campainID)
+        return jsonify(result)
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
+    
+@bp.route('/get_website/<int:compainID>', methods=['GET'])
+def getwebsite(campainID):
+    try:
+        result = get_website(campainID)
+        return (result)
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
