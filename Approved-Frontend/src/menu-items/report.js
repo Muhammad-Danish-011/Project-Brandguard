@@ -25,7 +25,7 @@ const Report= {
     },
     {
       id: 'Screenshots-Report',
-      title: '/Screenshots-Report',
+      title: 'Screenshots-Report',
       type: 'item',
       url: '/Screenshots-Report',
       icon: icons.BarChartOutlined,
