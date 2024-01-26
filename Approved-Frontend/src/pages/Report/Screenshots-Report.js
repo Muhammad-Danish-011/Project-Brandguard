@@ -1,35 +1,51 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Box,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
-
-
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
-// material-ui
-import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-
-// third-party
-import NumberFormat from 'react-number-format';
-
-// project import
-import Dot from 'components/@extended/Dot';
-
-function createData(trackingNo, name, fat, carbs, protein) {
-  return { trackingNo, name, fat, carbs, protein };
-}
-
-const rows = [
-  createData(84564564, 'Camera Lens', 40, 2, 40570),
-  createData(98764564, 'Laptop', 300, 0, 180139),
-  createData(98756325, 'Mobile', 355, 1, 90989),
-  createData(98652366, 'Handset', 50, 1, 10239),
-  createData(13286564, 'Computer Accessories', 100, 1, 83348),
-  createData(86739658, 'TV', 99, 0, 410780),
-  createData(13256498, 'Keyboard', 125, 2, 70999),
-  createData(98753263, 'Mouse', 89, 2, 10570),
-  createData(98753275, 'Desktop', 185, 1, 98063),
-  createData(98753291, 'Chair', 100, 0, 14001)
+const headCells = [
+  {
+    id: "campaignId",
+    align: "left",
+    disablePadding: false,
+    label: "Campaign Id",
+  },
+  {
+    id: "campaignName",
+    align: "left",
+    disablePadding: false,
+    label: "Campaign Name",
+  },
+  {
+    id: "startDate",
+    align: "left",
+    disablePadding: false,
+    label: "Start Date",
+  },
+  { id: "endDate", align: "left", disablePadding: false, label: "End Date" },
+  { id: "websites", align: "left", disablePadding: false, label: "Websites" },
+  { id: "images", align: "left", disablePadding: false, label: "Images" },
+  {
+    id: "screenshotPosition",
+    align: "left",
+    disablePadding: false,
+    label: "Screenshot Position",
+  },
+  {
+    id: "AdVisibility",
+    align: "left",
+    disablePadding: false,
+    label: "Ad Visibility %",
+  },
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -43,7 +59,9 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array, comparator) {
@@ -58,177 +76,178 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-// ==============================|| ORDER TABLE - HEADER CELL ||============================== //
-
-const headCells = [
+const mockApiData = [
   {
-    id: 'trackingNo',
-    align: 'left',
-    disablePadding: false,
-    label: 'Tracking No.'
+    campaignName: "Campaign 1",
+    campaignId: 123,
+    startDate: "2024-01-01",
+    endDate: "2024-02-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Top Left",
+    AdVisibility: 80,
   },
   {
-    id: 'name',
-    align: 'left',
-    disablePadding: true,
-    label: 'Product Name'
+    campaignId: 456,
+    campaignName: "Campaign 2",
+    startDate: "2024-02-01",
+    endDate: "2024-03-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Bottom Right",
+    AdVisibility: 75,
   },
   {
-    id: 'fat',
-    align: 'right',
-    disablePadding: false,
-    label: 'Total Order'
+    campaignId: 789,
+    campaignName: "Campaign 3",
+    startDate: "2024-03-01",
+    endDate: "2024-04-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Top Right",
+    AdVisibility: 85,
   },
   {
-    id: 'carbs',
-    align: 'left',
-    disablePadding: false,
-
-    label: 'Status'
+    campaignId: 1011,
+    campaignName: "Campaign 4",
+    startDate: "2024-04-01",
+    endDate: "2024-05-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Bottom Left",
+    AdVisibility: 90,
   },
   {
-    id: 'protein',
-    align: 'right',
-    disablePadding: false,
-    label: 'Total Amount'
-  }
+    campaignId: 1213,
+    campaignName: "Campaign 5",
+    startDate: "2024-05-01",
+    endDate: "2024-06-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Center",
+    AdVisibility: 70,
+  },
+  {
+    campaignId: 1415,
+    campaignName: "Campaign 6",
+    startDate: "2024-06-01",
+    endDate: "2024-07-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Top Center",
+    AdVisibility: 95,
+  },
+  {
+    campaignId: 1617,
+    campaignName: "Campaign 7",
+    startDate: "2024-07-01",
+    endDate: "2024-08-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Bottom Center",
+    AdVisibility: 60,
+  },
+  {
+    campaignId: 1819,
+    campaignName: "Campaign 8",
+    startDate: "2024-08-01",
+    endDate: "2024-09-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Right Center",
+    AdVisibility: 75,
+  },
+  {
+    campaignId: 2021,
+    campaignName: "Campaign 9",
+    startDate: "2024-09-01",
+    endDate: "2024-10-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Left Center",
+    AdVisibility: 85,
+  },
+  {
+    campaignId: 2223,
+    campaignName: "Campaign 10",
+    startDate: "2024-10-01",
+    endDate: "2024-11-01",
+    websites: "www.daraz.pk",
+    images: "new.png",
+    screenshotPosition: "Random",
+    AdVisibility: 80,
+  },
+  // Add more data as needed
 ];
 
-// ==============================|| ORDER TABLE - HEADER ||============================== //
+export default function CampaignTable() {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("campaignName");
+  const [data, setData] = useState([]);
 
-function OrderTableHead({ order, orderBy }) {
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.align}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            {headCell.label}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
+  useEffect(() => {
+    // Simulate fetching data from API
+    setData(mockApiData);
+  }, []);
 
-OrderTableHead.propTypes = {
-  order: PropTypes.string,
-  orderBy: PropTypes.string
-};
-
-// ==============================|| ORDER TABLE - STATUS ||============================== //
-
-const OrderStatus = ({ status }) => {
-  let color;
-  let title;
-
-  switch (status) {
-    case 0:
-      color = 'warning';
-      title = 'Pending';
-      break;
-    case 1:
-      color = 'success';
-      title = 'Approved';
-      break;
-    case 2:
-      color = 'error';
-      title = 'Rejected';
-      break;
-    default:
-      color = 'primary';
-      title = 'None';
-  }
-
-  return (
-    <Stack direction="row" spacing={1} alignItems="center">
-      <Dot color={color} />
-      <Typography>{title}</Typography>
-    </Stack>
-  );
-};
-
-OrderStatus.propTypes = {
-  status: PropTypes.number
-};
-
-// ==============================|| ORDER TABLE ||============================== //
-
-export default function ScreenshotsReport() {
-  const [order] = useState('asc');
-  const [orderBy] = useState('trackingNo');
-  const [selected] = useState([]);
-
-  const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
 
   return (
     <Box>
-      <TableContainer
-        sx={{
-          width: '100%',
-          overflowX: 'auto',
-          position: 'relative',
-          display: 'block',
-          maxWidth: '100%',
-          '& td, & th': { whiteSpace: 'nowrap' }
-        }}
-      >
-        <Table
-          aria-labelledby="tableTitle"
-          sx={{
-            '& .MuiTableCell-root:first-of-type': {
-              pl: 2
-            },
-            '& .MuiTableCell-root:last-of-type': {
-              pr: 3
-            }
-          }}
-        >
-          <OrderTableHead order={order} orderBy={orderBy} />
-          <TableBody>
-            {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-              const isItemSelected = isSelected(row.trackingNo);
-              const labelId = `enhanced-table-checkbox-${index}`;
-
-              return (
-                <TableRow
-                  hover
-                  role="checkbox"
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  aria-checked={isItemSelected}
-                  tabIndex={-1}
-                  key={row.trackingNo}
-                  selected={isItemSelected}
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {headCells.map((headCell) => (
+                <TableCell
+                  key={headCell.id}
+                  align={headCell.align}
+                  padding={headCell.disablePadding ? "none" : "normal"}
                 >
-                  <TableCell component="th" id={labelId} scope="row" align="left">
-                    <Link color="secondary" component={RouterLink} to="">
-                      {row.trackingNo}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="left">{row.name}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="left">
-                    <OrderStatus status={row.carbs} />
-                  </TableCell>
-                  <TableCell align="right">
-                    <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
-                  </TableCell>
+                  <Typography
+                    variant="subtitle3"
+                    fontWeight="bold"
+                    color="primary"
+                  >
+                    {headCell.disablePadding ? (
+                      headCell.label
+                    ) : (
+                      <Link
+                        color="inherit"
+                        component={RouterLink}
+                        to=""
+                        onClick={() => handleRequestSort(headCell.id)}
+                      >
+                        {headCell.label}
+                      </Link>
+                    )}
+                  </Typography>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {stableSort(data, getComparator(order, orderBy)).map(
+              (row, index) => (
+                <TableRow key={index}>
+                  <TableCell>{row.campaignId}</TableCell>
+                  <TableCell>{row.campaignName}</TableCell>
+                  <TableCell>{row.startDate}</TableCell>
+                  <TableCell>{row.endDate}</TableCell>
+                  <TableCell>{row.websites}</TableCell>
+                  <TableCell>{row.images}</TableCell>
+                  <TableCell>{row.screenshotPosition}</TableCell>
+                  <TableCell>{row.AdVisibility}</TableCell>
                 </TableRow>
-              );
-            })}
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
   );
 }
-
-
-
-
-
-
