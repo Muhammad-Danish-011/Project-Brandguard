@@ -1,6 +1,23 @@
 from app.extensions import db
 from sqlalchemy import ForeignKey
 
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150))
+    content = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'<Post "{self.title}">'
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    answer = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'<Question {self.content}>'
+    
 class Campaigns(db.Model):
     __tablename__ = 'campaigns'
     CampaignID = db.Column(db.Integer, primary_key=True)
@@ -39,6 +56,7 @@ class Screenshots(db.Model):
     def generate_screenshot_path(self):
         return f"{str(self.CampaignID).zfill(3)}_{str(self.ScreenshotID).zfill(3)}_{self.Timestamp}.{self.Extension}"
 
+
 class AdPositions(db.Model):
     __tablename__ = 'ad_positions'
     AdPositionID = db.Column(db.Integer, primary_key=True)
@@ -61,3 +79,4 @@ class URLS(db.Model):
     URL_id = db.Column(db.Integer,primary_key = True)
     webpage_url = db.Column(db.String)
     template_url = db.Column(db.String)
+
