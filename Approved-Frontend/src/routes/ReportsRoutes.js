@@ -1,26 +1,26 @@
 
-// project import
-import Report1 from "../pages/Report/Scraping-Report";
-import Report2 from "../pages/Report/Screenshots-Report";
+// // project import
+// import Report1 from "../pages/Report/Scraping-Report";
+// import Report2 from "../pages/Report/Screenshots-Report";
 
-//const Register = Loadable(lazy(() => import('../../src/pages/Schedule-Information/Register.js')));
+// //const Register = Loadable(lazy(() => import('../../src/pages/Schedule-Information/Register.js')));
 
-// ==============================|| MAIN ROUTING ||============================== //
+// // ==============================|| MAIN ROUTING ||============================== //
 
-const Reports = {
-  path: "/",
-  element: <Reports />,
-  children: [
-    {
-      path: "/",
-      element: <Report1 />,
-    },
-    {
-      path: "/",
-      element: <Report2 />,
-    },
+// const Reports = {
+//   path: "/",
+//   element: <Reports />,
+//   children: [
+//     {
+//       path: "/",
+//       element: <Report1 />,
+//     },
+//     {
+//       path: "/",
+//       element: <Report2 />,
+//     },
    
-  ],
-};
+//   ],
+// };
 
-export default Reports;
+// export default Reports;
