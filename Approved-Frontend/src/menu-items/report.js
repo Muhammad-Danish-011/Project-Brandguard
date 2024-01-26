@@ -10,7 +10,7 @@ const icons = {
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
-const Reports= {
+const Report= {
   id: 'group-dashboard',
   title: 'Reports',
   type: 'group',
@@ -25,7 +25,7 @@ const Reports= {
     },
     {
       id: 'Screenshots-Report',
-      title: 'Screenshots-Report',
+      title: '/Screenshots-Report',
       type: 'item',
       url: '/Screenshots-Report',
       icon: icons.BarChartOutlined,
@@ -35,4 +35,4 @@ const Reports= {
   ]
 };
 
-export default Reports;
+export default Report;
