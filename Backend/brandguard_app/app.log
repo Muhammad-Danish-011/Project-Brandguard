@@ -1,0 +1,129 @@
+2024-01-26 20:23:55,619 [INFO] Scheduler started
+2024-01-26 20:23:55,620 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-26 20:23:55,621 [INFO] Scheduler has been shut down
+2024-01-26 20:24:00,914 [INFO] Scheduler started
+2024-01-26 20:24:03,904 [INFO] Scheduler started
+2024-01-26 20:24:13,141 [INFO] Scheduler started
+2024-01-26 20:24:13,142 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-26 20:24:13,142 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-26 20:24:15,118 [INFO] 127.0.0.1 - - [26/Jan/2024 20:24:15] "GET / HTTP/1.1" 200 -
+2024-01-26 20:24:15,163 [INFO] 127.0.0.1 - - [26/Jan/2024 20:24:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-26 20:24:42,254 [INFO] 127.0.0.1 - - [26/Jan/2024 20:24:42] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-26 20:24:48,135 [INFO] 127.0.0.1 - - [26/Jan/2024 20:24:48] "[31m[1mPOST /screenshot/1 HTTP/1.1[0m" 405 -
+2024-01-26 20:24:50,895 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-26 20:24:50,896 [INFO] 127.0.0.1 - - [26/Jan/2024 20:24:50] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-26 20:26:19,906 [INFO] Scheduler has been shut down
+2024-01-26 20:27:21,558 [INFO] Scheduler started
+2024-01-26 20:27:21,578 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-26 20:27:21,578 [INFO] Scheduler has been shut down
+2024-01-26 20:27:25,223 [INFO] Scheduler started
+2024-01-26 20:27:27,709 [INFO] Scheduler started
+2024-01-26 20:27:36,117 [INFO] Scheduler started
+2024-01-26 20:27:36,118 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-26 20:27:36,118 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-26 20:27:46,670 [INFO] 127.0.0.1 - - [26/Jan/2024 20:27:46] "[35m[1mGET /screenshot/1 HTTP/1.1[0m" 500 -
+2024-01-26 20:28:06,674 [INFO] 127.0.0.1 - - [26/Jan/2024 20:28:06] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-26 20:28:10,343 [INFO] 127.0.0.1 - - [26/Jan/2024 20:28:10] "[33mGET /sc\\ HTTP/1.1[0m" 404 -
+2024-01-26 20:28:13,270 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-26 20:28:13,271 [INFO] 127.0.0.1 - - [26/Jan/2024 20:28:13] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-26 20:30:13,271 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-26 20:30:13 PKT)" (scheduled at 2024-01-26 20:30:13.270866+05:00)
+2024-01-26 20:30:13,275 [INFO] ====== WebDriver manager ======
+2024-01-26 20:30:13,328 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 20:30:13,675 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 20:30:14,011 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-26 20:30:28,930 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:30:35,992 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:30:42,690 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:30:49,499 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:30:56,232 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:31:04,398 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:31:10,941 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:31:17,449 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:31:19,453 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f703d774cd0>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/9c7261367cf3ab9a40b5f87bde60376b/execute/sync
+2024-01-26 20:31:19,453 [WARNING] Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f704091b9a0>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/9c7261367cf3ab9a40b5f87bde60376b/execute/sync
+2024-01-26 20:31:19,454 [WARNING] Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f704091bfa0>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/9c7261367cf3ab9a40b5f87bde60376b/execute/sync
+2024-01-26 20:31:19,455 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-26 20:32:13 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connection.py", line 203, in _new_conn
+    sock = connection.create_connection(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connection.py", line 395, in request
+    self.endheaders()
+  File "/usr/lib/python3.10/http/client.py", line 1278, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.10/http/client.py", line 1038, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.10/http/client.py", line 976, in send
+    self.connect()
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connection.py", line 243, in connect
+    self.sock = self._new_conn()
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connection.py", line 218, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f703f86f700>: Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 167, in capture_screenshot_by_compainid
+    capture_screenshots(driver, full_folder_path, interval_seconds=interval_time, duration_minutes=1)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 60, in capture_screenshots
+    fullpage_screenshot(driver, folder, file_name)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 32, in fullpage_screenshot
+    scroll_height = driver.execute_script(js)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 408, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 346, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 300, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 321, in _request
+    response = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/_request_methods.py", line 118, in request
+    return self.request_encode_body(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/_request_methods.py", line 217, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/poolmanager.py", line 444, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/venv/lib/python3.10/site-packages/urllib3/util/retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=38437): Max retries exceeded with url: /session/9c7261367cf3ab9a40b5f87bde60376b/execute/sync (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f703f86f700>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2024-01-26 20:31:19,459 [INFO] Scheduler has been shut down
+2024-01-26 20:41:37,870 [INFO] Scheduler started
+2024-01-26 20:41:37,871 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-26 20:41:37,871 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-26 20:41:42,051 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-26 20:41:42,052 [INFO] 127.0.0.1 - - [26/Jan/2024 20:41:42] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-26 20:43:42,052 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-26 20:43:42 PKT)" (scheduled at 2024-01-26 20:43:42.051868+05:00)
+2024-01-26 20:43:42,057 [INFO] ====== WebDriver manager ======
+2024-01-26 20:43:42,104 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 20:43:42,444 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-26 20:43:42,824 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-26 20:43:54,406 [INFO] Capturing screenshots for CampaignID 
+2024-01-26 20:43:54,473 [INFO] Screenshots captured successfully
+2024-01-26 20:43:54,474 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-26 20:45:42 PKT)" executed successfully
+2024-01-26 20:45:21,245 [INFO] Scheduler has been shut down

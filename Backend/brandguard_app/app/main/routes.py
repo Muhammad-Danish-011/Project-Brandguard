@@ -3,8 +3,7 @@ from app.extensions import db
 from app.models.models import *
 from app.main import bp
 from datetime import datetime  # Corrected import statement
-from app.utils.example_app import get_website_urls
-from app.utils.img_grabber import run_img_grabber
+from app.utils.img_grabber import *
 
 @bp.route('/')
 def index():
@@ -13,21 +12,6 @@ def index():
 @bp.route('/hello/')
 def hello():
     return 'Hello, World!'
-
-@bp.route('/get-websites')
-def get_websites_route():
-    urls = get_website_urls()
-    return jsonify(urls)
-
-@bp.route('/trigger-img-grabber')
-def trigger_img_grabber():
-    # Retrieve a URL from the database (adjust the query as needed)
-    website = Websites.query.first()
-    if website:
-        run_img_grabber(website.WebsiteURL)
-        return jsonify({"message": "Image grabber triggered successfully"})
-    else:
-        return jsonify({"error": "No website found"}), 404
 
 # Create a new Campaign
 @bp.route('/campaigns', methods=['POST'])
@@ -239,3 +223,87 @@ def get_urls():
             'template_url': url.template_url
         })
     return jsonify(result)
+
+
+# Define an API endpoint to capture screenshots by compainID
+@bp.route('/screenshot/<int:campaignID>', methods=['GET'])
+def capture_screenshot_api(campaignID):
+    try:
+        result = schedule_screenshot_capture(campaignID)
+        return jsonify(result)
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
+
+
+
+
+@bp.route('/interval_time/<int:compainID>', methods=['GET'])
+def interval_time(campainID):
+    try:
+        result = get_interval_time(campainID)
+        return jsonify(result)
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
+
+@bp.route('/get_website/<int:compainID>', methods=['GET'])
+def getwebsite(campainID):
+    try:
+        result = get_website(campainID)
+        return (result)
+    except Exception as e:
+        traceback.print_exc()  # Log the exception traceback
+        return {"error": str(e)}, 500
+    
+
+@bp.route('/campaign_details', methods=['POST'])
+def add_campaign_details():
+    try:
+        # Extract data from the request JSON
+        data = request.get_json()
+        campaign_name = data.get('CampaignName')
+        start_date = data.get('StartDate')
+        end_date = data.get('EndDate')
+        interval_time = data.get('IntervalTime')
+        status = data.get('Status')
+        websites = data.get('Websites')
+        images = data.get('Images')
+        # Create a new campaign and add it to the database
+        # Create a new campaign without websites
+        new_campaign = Campaigns(
+            CampaignName=campaign_name,
+            StartDate=start_date,
+            EndDate=end_date,
+            IntervalTime=interval_time,
+            Status=status
+        )
+        # Create a list of website instances
+        website_instances = [Websites() for _ in websites]
+          # Create image instances
+        
+        # Create image instances
+        image_instances = []
+        for image_path in images:
+            image = Images()
+            image.ImagePath = image_path
+            image_instances.append(image)
+        # Set WebsiteURL for each website instance
+        for i, website in enumerate(website_instances):
+            website.WebsiteURL = websites[i]
+        # Associate the websites with the campaign
+        new_campaign.websites.extend(website_instances)
+        new_campaign.images.extend(image_instances)
+
+        # Add the campaign and websites to the database
+        db.session.add(new_campaign)
+        db.session.add_all(website_instances)
+        db.session.add_all(image_instances)
+
+        # Commit the changes
+        db.session.commit()
+
+        return jsonify({"status": "Campaign added successfully"}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

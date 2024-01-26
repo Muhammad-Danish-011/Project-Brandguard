@@ -7,3 +7,4 @@ SQLAlchemy
 selenium
 selenium_stealth
 webdriver-manager
+APScheduler

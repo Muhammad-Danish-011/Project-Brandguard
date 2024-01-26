@@ -9,6 +9,10 @@ class Campaigns(db.Model):
     EndDate = db.Column(db.DateTime)
     IntervalTime = db.Column(db.Integer)
     Status = db.Column(db.String)
+    websites = db.relationship('Websites', backref='campaign', lazy=True)
+    images = db.relationship('Images', backref='campaign', lazy=True)
+
+
 
 class Websites(db.Model):
     __tablename__ = 'websites'
