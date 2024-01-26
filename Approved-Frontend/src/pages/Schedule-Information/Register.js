@@ -18,6 +18,18 @@ const Register = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+ const [CampaignName, setCampaignName] = useState(" ");
+ const [IntervalTime, setIntervalTime] = useState();
+
+ 
+ const handleTimeChange = (e) => {
+  setIntervalTime(e.target.value);
+};
+ 
+ const handleTextChange = (e) => {
+    setCampaignName(e.target.value);
+  };
+
 
   const handleInputChange = (e, name, index) => {
     const { value } = e.target;
@@ -52,9 +64,45 @@ const Register = () => {
   };
 
   const handleSaveClick = () => {
-    setShowPopup(true);
-    
+    // Prepare data to send to the API
+    const dataToSend = {
+      CampaignName: "",
+      StartDate: startDate ? startDate.toISOString() : null, // Convert to ISO string
+      EndDate: endDate ? endDate.toISOString() : null, // Convert to ISO string
+      IntervalTime: '',
+      Status: "Active", 
+      Websites: webUrls.filter(url => url.trim() !== ""), // Remove empty URLs
+      Images: [""],
+      // Add other data properties as needed
+    };
+  
+    // Make API call
+    fetch("https://127.0.0.1:5000/campaign_details", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSend),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle success
+        console.log("Data saved successfully:", data);
+        setShowPopup(true);
+      })
+      .catch(error => {
+        // Handle error
+        console.error("Error saving data:", error);
+      });
   };
+  
+    
+  
 
   const closePopup = () => {
     setShowPopup(false);
@@ -78,6 +126,16 @@ const Register = () => {
         <CardContent>
           <form>
             <Grid container spacing={1}>
+            <Grid container spacing={1} item xs={12}>
+            <TextField
+                    fullWidth
+                    label={`Campaign Name `}
+                    onChange={handleTextChange}
+                    type="text"
+                    placeholderText="Campaign Name"
+                    CampaignName={CampaignName}
+                    />
+                  </Grid>
               {/* Web URLs */}
               <Grid container spacing={2}>
                 {webUrls.map((url, index) => (
@@ -110,7 +168,7 @@ const Register = () => {
               </Grid>
 
               {/* Exact Page URLs */}
-              <Grid container spacing={2}>
+              {/* <Grid container spacing={2}>
                 {exactPageUrls.map((url, index) => (
                   <Grid item xs={12} key={index}>
                     <TextField
@@ -136,7 +194,7 @@ const Register = () => {
                     Add URL
                   </Button>
                 </Grid>
-              </Grid>
+              </Grid> */}
 
               {/* Ad Image */}
               <Grid item xs={12}>
@@ -146,6 +204,7 @@ const Register = () => {
                   onChange={(e) => handleInputChange(e, "adImage")}
                 />
               </Grid>
+           
 
               {/* Date Range */}
               <Grid container spacing={3} item xs={12}>
@@ -172,6 +231,20 @@ const Register = () => {
                     placeholderText="End Date"
                   />
                 </Grid>
+                <Grid container spacing={1} item xs={12}>
+            <TextField
+                    fullWidth
+                    label={`Interval Time `}
+                    onChange={(e) => handleTimeChange(e)}
+                    type="number"
+                    inputProps={{
+                      min: '0' 
+                  
+                    }}
+                    IntervalTime={IntervalTime}
+                    placeholderText="Interval Time"
+                    />
+                  </Grid>
               </Grid>
 
               {/* Save Button */}
@@ -218,6 +291,6 @@ const Register = () => {
       )}
     </div>
   );
-};
+        };
 
 export default Register;
