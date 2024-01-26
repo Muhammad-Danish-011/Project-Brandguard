@@ -86,11 +86,11 @@ def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
             renderer="Intel Iris OpenGL Engine",
             fix_hairline=True)
 
-def get_interval_time(compainID):
+def get_interval_time(campainID):
     try:
-        campaign = Campaigns.query.filter_by(CampaignID=compainID).first()
+        campaign = Campaigns.query.filter_by(CampaignID=campainID).first()
         if campaign:
-            return {"IntervalTime": campaign.IntervalTime}
+            return campaign.IntervalTime
         else:
             return {"error": "Campaign not found"}, 404
     except Exception as e:
@@ -119,7 +119,7 @@ def get_website(campaign_id):
 def generate_screenshot_path(website_url, campaign_id, timestamp, extension):
     return f"{str(campaign_id).zfill(3)}_{str(timestamp).zfill(3)}_{timestamp}.{extension}"
 
-def capture_screenshot_by_compainid(CompainID):
+def capture_screenshot_by_compainid(campainID):
     # try:
     from app import create_app
 
@@ -139,11 +139,11 @@ def capture_screenshot_by_compainid(CompainID):
 
         # Initialize the driver here or earlier in your code
 
-        campaign = Campaigns.query.filter_by(CampaignID=CompainID).first()
+        campaign = Campaigns.query.filter_by(CampaignID=campainID).first()
         print(campaign)
 
         if campaign:
-            website_url = Websites.query.filter_by(CampaignID=CompainID).first()
+            website_url = Websites.query.filter_by(CampaignID=campainID).first()
             if website_url:
                 website_id = website_url.WebsiteID
                 website_url = website_url.WebsiteURL
@@ -165,13 +165,13 @@ def capture_screenshot_by_compainid(CompainID):
 
         # Capture screenshots at the specified interval for the given duration
         capture_screenshots(driver, full_folder_path, interval_seconds=interval_time, duration_minutes=1)
-        screenshot_path = generate_screenshot_path(website_url, CompainID, current_datetime, 'png')
+        screenshot_path = generate_screenshot_path(website_url, campainID, current_datetime, 'png')
 
         # Quit the WebDriver
         driver.quit()
             # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
-            CampaignID=CompainID,
+            CampaignID=campainID,
             WebsiteID=website_id,  # Replace with the actual WebsiteID
             Extension='png',  # Replace with the actual extension
             Timestamp=current_datetime,
@@ -188,6 +188,7 @@ def capture_screenshot_by_compainid(CompainID):
     #     return {"error": str(e)}
 
 
-def schedule_screenshot_capture(CompainID):
-    scheduler.add_job(capture_screenshot_by_compainid, 'interval', minutes=3, args=[CompainID])
+def schedule_screenshot_capture(campainID):
+    Interval_time = get_interval_time(campainID)
+    scheduler.add_job(capture_screenshot_by_compainid, 'interval', minutes=Interval_time, args=[campainID])
     return "Screenshots will be captured as scheduled"
