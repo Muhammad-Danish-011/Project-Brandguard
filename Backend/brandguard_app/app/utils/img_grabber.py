@@ -50,41 +50,12 @@ def fullpage_screenshot(driver, folder, file):
     driver.save_screenshot(file_path)
 
 # Function to capture screenshots at intervals
-def capture_screenshots(driver, folder, interval_seconds, duration_minutes):
-    start_time = time.time()
-    end_time = start_time + (duration_minutes * 60)
+def capture_screenshots(driver, folder, interval_seconds):
+    timestamp = time.strftime("%Y%m%d%H%M%S")
+    file_name = f"screenshot_{timestamp}.png"
+    fullpage_screenshot(driver, folder, file_name)
+    logging.info(f"Capturing screenshots for CampaignID ")
 
-    while time.time() < end_time:
-        timestamp = time.strftime("%Y%m%d%H%M%S")
-        file_name = f"screenshot_{timestamp}.png"
-        fullpage_screenshot(driver, folder, file_name)
-        logging.info(f"Capturing screenshots for CampaignID ")
-        # print(f"Screenshot captured: {file_name}")
-
-        time.sleep(interval_seconds)
-
-# Chrome options
-    options = webdriver.ChromeOptions()
-    options.add_argument("start-maximized")
-    options.add_argument("--headless")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option('useAutomationExtension', False)
-
-# chrome_driver_path = ChromeDriverManager().install()
-    chrome_driver_path=ChromeDriverManager().install()
-    service = Service(chrome_driver_path)
-
-    # Initialize WebDriver
-    driver = webdriver.Chrome(options=options, service=service)
-
-    # Apply stealth settings
-    stealth(driver,
-            languages=["en-US", "en"],
-            vendor="Google Inc.",
-            platform="Win32",
-            webgl_vendor="Intel Inc.",
-            renderer="Intel Iris OpenGL Engine",
-            fix_hairline=True)
 
 def get_interval_time(campainID):
     try:
@@ -96,9 +67,6 @@ def get_interval_time(campainID):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return {"error": str(e)}, 500
-
-
-
 
 def get_website(campaign_id):
     try:
@@ -164,7 +132,7 @@ def capture_screenshot_by_compainid(campainID):
         driver.get(website_url)
 
         # Capture screenshots at the specified interval for the given duration
-        capture_screenshots(driver, full_folder_path, interval_seconds=interval_time, duration_minutes=1)
+        capture_screenshots(driver, full_folder_path, interval_seconds=interval_time)
         screenshot_path = generate_screenshot_path(website_url, campainID, current_datetime, 'png')
 
         # Quit the WebDriver
@@ -182,11 +150,6 @@ def capture_screenshot_by_compainid(campainID):
         db.session.commit()
         logging.info("Screenshots captured successfully")
         return {"status": "Screenshots captured successfully"}
-
-
-    # except Exception as e:
-    #     return {"error": str(e)}
-
 
 def schedule_screenshot_capture(campainID):
     Interval_time = get_interval_time(campainID)

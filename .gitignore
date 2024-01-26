@@ -1,0 +1,16 @@
+# Directories
+venv/
+env/
+build/
+*.egg-info/
+__pycache__/
+/model/trained_model/
+
+# File formats
+*.pyc
+
+# Files
+.env
+text.txt
+.DS_Store
+.mypy_cache
