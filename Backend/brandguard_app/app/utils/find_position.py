@@ -51,14 +51,15 @@ def find_image_position(screenshot_path, reference_image_path):
     return "Reference image position: " + ', '.join(true_positions)
 
 def get_screenshot_path(campainID):
-  screenshots = Screenshots.query.filter_by(CampaignID=campainID).all()
+  # screenshots = Screenshots.query.filter_by(CampaignID=campainID).last()
+  latest_screenshot = Screenshots.query.filter_by(CampaignID=campainID).order_by(Screenshots.Timestamp.desc()).first().FilePath
   file_path=None
 # Generate and print file paths for each screenshot
-  for screenshot in screenshots:
-    file_path = screenshot.FilePath
+  # for screenshot in screenshots:
+  # file_path = screenshots.FilePath
     #break
 #   print(file_path)
-  return(file_path)
+  return(latest_screenshot)
 
 def get_refrence_image(campaignID):
     image = Images.query.filter_by(CampaignID=campaignID).first()
@@ -71,4 +72,4 @@ def get_refrence_image(campaignID):
         print("Image not found for the given Campaign ID.")
 
 
- 
+

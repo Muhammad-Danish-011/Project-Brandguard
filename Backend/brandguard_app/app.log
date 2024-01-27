@@ -3431,3 +3431,725 @@ Traceback (most recent call last):
 cv2.error: OpenCV(4.9.0) /io/opencv/modules/imgproc/src/color.cpp:196: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
 
 2024-01-27 09:02:50,345 [INFO] 127.0.0.1 - - [27/Jan/2024 09:02:50] "[35m[1mGET /image_position/14 HTTP/1.1[0m" 500 -
+2024-01-27 12:31:34,602 [INFO] Scheduler started
+2024-01-27 12:31:34,603 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-27 12:31:34,603 [INFO] Scheduler has been shut down
+2024-01-27 12:31:38,362 [INFO] Scheduler started
+2024-01-27 12:32:17,761 [INFO] Scheduler started
+2024-01-27 12:32:39,640 [INFO] Scheduler started
+2024-01-27 12:32:39,641 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-27 12:32:39,641 [INFO] Scheduler has been shut down
+2024-01-27 12:32:41,626 [INFO] Scheduler started
+2024-01-27 12:32:57,786 [INFO] Scheduler started
+2024-01-27 12:32:57,787 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-27 12:32:57,787 [INFO] Scheduler has been shut down
+2024-01-27 12:32:59,892 [INFO] Scheduler started
+2024-01-27 12:33:08,921 [INFO] Scheduler started
+2024-01-27 12:41:33,092 [INFO] Scheduler started
+2024-01-27 12:41:33,093 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-27 12:41:33,094 [INFO] Scheduler has been shut down
+2024-01-27 12:41:40,279 [INFO] Scheduler started
+2024-01-27 12:41:43,032 [INFO] Scheduler started
+2024-01-27 12:41:58,355 [INFO] Scheduler started
+2024-01-27 12:41:58,359 [INFO] Scheduler has been shut down
+2024-01-27 12:42:01,593 [INFO] Scheduler started
+2024-01-27 12:42:11,039 [INFO] Scheduler started
+2024-01-27 12:42:17,845 [INFO] Scheduler started
+2024-01-27 12:42:17,846 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 12:42:17,846 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 13:01:26,765 [INFO] 127.0.0.1 - - [27/Jan/2024 13:01:26] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 500 -
+2024-01-27 13:40:49,814 [INFO] Scheduler has been shut down
+2024-01-27 13:40:51,338 [INFO] Scheduler started
+2024-01-27 13:40:51,339 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 13:40:51,339 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 13:40:53,744 [INFO] 127.0.0.1 - - [27/Jan/2024 13:40:53] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 500 -
+2024-01-27 13:48:14,580 [INFO] 127.0.0.1 - - [27/Jan/2024 13:48:14] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 500 -
+2024-01-27 13:48:19,244 [INFO] 127.0.0.1 - - [27/Jan/2024 13:48:19] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 500 -
+2024-01-27 14:04:43,717 [INFO] 127.0.0.1 - - [27/Jan/2024 14:04:43] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 500 -
+2024-01-27 14:16:35,770 [INFO] 127.0.0.1 - - [27/Jan/2024 14:16:35] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 500 -
+2024-01-27 17:37:46,963 [INFO] Scheduler has been shut down
+2024-01-27 17:37:57,723 [INFO] Scheduler started
+2024-01-27 17:37:57,723 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 17:37:57,723 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 17:38:01,471 [INFO] 127.0.0.1 - - [27/Jan/2024 17:38:01] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 17:40:07,093 [INFO] 127.0.0.1 - - [27/Jan/2024 17:40:07] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 17:41:04,005 [INFO] 127.0.0.1 - - [27/Jan/2024 17:41:04] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 17:41:26,736 [INFO] 127.0.0.1 - - [27/Jan/2024 17:41:26] "[35m[1mGET /screenshot/2 HTTP/1.1[0m" 500 -
+2024-01-27 17:43:51,196 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 17:43:51,196 [INFO] Added job "image_position" to job store "default"
+2024-01-27 17:43:51,196 [INFO] 127.0.0.1 - - [27/Jan/2024 17:43:51] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 17:45:51,196 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:45:51 PKT)" (scheduled at 2024-01-27 17:45:51.196152+05:00)
+2024-01-27 17:45:51,201 [INFO] ====== WebDriver manager ======
+2024-01-27 17:45:51,201 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:45:51 PKT)" (scheduled at 2024-01-27 17:45:51.196410+05:00)
+2024-01-27 17:45:51,216 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:47:51 PKT)" executed successfully
+2024-01-27 17:45:51,260 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:45:51,608 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:45:51,945 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:45:52,650 [INFO] WebDriver version 121.0.6167.85 selected
+2024-01-27 17:45:52,651 [INFO] Modern chrome version https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
+2024-01-27 17:45:52,651 [INFO] About to download new driver from https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
+2024-01-27 17:45:52,945 [INFO] Driver downloading response is 200
+2024-01-27 17:45:55,322 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:45:55,774 [INFO] Driver has been saved in cache [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85]
+2024-01-27 17:46:33,016 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 17:46:33,077 [INFO] Screenshots captured successfully
+2024-01-27 17:46:33,078 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:47:51 PKT)" executed successfully
+2024-01-27 17:47:51,196 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:49:51 PKT)" (scheduled at 2024-01-27 17:47:51.196152+05:00)
+2024-01-27 17:47:51,201 [INFO] ====== WebDriver manager ======
+2024-01-27 17:47:51,201 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:49:51 PKT)" (scheduled at 2024-01-27 17:47:51.196410+05:00)
+2024-01-27 17:47:51,229 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:49:51 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 175, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 17:47:51,263 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:47:51,610 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:47:51,957 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 17:48:32,893 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 17:48:32,956 [INFO] Screenshots captured successfully
+2024-01-27 17:48:32,957 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:49:51 PKT)" executed successfully
+2024-01-27 17:49:51,196 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:51:51 PKT)" (scheduled at 2024-01-27 17:49:51.196152+05:00)
+2024-01-27 17:49:51,196 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:51:51 PKT)" (scheduled at 2024-01-27 17:49:51.196410+05:00)
+2024-01-27 17:49:51,201 [INFO] ====== WebDriver manager ======
+2024-01-27 17:49:51,218 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:51:51 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 175, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 17:49:51,263 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:49:51,616 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:49:51,951 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 17:49:59,151 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:51:51 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 461, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 287, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 146, in capture_screenshot_by_compainid
+    driver.get(website_url)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 353, in get
+    self.execute(Command.GET, {"url": url})
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 342, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 297, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 318, in _request
+    response = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/_request_methods.py", line 118, in request
+    return self.request_encode_body(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/_request_methods.py", line 217, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 461, in getresponse
+    httplib_response = super().getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 287, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2024-01-27 17:49:59,153 [INFO] Scheduler has been shut down
+2024-01-27 17:57:54,977 [INFO] Scheduler started
+2024-01-27 17:57:54,978 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 17:57:54,978 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 17:57:59,360 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 17:57:59,360 [INFO] Added job "image_position" to job store "default"
+2024-01-27 17:57:59,361 [INFO] 127.0.0.1 - - [27/Jan/2024 17:57:59] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 17:59:59,360 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 17:59:59 PKT)" (scheduled at 2024-01-27 17:59:59.360149+05:00)
+2024-01-27 17:59:59,361 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 17:59:59 PKT)" (scheduled at 2024-01-27 17:59:59.360447+05:00)
+2024-01-27 17:59:59,366 [INFO] ====== WebDriver manager ======
+2024-01-27 17:59:59,388 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:01:59 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 176, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 17:59:59,429 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 17:59:59,771 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:00:00,110 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:00:36,904 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:00:36,994 [INFO] Screenshots captured successfully
+2024-01-27 18:00:36,995 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:01:59 PKT)" executed successfully
+2024-01-27 18:00:46,829 [INFO] Scheduler has been shut down
+2024-01-27 18:04:50,418 [INFO] Scheduler started
+2024-01-27 18:04:50,419 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:04:50,419 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:04:53,620 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:04:53,620 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:04:53,620 [INFO] 127.0.0.1 - - [27/Jan/2024 18:04:53] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 18:06:53,620 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:06:53 PKT)" (scheduled at 2024-01-27 18:06:53.620106+05:00)
+2024-01-27 18:06:53,624 [INFO] ====== WebDriver manager ======
+2024-01-27 18:06:53,625 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:06:53 PKT)" (scheduled at 2024-01-27 18:06:53.620348+05:00)
+2024-01-27 18:06:53,645 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:08:53 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 177, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 18:06:53,682 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:06:54,029 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:06:54,364 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:07:29,841 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:07:29,903 [INFO] Screenshots captured successfully
+2024-01-27 18:07:29,903 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:08:53 PKT)" executed successfully
+2024-01-27 18:08:53,620 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:10:53 PKT)" (scheduled at 2024-01-27 18:08:53.620106+05:00)
+2024-01-27 18:08:53,620 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:10:53 PKT)" (scheduled at 2024-01-27 18:08:53.620348+05:00)
+2024-01-27 18:08:53,625 [INFO] ====== WebDriver manager ======
+2024-01-27 18:08:53,645 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:10:53 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 177, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 18:08:53,689 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:08:54,145 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:08:54,490 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:09:42,085 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:09:42,145 [INFO] Screenshots captured successfully
+2024-01-27 18:09:42,146 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:10:53 PKT)" executed successfully
+2024-01-27 18:10:42,131 [INFO] Scheduler has been shut down
+2024-01-27 18:11:00,549 [INFO] Scheduler started
+2024-01-27 18:11:00,549 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:11:00,550 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:11:03,091 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:11:03,091 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:11:03,091 [INFO] 127.0.0.1 - - [27/Jan/2024 18:11:03] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 18:12:19,475 [INFO] Scheduler has been shut down
+2024-01-27 18:12:31,803 [INFO] Scheduler started
+2024-01-27 18:12:31,804 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:12:31,804 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:13:29,445 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:13:29,445 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:13:29,446 [INFO] 127.0.0.1 - - [27/Jan/2024 18:13:29] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 18:15:29,445 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:15:29 PKT)" (scheduled at 2024-01-27 18:15:29.445018+05:00)
+2024-01-27 18:15:29,450 [INFO] ====== WebDriver manager ======
+2024-01-27 18:15:29,450 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:15:29 PKT)" (scheduled at 2024-01-27 18:15:29.445468+05:00)
+2024-01-27 18:15:29,472 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:17:29 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 187, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 18:15:29,507 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:15:29,860 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:15:30,204 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:16:06,128 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:16:06,128 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:17:29 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 161, in capture_screenshot_by_compainid
+    screenshot_path = generate_screenshot_path(website_url, current_datetime, 'png')
+TypeError: generate_screenshot_path() missing 1 required positional argument: 'extension'
+2024-01-27 18:17:29,445 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:19:29 PKT)" (scheduled at 2024-01-27 18:17:29.445018+05:00)
+2024-01-27 18:17:29,449 [INFO] ====== WebDriver manager ======
+2024-01-27 18:17:29,449 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:19:29 PKT)" (scheduled at 2024-01-27 18:17:29.445468+05:00)
+2024-01-27 18:17:29,466 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:19:29 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 187, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 18:17:29,506 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:17:29,850 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:17:30,200 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:18:24,246 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:18:24,247 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:19:29 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 161, in capture_screenshot_by_compainid
+    screenshot_path = generate_screenshot_path(website_url, current_datetime, 'png')
+TypeError: generate_screenshot_path() missing 1 required positional argument: 'extension'
+2024-01-27 18:18:39,468 [INFO] Scheduler has been shut down
+2024-01-27 18:22:43,125 [INFO] Scheduler started
+2024-01-27 18:22:43,126 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:22:43,126 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:22:45,457 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:22:45,458 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:22:45,458 [INFO] 127.0.0.1 - - [27/Jan/2024 18:22:45] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 18:23:02,309 [INFO] Scheduler has been shut down
+2024-01-27 18:23:10,587 [INFO] Scheduler started
+2024-01-27 18:23:10,588 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:23:10,588 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:23:15,442 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:23:15,442 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:23:15,443 [INFO] 127.0.0.1 - - [27/Jan/2024 18:23:15] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 18:25:15,442 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:25:15 PKT)" (scheduled at 2024-01-27 18:25:15.442026+05:00)
+2024-01-27 18:25:15,447 [INFO] ====== WebDriver manager ======
+2024-01-27 18:25:15,447 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:25:15 PKT)" (scheduled at 2024-01-27 18:25:15.442298+05:00)
+2024-01-27 18:25:15,480 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:27:15 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 189, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 18:25:15,523 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:25:15,860 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:25:16,194 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:25:54,108 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:25:54,169 [INFO] Screenshots captured successfully
+2024-01-27 18:25:54,170 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:27:15 PKT)" executed successfully
+2024-01-27 18:26:10,357 [INFO] Scheduler has been shut down
+2024-01-27 18:29:43,212 [INFO] Scheduler started
+2024-01-27 18:29:43,213 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:29:43,213 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:29:51,567 [INFO] 127.0.0.1 - - [27/Jan/2024 18:29:51] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 18:30:03,354 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:30:03,354 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:30:03,355 [INFO] 127.0.0.1 - - [27/Jan/2024 18:30:03] "GET /screenshot/4 HTTP/1.1" 200 -
+2024-01-27 18:32:03,355 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:32:03 PKT)" (scheduled at 2024-01-27 18:32:03.354643+05:00)
+2024-01-27 18:32:03,359 [INFO] ====== WebDriver manager ======
+2024-01-27 18:32:03,359 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:32:03 PKT)" (scheduled at 2024-01-27 18:32:03.354858+05:00)
+2024-01-27 18:32:03,381 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:34:03 PKT)" executed successfully
+2024-01-27 18:32:03,419 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:32:03,757 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:32:04,092 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:32:39,269 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:32:39,330 [INFO] Screenshots captured successfully
+2024-01-27 18:32:39,331 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:34:03 PKT)" executed successfully
+2024-01-27 18:34:03,355 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:36:03 PKT)" (scheduled at 2024-01-27 18:34:03.354643+05:00)
+2024-01-27 18:34:03,359 [INFO] ====== WebDriver manager ======
+2024-01-27 18:34:03,359 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:36:03 PKT)" (scheduled at 2024-01-27 18:34:03.354858+05:00)
+2024-01-27 18:34:03,376 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:36:03 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 189, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 18:34:03,427 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:34:03,772 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:34:04,106 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:34:46,327 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:34:46,388 [INFO] Screenshots captured successfully
+2024-01-27 18:34:46,389 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:36:03 PKT)" executed successfully
+2024-01-27 18:36:01,895 [INFO] Scheduler has been shut down
+2024-01-27 18:51:14,329 [INFO] Scheduler started
+2024-01-27 18:51:14,330 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 18:51:14,330 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 18:51:21,678 [INFO] 127.0.0.1 - - [27/Jan/2024 18:51:21] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 18:51:33,462 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 18:51:33,462 [INFO] Added job "image_position" to job store "default"
+2024-01-27 18:51:33,463 [INFO] 127.0.0.1 - - [27/Jan/2024 18:51:33] "GET /screenshot/5 HTTP/1.1" 200 -
+2024-01-27 18:53:33,462 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:53:33 PKT)" (scheduled at 2024-01-27 18:53:33.462520+05:00)
+2024-01-27 18:53:33,467 [INFO] ====== WebDriver manager ======
+2024-01-27 18:53:33,468 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:53:33 PKT)" (scheduled at 2024-01-27 18:53:33.462824+05:00)
+2024-01-27 18:53:33,487 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:55:33 PKT)" executed successfully
+2024-01-27 18:53:33,529 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:53:33,868 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:53:34,215 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:54:32,931 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:54:32,992 [INFO] Screenshots captured successfully
+2024-01-27 18:54:32,993 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:55:33 PKT)" executed successfully
+2024-01-27 18:55:33,462 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:57:33 PKT)" (scheduled at 2024-01-27 18:55:33.462520+05:00)
+2024-01-27 18:55:33,463 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:57:33 PKT)" (scheduled at 2024-01-27 18:55:33.462824+05:00)
+2024-01-27 18:55:33,468 [INFO] ====== WebDriver manager ======
+2024-01-27 18:55:33,556 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:55:33,897 [INFO] image position is Reference image not found.
+2024-01-27 18:55:33,898 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 18:57:33 PKT)" executed successfully
+2024-01-27 18:55:33,916 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 18:55:34,254 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 18:56:12,478 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 18:56:12,538 [INFO] Screenshots captured successfully
+2024-01-27 18:56:12,539 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 18:57:33 PKT)" executed successfully
+2024-01-27 18:56:23,635 [INFO] Scheduler has been shut down
+2024-01-27 19:00:44,081 [INFO] Scheduler started
+2024-01-27 19:00:44,082 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-27 19:00:44,082 [INFO] Scheduler has been shut down
+2024-01-27 19:00:48,657 [INFO] Scheduler started
+2024-01-27 19:00:52,197 [INFO] Scheduler started
+2024-01-27 19:01:07,416 [INFO] Scheduler started
+2024-01-27 19:01:07,417 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:01:07,417 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:01:14,324 [INFO] 127.0.0.1 - - [27/Jan/2024 19:01:14] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 19:01:24,147 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:01:24,148 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:01:24,148 [INFO] 127.0.0.1 - - [27/Jan/2024 19:01:24] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-27 19:03:24,148 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:03:24 PKT)" (scheduled at 2024-01-27 19:03:24.147826+05:00)
+2024-01-27 19:03:24,153 [INFO] ====== WebDriver manager ======
+2024-01-27 19:03:24,153 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:03:24 PKT)" (scheduled at 2024-01-27 19:03:24.148093+05:00)
+2024-01-27 19:03:24,171 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:05:24 PKT)" executed successfully
+2024-01-27 19:03:24,209 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:03:24,551 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:03:24,888 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:04:09,884 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:04:09,956 [INFO] Screenshots captured successfully
+2024-01-27 19:04:09,957 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:05:24 PKT)" executed successfully
+2024-01-27 19:05:24,148 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:07:24 PKT)" (scheduled at 2024-01-27 19:05:24.147826+05:00)
+2024-01-27 19:05:24,148 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:07:24 PKT)" (scheduled at 2024-01-27 19:05:24.148093+05:00)
+2024-01-27 19:05:24,152 [INFO] ====== WebDriver manager ======
+2024-01-27 19:05:24,210 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:05:24,543 [INFO] image position is Reference image not found.
+2024-01-27 19:05:24,543 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:07:24 PKT)" executed successfully
+2024-01-27 19:05:24,556 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:05:24,895 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:06:05,479 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:06:05,541 [INFO] Screenshots captured successfully
+2024-01-27 19:06:05,542 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:07:24 PKT)" executed successfully
+2024-01-27 19:06:56,455 [INFO] Scheduler has been shut down
+2024-01-27 19:09:22,539 [INFO] Scheduler started
+2024-01-27 19:09:22,540 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:09:22,540 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:09:25,010 [INFO] Scheduler has been shut down
+2024-01-27 19:15:47,116 [INFO] Scheduler started
+2024-01-27 19:15:47,116 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:15:47,116 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:15:50,290 [INFO] Scheduler has been shut down
+2024-01-27 19:16:15,759 [INFO] Scheduler started
+2024-01-27 19:16:15,760 [ERROR] Error: Directory migrations already exists and is not empty
+2024-01-27 19:16:15,761 [INFO] Scheduler has been shut down
+2024-01-27 19:16:19,377 [INFO] Scheduler started
+2024-01-27 19:16:23,070 [INFO] Scheduler started
+2024-01-27 19:16:50,016 [INFO] Scheduler started
+2024-01-27 19:16:50,017 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:16:50,017 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:16:51,934 [INFO] 127.0.0.1 - - [27/Jan/2024 19:16:51] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 19:16:57,217 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:16:57,217 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:16:57,218 [INFO] 127.0.0.1 - - [27/Jan/2024 19:16:57] "GET /screenshot/1 HTTP/1.1" 200 -
+2024-01-27 19:18:57,217 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:18:57 PKT)" (scheduled at 2024-01-27 19:18:57.217602+05:00)
+2024-01-27 19:18:57,218 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:18:57 PKT)" (scheduled at 2024-01-27 19:18:57.217848+05:00)
+2024-01-27 19:18:57,222 [INFO] ====== WebDriver manager ======
+2024-01-27 19:18:57,239 [ERROR] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:20:57 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 189, in image_position
+    screenshots_path = get_screenshot_path(campainID)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 57, in get_screenshot_path
+    for screenshot in screenshots:
+TypeError: 'NoneType' object is not iterable
+2024-01-27 19:18:57,283 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:18:57,638 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:18:57,974 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:19:36,340 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:19:36,402 [INFO] Screenshots captured successfully
+2024-01-27 19:19:36,402 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:20:57 PKT)" executed successfully
+2024-01-27 19:20:29,260 [INFO] Scheduler has been shut down
+2024-01-27 19:30:03,022 [INFO] Scheduler started
+2024-01-27 19:30:03,024 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:30:03,024 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:30:04,737 [INFO] 127.0.0.1 - - [27/Jan/2024 19:30:04] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 19:30:15,048 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:30:15,048 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:30:15,049 [INFO] 127.0.0.1 - - [27/Jan/2024 19:30:15] "GET /screenshot/2 HTTP/1.1" 200 -
+2024-01-27 19:32:15,048 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:32:15 PKT)" (scheduled at 2024-01-27 19:32:15.048366+05:00)
+2024-01-27 19:32:15,053 [INFO] ====== WebDriver manager ======
+2024-01-27 19:32:15,054 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:32:15 PKT)" (scheduled at 2024-01-27 19:32:15.048628+05:00)
+2024-01-27 19:32:15,077 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:34:15 PKT)" executed successfully
+2024-01-27 19:32:15,137 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:32:15,489 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:32:15,826 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:32:51,008 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:32:51,092 [INFO] Screenshots captured successfully
+2024-01-27 19:32:51,094 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:34:15 PKT)" executed successfully
+2024-01-27 19:34:15,049 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:36:15 PKT)" (scheduled at 2024-01-27 19:34:15.048366+05:00)
+2024-01-27 19:34:15,049 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:36:15 PKT)" (scheduled at 2024-01-27 19:34:15.048628+05:00)
+2024-01-27 19:34:15,054 [INFO] ====== WebDriver manager ======
+2024-01-27 19:34:15,130 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:34:15,485 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:34:15,505 [INFO] Image Position Result Reference image not found.
+2024-01-27 19:34:15,506 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:36:15 PKT)" executed successfully
+2024-01-27 19:34:15,869 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:34:56,676 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:34:56,766 [INFO] Screenshots captured successfully
+2024-01-27 19:34:56,767 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:36:15 PKT)" executed successfully
+2024-01-27 19:36:15,048 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:38:15 PKT)" (scheduled at 2024-01-27 19:36:15.048366+05:00)
+2024-01-27 19:36:15,049 [INFO] Running job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:38:15 PKT)" (scheduled at 2024-01-27 19:36:15.048628+05:00)
+2024-01-27 19:36:15,055 [INFO] ====== WebDriver manager ======
+2024-01-27 19:36:15,138 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:36:15,518 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:36:15,617 [INFO] Image Position Result Reference image not found.
+2024-01-27 19:36:15,617 [INFO] Job "image_position (trigger: interval[0:02:00], next run at: 2024-01-27 19:38:15 PKT)" executed successfully
+2024-01-27 19:36:15,865 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:36:43,174 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8bfe33f070>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/67b2c177c65c57eab14639a0edf7ef8c/execute/sync
+2024-01-27 19:36:43,175 [WARNING] Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8c210c7430>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/67b2c177c65c57eab14639a0edf7ef8c/execute/sync
+2024-01-27 19:36:43,175 [WARNING] Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8c210c6b30>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/67b2c177c65c57eab14639a0edf7ef8c/execute/sync
+2024-01-27 19:36:43,176 [ERROR] Job "capture_screenshot_by_compainid (trigger: interval[0:02:00], next run at: 2024-01-27 19:38:15 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 203, in _new_conn
+    sock = connection.create_connection(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 395, in request
+    self.endheaders()
+  File "/usr/lib/python3.10/http/client.py", line 1278, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.10/http/client.py", line 1038, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.10/http/client.py", line 976, in send
+    self.connect()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 243, in connect
+    self.sock = self._new_conn()
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connection.py", line 218, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f8c2004b5e0>: Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 166, in capture_screenshot_by_compainid
+    c_sc = capture_screenshots(driver, screenshots_dir)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 63, in capture_screenshots
+    fullpage_screenshot(driver, folder, file_name)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 38, in fullpage_screenshot
+    driver.execute_script(f"window.scrollTo(0, {y});")
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 404, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/webdriver.py", line 342, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 297, in execute
+    return self._request(command_info[0], url, body=data)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/selenium/webdriver/remote/remote_connection.py", line 318, in _request
+    response = self._conn.request(method, url, body=body, headers=headers)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/_request_methods.py", line 118, in request
+    return self.request_encode_body(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/_request_methods.py", line 217, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 874, in urlopen
+    return self.urlopen(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/urllib3/util/retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=58909): Max retries exceeded with url: /session/67b2c177c65c57eab14639a0edf7ef8c/execute/sync (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8c2004b5e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2024-01-27 19:36:43,178 [INFO] Scheduler has been shut down
+2024-01-27 19:45:15,799 [INFO] Scheduler started
+2024-01-27 19:45:15,800 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:45:15,800 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:45:17,523 [INFO] 127.0.0.1 - - [27/Jan/2024 19:45:17] "[35m[1mPOST /campaign_details HTTP/1.1[0m" 201 -
+2024-01-27 19:45:32,181 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:45:32,181 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:45:32,181 [INFO] 127.0.0.1 - - [27/Jan/2024 19:45:32] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 19:46:32,181 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:46:32 PKT)" (scheduled at 2024-01-27 19:46:32.180874+05:00)
+2024-01-27 19:46:32,181 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:46:32 PKT)" (scheduled at 2024-01-27 19:46:32.181120+05:00)
+2024-01-27 19:46:32,187 [INFO] ====== WebDriver manager ======
+2024-01-27 19:46:32,208 [INFO] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:47:32 PKT)" executed successfully
+2024-01-27 19:46:32,255 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:46:32,611 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:46:32,951 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:46:47,623 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:46:47,686 [INFO] Screenshots captured successfully
+2024-01-27 19:46:47,686 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:47:32 PKT)" executed successfully
+2024-01-27 19:47:32,181 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:48:32 PKT)" (scheduled at 2024-01-27 19:47:32.180874+05:00)
+2024-01-27 19:47:32,181 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:48:32 PKT)" (scheduled at 2024-01-27 19:47:32.181120+05:00)
+2024-01-27 19:47:32,188 [INFO] ====== WebDriver manager ======
+2024-01-27 19:47:32,273 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:47:32,355 [INFO] Image Position Result Reference image position: top, right
+2024-01-27 19:47:32,356 [INFO] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:48:32 PKT)" executed successfully
+2024-01-27 19:47:32,678 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:47:33,022 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:47:47,728 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:47:47,791 [INFO] Screenshots captured successfully
+2024-01-27 19:47:47,791 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:48:32 PKT)" executed successfully
+2024-01-27 19:48:29,444 [INFO] Scheduler has been shut down
+2024-01-27 19:50:16,433 [INFO] Scheduler started
+2024-01-27 19:50:16,434 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:50:16,434 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:50:34,517 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:50:34,517 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:50:34,518 [INFO] 127.0.0.1 - - [27/Jan/2024 19:50:34] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 19:51:34,517 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:51:34 PKT)" (scheduled at 2024-01-27 19:51:34.517085+05:00)
+2024-01-27 19:51:34,521 [INFO] ====== WebDriver manager ======
+2024-01-27 19:51:34,522 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:52:34 PKT)" (scheduled at 2024-01-27 19:51:34.517447+05:00)
+2024-01-27 19:51:34,542 [ERROR] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:52:34 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 194, in image_position
+    position_result = find_image_position(screenshots_path,refrence_image)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 10, in find_image_position
+    screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
+
+2024-01-27 19:51:34,580 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:51:34,939 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:51:35,322 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:51:50,563 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:51:50,625 [INFO] Screenshots captured successfully
+2024-01-27 19:51:50,626 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:52:34 PKT)" executed successfully
+2024-01-27 19:51:53,783 [INFO] Scheduler has been shut down
+2024-01-27 19:55:32,884 [INFO] Scheduler started
+2024-01-27 19:55:32,884 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:55:32,884 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:55:35,972 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:55:35,972 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:55:35,973 [INFO] 127.0.0.1 - - [27/Jan/2024 19:55:35] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 19:56:35,972 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:56:35 PKT)" (scheduled at 2024-01-27 19:56:35.972451+05:00)
+2024-01-27 19:56:35,973 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:56:35 PKT)" (scheduled at 2024-01-27 19:56:35.972703+05:00)
+2024-01-27 19:56:35,980 [INFO] ====== WebDriver manager ======
+2024-01-27 19:56:35,988 [ERROR] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 19:57:35 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 189, in image_position
+    screenshots_path = get_screenshot_path(campainID)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 54, in get_screenshot_path
+    screenshots = Screenshots.query.filter_by(CampaignID=campainID).last()
+AttributeError: 'Query' object has no attribute 'last'
+2024-01-27 19:56:36,057 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:56:36,417 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 19:56:36,757 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 19:56:51,972 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 19:56:52,037 [INFO] Screenshots captured successfully
+2024-01-27 19:56:52,037 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 19:57:35 PKT)" executed successfully
+2024-01-27 19:57:21,863 [INFO] Scheduler has been shut down
+2024-01-27 19:59:47,322 [INFO] Scheduler started
+2024-01-27 19:59:47,322 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 19:59:47,322 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 19:59:49,893 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 19:59:49,893 [INFO] Added job "image_position" to job store "default"
+2024-01-27 19:59:49,894 [INFO] 127.0.0.1 - - [27/Jan/2024 19:59:49] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 20:00:49,893 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 20:00:49 PKT)" (scheduled at 2024-01-27 20:00:49.893167+05:00)
+2024-01-27 20:00:49,894 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 20:00:49 PKT)" (scheduled at 2024-01-27 20:00:49.893491+05:00)
+2024-01-27 20:00:49,905 [INFO] ====== WebDriver manager ======
+2024-01-27 20:00:49,908 [ERROR] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 20:01:49 PKT)" raised an exception
+Traceback (most recent call last):
+  File "/home/shahzaibkhan/.local/lib/python3.10/site-packages/apscheduler/executors/base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/img_grabber.py", line 189, in image_position
+    screenshots_path = get_screenshot_path(campainID)
+  File "/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/find_position.py", line 55, in get_screenshot_path
+    latest_screenshot = Screenshots.query.filter_by(CampaignID=campainID).order_by(Screenshots.timestamp.desc()).first().FilePath
+AttributeError: type object 'Screenshots' has no attribute 'timestamp'
+2024-01-27 20:00:49,969 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 20:00:50,313 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 20:00:50,655 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 20:01:06,575 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 20:01:06,638 [INFO] Screenshots captured successfully
+2024-01-27 20:01:06,638 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 20:01:49 PKT)" executed successfully
+2024-01-27 20:01:41,456 [INFO] Scheduler has been shut down
+2024-01-27 20:01:51,376 [INFO] Scheduler started
+2024-01-27 20:01:51,377 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-27 20:01:51,377 [INFO] [33mPress CTRL+C to quit[0m
+2024-01-27 20:01:53,105 [INFO] Added job "capture_screenshot_by_compainid" to job store "default"
+2024-01-27 20:01:53,105 [INFO] Added job "image_position" to job store "default"
+2024-01-27 20:01:53,106 [INFO] 127.0.0.1 - - [27/Jan/2024 20:01:53] "GET /screenshot/3 HTTP/1.1" 200 -
+2024-01-27 20:02:53,106 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 20:02:53 PKT)" (scheduled at 2024-01-27 20:02:53.105431+05:00)
+2024-01-27 20:02:53,111 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 20:02:53 PKT)" (scheduled at 2024-01-27 20:02:53.105684+05:00)
+2024-01-27 20:02:53,112 [INFO] ====== WebDriver manager ======
+2024-01-27 20:02:53,179 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 20:02:53,246 [INFO] Image Position Result Reference image position: right
+2024-01-27 20:02:53,247 [INFO] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 20:03:53 PKT)" executed successfully
+2024-01-27 20:02:53,548 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 20:02:53,911 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 20:03:10,354 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 20:03:10,418 [INFO] Screenshots captured successfully
+2024-01-27 20:03:10,418 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 20:03:53 PKT)" executed successfully
+2024-01-27 20:03:53,105 [INFO] Running job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 20:04:53 PKT)" (scheduled at 2024-01-27 20:03:53.105431+05:00)
+2024-01-27 20:03:53,106 [INFO] Running job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 20:04:53 PKT)" (scheduled at 2024-01-27 20:03:53.105684+05:00)
+2024-01-27 20:03:53,112 [INFO] ====== WebDriver manager ======
+2024-01-27 20:03:53,183 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 20:03:53,265 [INFO] Image Position Result Reference image position: right
+2024-01-27 20:03:53,266 [INFO] Job "image_position (trigger: interval[0:01:00], next run at: 2024-01-27 20:04:53 PKT)" executed successfully
+2024-01-27 20:03:53,533 [INFO] Get LATEST chromedriver version for google-chrome
+2024-01-27 20:03:53,869 [INFO] Driver [/home/shahzaibkhan/.wdm/drivers/chromedriver/linux64/121.0.6167.85/chromedriver-linux64/chromedriver] found in cache
+2024-01-27 20:04:10,219 [INFO] Capturing screenshots for CampaignID 
+2024-01-27 20:04:10,283 [INFO] Screenshots captured successfully
+2024-01-27 20:04:10,283 [INFO] Job "capture_screenshot_by_compainid (trigger: interval[0:01:00], next run at: 2024-01-27 20:04:53 PKT)" executed successfully
+2024-01-27 20:04:31,479 [INFO] Scheduler has been shut down

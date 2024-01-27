@@ -11,8 +11,7 @@ import traceback
 from app.extensions import scheduler
 import logging
 from app.utils.find_position import *
-
-
+from urllib.parse import urlparse
 
 # Configure logging (usually done in your Flask app initialization)
 logging.basicConfig(
@@ -62,6 +61,7 @@ def capture_screenshots(driver, folder):
     file_name = f"screenshot_{timestamp}.png"
     fullpage_screenshot(driver, folder, file_name)
     logging.info(f"Capturing screenshots for CampaignID ")
+    return file_name
 
 
 def get_interval_time(campainID):
@@ -91,8 +91,19 @@ def get_website(campaign_id):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return jsonify({"error": str(e)}), 500
-def generate_screenshot_path(website_url, campaign_id, timestamp, extension):
-    return f"{str(campaign_id).zfill(3)}_{str(timestamp).zfill(3)}_{timestamp}.{extension}"
+
+# def generate_screenshot_path(path):
+#     # Extract domain from the website URL
+#     parsed_url = urlparse(website_url)
+#     domain = parsed_url.netloc.replace('www.', '')  # Removes 'www.' if present
+
+#     # Format folder and file names
+#     folder_name = f"screenshots/{domain} - {timestamp}"
+#     file_name = f"screenshot_{timestamp}.{extension}"
+
+#     # Combine to create the full path
+#     full_path = path
+#     return full_path
 
 def capture_screenshot_by_compainid(campainID):
     # try:
@@ -137,24 +148,31 @@ def capture_screenshot_by_compainid(campainID):
             driver.quit()  # Quit the driver before returning an error response
             return {"error": "Campaign not found"}, 404
 
+        parsed_url = urlparse(website_url)
+        domain = parsed_url.netloc.replace('www.', '').replace('.', '_')
+
         # Create a subfolder for each capture
         current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-        folder_name = f"{website_url.replace('https://', '').replace('/', '-')} - {current_datetime}"
+        folder_name = f"{website_url.replace('https://', '').replace('/', ' ')} - {current_datetime}"
         full_folder_path = os.path.join("screenshots", folder_name)
+
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        screenshots_dir = os.path.join(base_dir, "screenshots", folder_name)
 
         # Open the URL
         driver.get(website_url)
         # Capture screenshots at the specified interval for the given duration
-        capture_screenshots(driver, full_folder_path)
-        screenshot_path = generate_screenshot_path(website_url, campainID, current_datetime, 'png')
+        c_sc = capture_screenshots(driver, screenshots_dir)
+        # screenshot_path = generate_screenshot_path(c_sc)
+        screenshot_path = os.path.join(screenshots_dir, c_sc)
 
         # Quit the WebDriver
         driver.quit()
             # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
             CampaignID=campainID,
-            WebsiteID=website_id,  
-            Extension='png', 
+            WebsiteID=website_id,
+            Extension='png',
             Timestamp=current_datetime,
             FilePath=screenshot_path
         )
@@ -163,6 +181,7 @@ def capture_screenshot_by_compainid(campainID):
         db.session.commit()
         logging.info("Screenshots captured successfully")
         return {"status": "Screenshots captured successfully"}
+
 def image_position(campainID):
     from app import create_app
 
@@ -173,7 +192,7 @@ def image_position(campainID):
         print(refrence_image)
         if screenshots_path and refrence_image:
             position_result = find_image_position(screenshots_path,refrence_image)
-            logging.info(f"image position is {position_result}")
+            logging.info(f"Image Position Result {position_result}")
             return position_result
 
 def schedule_screenshot_capture(campainID):
