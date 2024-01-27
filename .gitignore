@@ -6,7 +6,6 @@ build/
 __pycache__/
 /model/trained_model/
 migrations/
-reference_images/
 
 # File formats
 *.pyc
