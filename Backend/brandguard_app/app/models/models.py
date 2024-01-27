@@ -1,5 +1,6 @@
 from app.extensions import db
 from sqlalchemy import ForeignKey
+import os
 
 class Campaigns(db.Model):
     __tablename__ = 'campaigns'
@@ -26,10 +27,9 @@ class Images(db.Model):
     CampaignID = db.Column(db.Integer, ForeignKey('campaigns.CampaignID'))
     Extension = db.Column(db.String)  # Add an Extension column
     ImagePath = db.Column(db.String)
-
-    def generate_image_path(self):
-        return f"{str(self.CampaignID).zfill(3)}_{str(self.ImageID).zfill(3)}.{self.Extension}"
-
+    def generate_image_path(self, local_directory):
+        filename = f"{str(self.CampaignID).zfill(3)}_{str(self.ImageID).zfill(3)}.{self.Extension}"
+        return os.path.join(local_directory, filename)
 class Screenshots(db.Model):
     __tablename__ = 'screenshots'
     ScreenshotID = db.Column(db.Integer, primary_key=True)

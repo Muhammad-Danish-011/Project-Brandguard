@@ -10,6 +10,8 @@ from flask import jsonify
 import traceback
 from app.extensions import scheduler
 import logging
+from app.utils.find_position import *
+
 
 
 # Configure logging (usually done in your Flask app initialization)
@@ -25,11 +27,16 @@ logging.basicConfig(
 def fullpage_screenshot(driver, folder, file):
     """Capture a full-page screenshot using JavaScript"""
     js = (
-        "return Math.max( document.body.scrollHeight, document.body.offsetHeight, "
+        "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
         "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
         "document.documentElement.offsetHeight);"
     )
     scroll_height = driver.execute_script(js)
+
+    # Scroll through the page to trigger lazy loading
+    for y in range(0, scroll_height, 200):
+        driver.execute_script(f"window.scrollTo(0, {y});")
+        time.sleep(1)  # short sleep between scrolls
 
     # Set window size to capture the entire page
     driver.set_window_size(1920, scroll_height)
@@ -50,7 +57,7 @@ def fullpage_screenshot(driver, folder, file):
     driver.save_screenshot(file_path)
 
 # Function to capture screenshots at intervals
-def capture_screenshots(driver, folder, interval_seconds):
+def capture_screenshots(driver, folder):
     timestamp = time.strftime("%Y%m%d%H%M%S")
     file_name = f"screenshot_{timestamp}.png"
     fullpage_screenshot(driver, folder, file_name)
@@ -104,6 +111,13 @@ def capture_screenshot_by_compainid(campainID):
 
         # Initialize WebDriver
         driver = webdriver.Chrome(options=options, service=service)
+        stealth(driver,
+        languages=["en-US", "en"],
+        vendor="Google Inc.",
+        platform="Win32",
+        webgl_vendor="Intel Inc.",
+        renderer="Intel Iris OpenGL Engine",
+        fix_hairline=True)
 
         # Initialize the driver here or earlier in your code
 
@@ -130,9 +144,8 @@ def capture_screenshot_by_compainid(campainID):
 
         # Open the URL
         driver.get(website_url)
-
         # Capture screenshots at the specified interval for the given duration
-        capture_screenshots(driver, full_folder_path, interval_seconds=interval_time)
+        capture_screenshots(driver, full_folder_path)
         screenshot_path = generate_screenshot_path(website_url, campainID, current_datetime, 'png')
 
         # Quit the WebDriver
@@ -140,8 +153,8 @@ def capture_screenshot_by_compainid(campainID):
             # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
             CampaignID=campainID,
-            WebsiteID=website_id,  # Replace with the actual WebsiteID
-            Extension='png',  # Replace with the actual extension
+            WebsiteID=website_id,  
+            Extension='png', 
             Timestamp=current_datetime,
             FilePath=screenshot_path
         )
@@ -150,8 +163,21 @@ def capture_screenshot_by_compainid(campainID):
         db.session.commit()
         logging.info("Screenshots captured successfully")
         return {"status": "Screenshots captured successfully"}
+def image_position(campainID):
+    from app import create_app
+
+    with create_app().app_context():
+        screenshots_path = get_screenshot_path(campainID)
+        print(screenshots_path)
+        refrence_image = get_refrence_image(campainID)
+        print(refrence_image)
+        if screenshots_path and refrence_image:
+            position_result = find_image_position(screenshots_path,refrence_image)
+            logging.info(f"image position is {position_result}")
+            return position_result
 
 def schedule_screenshot_capture(campainID):
     Interval_time = get_interval_time(campainID)
     scheduler.add_job(capture_screenshot_by_compainid, 'interval', minutes=Interval_time, args=[campainID])
+    scheduler.add_job(image_position,'interval',minutes = Interval_time,args=[campainID])
     return "Screenshots will be captured as scheduled"

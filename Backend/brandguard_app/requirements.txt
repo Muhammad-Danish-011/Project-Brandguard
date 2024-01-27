@@ -6,4 +6,6 @@ python-dotenv
 SQLAlchemy
 selenium
 selenium_stealth
-APScheduler
+apscheduler
+numpy
+opencv-python

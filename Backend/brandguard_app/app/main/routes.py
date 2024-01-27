@@ -1,9 +1,11 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify,current_app
 from app.extensions import db
 from app.models.models import *
 from app.main import bp
 from datetime import datetime  # Corrected import statement
 from app.utils.img_grabber import *
+from werkzeug.utils import secure_filename
+from app.utils import img_grabber
 
 @bp.route('/')
 def index():
@@ -269,6 +271,8 @@ def add_campaign_details():
         status = data.get('Status')
         websites = data.get('Websites')
         images = data.get('Images')
+
+
         # Create a new campaign and add it to the database
         # Create a new campaign without websites
         new_campaign = Campaigns(
@@ -278,6 +282,7 @@ def add_campaign_details():
             IntervalTime=interval_time,
             Status=status
         )
+
         # Create a list of website instances
         website_instances = [Websites() for _ in websites]
           # Create image instances
@@ -287,10 +292,22 @@ def add_campaign_details():
         for image_path in images:
             image = Images()
             image.ImagePath = image_path
+            campaign_directory = os.path.join(current_app.config['BASE_UPLOAD_FOLDER'], str(new_campaign.CampaignID))
+            os.makedirs(campaign_directory, exist_ok=True)
+            # Generate a unique filename for the image
+            filename = secure_filename(image_path.get('ImagePath'))
+            file_path = os.path.join(campaign_directory, filename)
+            # Save the image locally
+            image_file = request.files['file']  # Access the uploaded file
+            image_file.save(file_path)
             image_instances.append(image)
+
+
+
         # Set WebsiteURL for each website instance
         for i, website in enumerate(website_instances):
             website.WebsiteURL = websites[i]
+
         # Associate the websites with the campaign
         new_campaign.websites.extend(website_instances)
         new_campaign.images.extend(image_instances)
@@ -307,3 +324,9 @@ def add_campaign_details():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@bp.route('/image_position/<int:campaignID>', methods = ['GET'])
+def img_position(campaignID):
+    result = image_position(campaignID)
+    return jsonify(result)

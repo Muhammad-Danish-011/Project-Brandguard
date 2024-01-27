@@ -7,6 +7,10 @@ import atexit
 def create_app(config_class=Config, start_scheduler=True):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    # Set the BASE_UPLOAD_FOLDER configuration option
+    BASE_UPLOAD_FOLDER = '/home/muhammadmoizkhan/Music/flask_app/schedular_check/brandguard_app/refrence_images'
+    app.config['BASE_UPLOAD_FOLDER'] = BASE_UPLOAD_FOLDER
+
 
     # Initialize Flask extensions here
     db.init_app(app)
