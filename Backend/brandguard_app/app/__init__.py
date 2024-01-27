@@ -1,8 +1,10 @@
-from flask import Flask
-from config import Config
-from app.extensions import db, migrate,scheduler
-from app.main import bp as main_bp
 import atexit
+
+from app.extensions import db, migrate, scheduler
+from app.main import bp as main_bp
+from config import Config
+from flask import Flask
+
 
 def create_app(config_class=Config, start_scheduler=True):
     app = Flask(__name__)
@@ -10,7 +12,7 @@ def create_app(config_class=Config, start_scheduler=True):
 
     # Initialize Flask extensions here
     db.init_app(app)
-    migrate.init_app(app,db)
+    migrate.init_app(app, db)
 
     # Register blueprints here
     app.register_blueprint(main_bp)

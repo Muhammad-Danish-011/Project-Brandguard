@@ -1,21 +1,24 @@
-from flask import render_template, request, jsonify,current_app
-from app.extensions import db
-from app.models.models import *
-from app.main import bp
 from datetime import datetime  # Corrected import statement
+
+from app.extensions import db
+from app.main import bp
+from app.models.models import *
 from app.utils.img_grabber import *
-from werkzeug.utils import secure_filename
-from app.utils import img_grabber
+from flask import jsonify, request
+
 
 @bp.route('/')
 def index():
     return 'Welcome to Brandguard!'
+
 
 @bp.route('/hello/')
 def hello():
     return 'Hello, World!'
 
 # Create a new Campaign
+
+
 @bp.route('/campaigns', methods=['POST'])
 def create_campaign():
     data = request.get_json()
@@ -25,14 +28,17 @@ def create_campaign():
 
     new_campaign = Campaigns(
         CampaignName=data['CampaignName'],
-        StartDate=datetime.strptime(data['StartDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
-        EndDate=datetime.strptime(data['EndDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
+        StartDate=datetime.strptime(
+            data['StartDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
+        EndDate=datetime.strptime(
+            data['EndDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
         IntervalTime=data['IntervalTime'],
         Status=data['Status']
     )
     db.session.add(new_campaign)
     db.session.commit()
     return jsonify(message='Campaign created successfully'), 201
+
 
 @bp.route('/campaigns', methods=['GET'])
 def get_campaigns():
@@ -48,8 +54,6 @@ def get_campaigns():
             'Status': campaign.Status
         })
     return jsonify(result)
-
-
 
 
 # Create a new Website
@@ -69,7 +73,6 @@ def create_website():
     return jsonify(message='Website created successfully'), 201
 
 
-
 # Get all Websites
 @bp.route('/websites', methods=['GET'])
 def get_websites():
@@ -84,8 +87,7 @@ def get_websites():
     return jsonify(result)
 
 
-
-# # Create an Image
+# Create an Image
 @bp.route('/images', methods=['POST'])
 def create_image():
     data = request.get_json()
@@ -99,6 +101,8 @@ def create_image():
     return jsonify({'message': 'Image created successfully'}), 201
 
 # Get All Images
+
+
 @bp.route('/images', methods=['GET'])
 def get_images():
     images = Images.query.all()
@@ -112,7 +116,9 @@ def get_images():
         })
     return jsonify(result)
 
-# # Create a Screenshot
+# Create a Screenshot
+
+
 @bp.route('/screenshots', methods=['POST'])
 def create_screenshot():
     data = request.get_json()
@@ -128,7 +134,9 @@ def create_screenshot():
     db.session.commit()
     return jsonify({'message': 'Screenshot created successfully'}), 201
 
-# # Get All Screenshots
+# Get All Screenshots
+
+
 @bp.route('/screenshots', methods=['GET'])
 def get_screenshots():
     screenshots = Screenshots.query.all()
@@ -146,7 +154,7 @@ def get_screenshots():
     return jsonify(result)
 
 
-# # Create an Ad Position
+# Create an Ad Position
 @bp.route('/adpositions', methods=['POST'])
 def create_ad_position():
     data = request.get_json()
@@ -159,7 +167,9 @@ def create_ad_position():
     db.session.commit()
     return jsonify({'message': 'Ad Position created successfully'}), 201
 
-# # Get All Ad Positions
+# Get All Ad Positions
+
+
 @bp.route('/adpositions', methods=['GET'])
 def get_ad_positions():
     ad_positions = AdPositions.query.all()
@@ -174,7 +184,7 @@ def get_ad_positions():
     return jsonify(result)
 
 
-# # Create a Scraped Image
+# Create a Scraped Image
 @bp.route('/scraped-images', methods=['POST'])
 def create_scraped_image():
     data = request.get_json()
@@ -187,7 +197,9 @@ def create_scraped_image():
     db.session.commit()
     return jsonify({'message': 'Scraped Image created successfully'}), 201
 
-# # Get All Scraped Images
+# Get All Scraped Images
+
+
 @bp.route('/scraped-images', methods=['GET'])
 def get_scraped_images():
     scraped_images = ScrapedImages.query.all()
@@ -201,7 +213,9 @@ def get_scraped_images():
         })
     return jsonify(result)
 
-# # Create a URL
+# Create a URL
+
+
 @bp.route('/urls', methods=['POST'])
 def create_url():
     data = request.get_json()
@@ -214,6 +228,8 @@ def create_url():
     return jsonify({'message': 'URL created successfully'}), 201
 
 # Get All URLs
+
+
 @bp.route('/urls', methods=['GET'])
 def get_urls():
     urls = URLS.query.all()
@@ -238,8 +254,6 @@ def capture_screenshot_api(campaignID):
         return {"error": str(e)}, 500
 
 
-
-
 @bp.route('/interval_time/<int:compainID>', methods=['GET'])
 def interval_time(campainID):
     try:
@@ -248,6 +262,7 @@ def interval_time(campainID):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return {"error": str(e)}, 500
+
 
 @bp.route('/get_website/<int:compainID>', methods=['GET'])
 def getwebsite(campainID):
@@ -282,7 +297,7 @@ def add_campaign_details():
         )
         # Create a list of website instances
         website_instances = [Websites() for _ in websites]
-          # Create image instances
+        # Create image instances
 
         # Create image instances
         image_instances = []
@@ -311,7 +326,7 @@ def add_campaign_details():
         return jsonify({"error": str(e)}), 500
 
 
-@bp.route('/image_position/<int:campaignID>', methods = ['GET'])
+@bp.route('/image_position/<int:campaignID>', methods=['GET'])
 def img_position(campaignID):
     result = image_position(campaignID)
     return jsonify(result)

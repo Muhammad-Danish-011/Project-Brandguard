@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 from app.models.models import *
+
+
 def find_image_position(screenshot_path, reference_image_path):
     # Read the screenshot and reference image
     screenshot = cv2.imread(screenshot_path)
@@ -11,12 +13,14 @@ def find_image_position(screenshot_path, reference_image_path):
     reference_image_gray = cv2.cvtColor(reference_image, cv2.COLOR_BGR2GRAY)
 
     # Use template matching to find the location of the reference image
-    result = cv2.matchTemplate(screenshot_gray, reference_image_gray, cv2.TM_CCOEFF_NORMED)
+    result = cv2.matchTemplate(
+        screenshot_gray, reference_image_gray, cv2.TM_CCOEFF_NORMED)
 
     # Define a threshold
     threshold = 0.8
     locations = np.where(result >= threshold)
-    locations = list(zip(*locations[::-1]))  # Switch x and y coordinates to (x, y)
+    # Switch x and y coordinates to (x, y)
+    locations = list(zip(*locations[::-1]))
 
     if not locations:
         return "Reference image not found."
@@ -43,23 +47,21 @@ def find_image_position(screenshot_path, reference_image_path):
     position_names['bottom'] = mid_y > 2 * screen_height / 3
     position_names['left'] = mid_x < screen_width / 3
     position_names['right'] = mid_x > 2 * screen_width / 3
-    position_names['mid'] = not any([position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
+    position_names['mid'] = not any(
+        [position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
 
     # Print only the true positions
     true_positions = [key for key, value in position_names.items() if value]
     print("Reference image position: " + ', '.join(true_positions))
     return "Reference image position: " + ', '.join(true_positions)
 
+
 def get_screenshot_path(campainID):
-  # screenshots = Screenshots.query.filter_by(CampaignID=campainID).last()
-  latest_screenshot = Screenshots.query.filter_by(CampaignID=campainID).order_by(Screenshots.Timestamp.desc()).first().FilePath
-  file_path=None
-# Generate and print file paths for each screenshot
-  # for screenshot in screenshots:
-  # file_path = screenshots.FilePath
-    #break
-#   print(file_path)
-  return(latest_screenshot)
+    # screenshots = Screenshots.query.filter_by(CampaignID=campainID).last()
+    latest_screenshot = Screenshots.query.filter_by(CampaignID=campainID).order_by(
+        Screenshots.Timestamp.desc()).first().FilePath
+    return (latest_screenshot)
+
 
 def get_refrence_image(campaignID):
     image = Images.query.filter_by(CampaignID=campaignID).first()
@@ -67,9 +69,6 @@ def get_refrence_image(campaignID):
     if image:
         image_path = image.ImagePath
         # print(image_path)
-        return(image_path)
+        return (image_path)
     else:
         print("Image not found for the given Campaign ID.")
-
-
-
