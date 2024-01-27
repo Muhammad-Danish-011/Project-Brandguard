@@ -68,9 +68,9 @@ def capture_screenshots(driver, folder):
     return file_name
 
 
-def get_interval_time(campainID):
+def get_interval_time(campaignID):
     try:
-        campaign = Campaigns.query.filter_by(CampaignID=campainID).first()
+        campaign = Campaigns.query.filter_by(CampaignID=campaignID).first()
         if campaign:
             return campaign.IntervalTime
         else:
@@ -99,7 +99,7 @@ def get_website(campaign_id):
         return jsonify({"error": str(e)}), 500
 
 
-def capture_screenshot_by_compainid(campainID):
+def capture_screenshot_by_campaignid(campaignID):
     # try:
     from app import create_app
 
@@ -127,12 +127,12 @@ def capture_screenshot_by_compainid(campainID):
 
         # Initialize the driver here or earlier in your code
 
-        campaign = Campaigns.query.filter_by(CampaignID=campainID).first()
+        campaign = Campaigns.query.filter_by(CampaignID=campaignID).first()
         print(campaign)
 
         if campaign:
             website_url = Websites.query.filter_by(
-                CampaignID=campainID).first()
+                CampaignID=campaignID).first()
             if website_url:
                 website_id = website_url.WebsiteID
                 website_url = website_url.WebsiteURL
@@ -165,7 +165,7 @@ def capture_screenshot_by_compainid(campainID):
         driver.quit()
         # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
-            CampaignID=campainID,
+            CampaignID=campaignID,
             WebsiteID=website_id,
             Extension='png',
             Timestamp=current_datetime,
@@ -178,13 +178,13 @@ def capture_screenshot_by_compainid(campainID):
         return {"status": "Screenshots captured successfully"}
 
 
-def image_position(campainID):
+def image_position(campaignID):
     from app import create_app
 
     with create_app().app_context():
-        screenshots_path = get_screenshot_path(campainID)
+        screenshots_path = get_screenshot_path(campaignID)
         print(screenshots_path)
-        refrence_image = get_refrence_image(campainID)
+        refrence_image = get_refrence_image(campaignID)
         print(refrence_image)
         if screenshots_path and refrence_image:
             position_result = find_image_position(
@@ -193,10 +193,10 @@ def image_position(campainID):
             return position_result
 
 
-def schedule_screenshot_capture(campainID):
-    Interval_time = get_interval_time(campainID)
-    scheduler.add_job(capture_screenshot_by_compainid,
-                      'interval', minutes=Interval_time, args=[campainID])
+def schedule_screenshot_capture(campaignID):
+    Interval_time = get_interval_time(campaignID)
+    scheduler.add_job(capture_screenshot_by_campaignid,
+                      'interval', minutes=Interval_time, args=[campaignID])
     scheduler.add_job(image_position, 'interval',
-                      minutes=Interval_time, args=[campainID])
+                      minutes=Interval_time, args=[campaignID])
     return "Screenshots will be captured as scheduled"
