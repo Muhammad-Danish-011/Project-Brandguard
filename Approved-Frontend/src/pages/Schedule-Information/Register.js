@@ -68,7 +68,7 @@ const Register = () => {
   const handleSaveClick = () => {
     // Prepare data to send to the API
     const dataToSend = {
-      CampaignName: "",
+      CampaignName: CampaignName,
       StartDate: startDate ? format(startDate, "yyyy-MM-dd HH:mm:ss") : null,
       EndDate: endDate ? format(endDate, "yyyy-MM-dd HH:mm:ss") : null,
       IntervalTime: parseInt(IntervalTime),
