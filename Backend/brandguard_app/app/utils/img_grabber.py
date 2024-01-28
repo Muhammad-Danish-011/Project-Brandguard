@@ -101,7 +101,7 @@ def get_website(campaign_id):
 
 def capture_screenshot_by_campaignid(campaignID):
     # try:
-    from app import create_app
+    from app.factory import create_app
 
     with create_app().app_context():
         options = webdriver.ChromeOptions()
@@ -179,7 +179,7 @@ def capture_screenshot_by_campaignid(campaignID):
 
 
 def image_position(campaignID):
-    from app import create_app
+    from app.factory import create_app
 
     with create_app().app_context():
         screenshots_path = get_screenshot_path(campaignID)
@@ -193,10 +193,19 @@ def image_position(campaignID):
             return position_result
 
 
-def schedule_screenshot_capture(campaignID):
-    Interval_time = get_interval_time(campaignID)
+def schedule_screenshot_capture(campaignID, Interval_time):
+    # Interval_time = get_interval_time(campaignID)
+    print(f'{campaignID} and {Interval_time}')
     scheduler.add_job(capture_screenshot_by_campaignid,
                       'interval', minutes=Interval_time, args=[campaignID])
     scheduler.add_job(image_position, 'interval',
                       minutes=Interval_time, args=[campaignID])
     return "Screenshots will be captured as scheduled"
+
+
+def schedule_active_campaigns(app):
+    with app.app_context():
+        active_campaigns = Campaigns.query.filter_by(Status='active').all()
+        for campaign in active_campaigns:
+            schedule_screenshot_capture(
+                campaign.CampaignID, campaign.IntervalTime)

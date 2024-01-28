@@ -4,7 +4,7 @@ from app.extensions import db
 from app.main import bp
 from app.models.models import *
 from app.utils.img_grabber import *
-from flask import jsonify, request
+from flask import current_app, jsonify, request
 
 
 @bp.route('/')
@@ -280,14 +280,18 @@ def add_campaign_details():
         # Extract data from the request JSON
         data = request.get_json()
         campaign_name = data.get('CampaignName')
-        start_date = data.get('StartDate')
-        end_date = data.get('EndDate')
-        interval_time = data.get('IntervalTime')
-        status = data.get('Status')
+        start_date = datetime.strptime(
+            data.get('StartDate'), '%Y-%m-%d %H:%M:%S')
+        end_date = datetime.strptime(data.get('EndDate'), '%Y-%m-%d %H:%M:%S')
+        interval_time = int(data.get('IntervalTime'))
         websites = data.get('Websites')
         images = data.get('Images')
-        # Create a new campaign and add it to the database
-        # Create a new campaign without websites
+        current_datetime = datetime.now()
+
+        # Determine the status based on the current date
+        status = 'active' if start_date <= current_datetime <= end_date else 'inactive'
+
+        # Create a new campaign
         new_campaign = Campaigns(
             CampaignName=campaign_name,
             StartDate=start_date,
@@ -295,6 +299,7 @@ def add_campaign_details():
             IntervalTime=interval_time,
             Status=status
         )
+
         # Create a list of website instances
         website_instances = [Websites() for _ in websites]
         # Create image instances
@@ -312,18 +317,43 @@ def add_campaign_details():
         new_campaign.websites.extend(website_instances)
         new_campaign.images.extend(image_instances)
 
-        # Add the campaign and websites to the database
+        # Add the campaign and related entities to the database
         db.session.add(new_campaign)
         db.session.add_all(website_instances)
         db.session.add_all(image_instances)
-
-        # Commit the changes
         db.session.commit()
 
-        return jsonify({"status": "Campaign added successfully"}), 201
+        current_app.logger.info(
+            f"Campaign status set to: {new_campaign.Status}")  # Logging status
+
+        # Schedule the campaign if it's active
+        if new_campaign.Status == 'active':
+            schedule_campaign(new_campaign.CampaignID, interval_time)
+
+        return jsonify({"status": "Campaign added successfully. With status {new_campaign.Status}"}), 201
 
     except Exception as e:
+        current_app.logger.error(
+            f"Error in add_campaign_details: {e}")  # Log the exception
         return jsonify({"error": str(e)}), 500
+
+
+def schedule_campaign(campaignID, interval_time):
+    """
+    Schedule tasks for a specific campaign.
+    """
+    scheduler.add_job(
+        capture_screenshot_by_campaignid,
+        'interval',
+        minutes=interval_time,
+        args=[campaignID]
+    )
+    scheduler.add_job(
+        image_position,
+        'interval',
+        minutes=interval_time,
+        args=[campaignID]
+    )
 
 
 @bp.route('/image_position/<int:campaignID>', methods=['GET'])

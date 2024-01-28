@@ -57,10 +57,13 @@ def find_image_position(screenshot_path, reference_image_path):
 
 
 def get_screenshot_path(campaignID):
-    # screenshots = Screenshots.query.filter_by(CampaignID=campaignID).last()
     latest_screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
-        Screenshots.Timestamp.desc()).first().FilePath
-    return (latest_screenshot)
+        Screenshots.Timestamp.desc()).first()
+
+    if latest_screenshot is not None:
+        return latest_screenshot.FilePath
+    else:
+        return None
 
 
 def get_refrence_image(campaignID):

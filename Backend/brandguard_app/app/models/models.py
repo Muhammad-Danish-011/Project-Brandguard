@@ -1,4 +1,3 @@
-import os
 
 from app.extensions import db
 from sqlalchemy import ForeignKey
@@ -11,7 +10,7 @@ class Campaigns(db.Model):
     StartDate = db.Column(db.DateTime)
     EndDate = db.Column(db.DateTime)
     IntervalTime = db.Column(db.Integer)
-    Status = db.Column(db.String)
+    Status = db.Column(db.String, nullable=True)
     websites = db.relationship('Websites', backref='campaign', lazy=True)
     images = db.relationship('Images', backref='campaign', lazy=True)
 
@@ -30,9 +29,9 @@ class Images(db.Model):
     Extension = db.Column(db.String)  # Add an Extension column
     ImagePath = db.Column(db.String)
 
-    def generate_image_path(self, local_directory):
-        filename = f"{str(self.CampaignID).zfill(3)}_{str(self.ImageID).zfill(3)}.{self.Extension}"
-        return os.path.join(local_directory, filename)
+    # def generate_image_path(self, local_directory):
+    #     filename = f"{str(self.CampaignID).zfill(3)}_{str(self.ImageID).zfill(3)}.{self.Extension}"
+    #     return os.path.join(local_directory, filename)
 
 
 class Screenshots(db.Model):

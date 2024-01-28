@@ -1,26 +1,23 @@
-import atexit
+# app/__init__.py
 
-from app.extensions import db, migrate, scheduler
-from app.main import bp as main_bp
-from config import Config
-from flask import Flask
+from app.extensions import scheduler
+from app.factory import create_app
+from app.utils.img_grabber import schedule_active_campaigns
 
+app = create_app()
 
-def create_app(config_class=Config, start_scheduler=True):
-    app = Flask(__name__)
-    app.config.from_object(config_class)
+# Initialize and start the scheduler here
+if not scheduler.running:
+    scheduler.start()
+    from app.utils.campaign_status_manager import \
+        check_and_update_campaign_status
+    scheduler.add_job(lambda: check_and_update_campaign_status(
+        app), 'interval', minutes=3)
 
-    # Initialize Flask extensions here
-    db.init_app(app)
-    migrate.init_app(app, db)
+    try:
+        schedule_active_campaigns(app)
+    except:
+        pass
 
-    # Register blueprints here
-    app.register_blueprint(main_bp)
-
-    if start_scheduler:
-        # Start the scheduler only if not already started
-        if not scheduler.running:
-            scheduler.start()
-            atexit.register(lambda: scheduler.shutdown())
-
-    return app
+    import atexit
+    atexit.register(lambda: scheduler.shutdown())
