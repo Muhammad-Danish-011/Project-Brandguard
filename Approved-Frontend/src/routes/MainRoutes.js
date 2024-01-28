@@ -29,7 +29,7 @@ const MainRoutes = {
     },
     {
       path: "/Scraping-Report",
-      element: <ScrapingReport/>,
+      element: <ScrapingReport />,
     },
     {
       path: "/Screenshots-Report",

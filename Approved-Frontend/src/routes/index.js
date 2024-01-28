@@ -8,5 +8,5 @@ import Reports from './ReportsRoutes';
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-  return useRoutes([ LoginRoutes,MainRoutes,Reports]);
+  return useRoutes([ MainRoutes,LoginRoutes,Reports]);
 }
