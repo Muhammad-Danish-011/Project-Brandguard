@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 from app.extensions import scheduler
 from app.models.models import *
 from app.utils.find_position import *
+from app.utils.img_scraper import *
 from flask import jsonify
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -195,11 +196,16 @@ def image_position(campaignID):
 
 def schedule_screenshot_capture(campaignID, Interval_time):
     # Interval_time = get_interval_time(campaignID)
-    print(f'{campaignID} and {Interval_time}')
+    print(f'Campaign ID is {campaignID} and its interval is {Interval_time}')
     scheduler.add_job(capture_screenshot_by_campaignid,
                       'interval', minutes=Interval_time, args=[campaignID])
+
     scheduler.add_job(image_position, 'interval',
                       minutes=Interval_time, args=[campaignID])
+
+    scheduler.add_job(image_scraping, 'interval',
+                      minutes=Interval_time, args=[campaignID])
+
     return "Screenshots will be captured as scheduled"
 
 

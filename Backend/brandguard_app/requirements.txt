@@ -10,3 +10,5 @@ apscheduler
 numpy
 opencv-python
 webdriver-manager
+scikit-image
+python3-tk
