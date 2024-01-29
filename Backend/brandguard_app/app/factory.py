@@ -1,6 +1,7 @@
-from flask import Flask
-from app.extensions import db, migrate, scheduler
+from app.extensions import db, migrate
 from config import Config
+from flask import Flask
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)

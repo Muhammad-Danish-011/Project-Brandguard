@@ -1,25 +1,18 @@
-import re
-import requests
 import os
-from selenium import webdriver
-from urllib.parse import urlparse
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+import re
 import time
-
-from tkinter import Tk, filedialog
-from PIL import Image
-from io import BytesIO
-import cv2
-from skimage.metrics import structural_similarity as ssim
-import numpy as np
-import matplotlib.pyplot as plt
 from datetime import datetime
-from webdriver_manager.chrome import ChromeDriverManager
+from urllib.parse import urlparse
+
+import cv2
+import requests
 from app.models.models import *
 from app.utils.find_position import *
-
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def get_root_domain(url):
@@ -34,9 +27,11 @@ def get_root_domain(url):
     else:
         return domain
 
+
 def get_script_directory():
     # Get the directory of the current script
     return os.path.dirname(os.path.abspath(__file__))
+
 
 def get_image_files(folder_name):
     # Get the path to the 'utils' directory
@@ -51,13 +46,15 @@ def get_image_files(folder_name):
         return []
 
     # List image files in the directory
-    image_files = [f for f in os.listdir(download_images_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+    image_files = [f for f in os.listdir(download_images_path) if f.lower(
+    ).endswith(('.png', '.jpg', '.jpeg', '.gif'))]
     return [os.path.join(download_images_path, f) for f in image_files]
 
 # def get_image_files(folder_path):
 
 #     image_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
 #     return [os.path.join(folder_path, f) for f in image_files]
+
 
 def calculate_similarity_percentage(main_image, other_image):
     # Feature-based matching using ORB
@@ -69,15 +66,18 @@ def calculate_similarity_percentage(main_image, other_image):
     matches = bf.match(descriptors1, descriptors2)
 
     # Calculate similarity percentage based on the number of matches
-    similarity_percentage = len(matches) / max(len(keypoints1), len(keypoints2)) * 100
+    similarity_percentage = len(
+        matches) / max(len(keypoints1), len(keypoints2)) * 100
 
     return similarity_percentage
 
+
 def get_slider_images(url):
-        # Create Chrome options
+    # Create Chrome options
     chrome_options = Options()
     chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--headless")  # This line makes Chrome run in headless mode
+    # This line makes Chrome run in headless mode
+    chrome_options.add_argument("--headless")
 
     # Initialize a webdriver (e.g., Chrome)
     # driver = webdriver.Chrome(options=chrome_options)
@@ -97,7 +97,8 @@ def get_slider_images(url):
 
     if 'daraz.pk' in url:
         # Daraz specific logic
-        slider_keywords = ['slider', 'carousel', 'slideshow', 'gallery', 'magicslider']
+        slider_keywords = ['slider', 'carousel',
+                           'slideshow', 'gallery', 'magicslider']
         exclude_substring = '/tps/'
         slider_regex = re.compile('|'.join(slider_keywords), re.IGNORECASE)
 
@@ -125,7 +126,6 @@ def get_slider_images(url):
             if src and "/magicslider" in src:
                 image_urls.add(src)
 
-
     else:
         # General logic for other URLs
         images = driver.find_elements(By.TAG_NAME, 'img')
@@ -138,6 +138,7 @@ def get_slider_images(url):
     driver.quit()
     return list(image_urls)
 
+
 def download_images_from_list(url_list, output_folder):
     try:
         # Create the output folder if it doesn't exist
@@ -149,20 +150,23 @@ def download_images_from_list(url_list, output_folder):
 
                 if response.status_code == 200:
                     # Get the image filename from the URL
-                    image_name = os.path.join(output_folder, os.path.basename(url.strip()))
+                    image_name = os.path.join(
+                        output_folder, os.path.basename(url.strip()))
 
                     # Save the image to the specified folder
                     with open(image_name, 'wb') as img_file:
                         img_file.write(response.content)
                         print(f"Image downloaded: {image_name}")
                 else:
-                    print(f"Failed to download image from {url.strip()}. Status code: {response.status_code}")
+                    print(
+                        f"Failed to download image from {url.strip()}. Status code: {response.status_code}")
 
             except Exception as e:
                 print(f"Error downloading {url.strip()}: {e}")
 
     except Exception as e:
         print(f"Error creating folder {output_folder}: {e}")
+
 
 def analyze_images(url, main_image_path):
     # Get the root domain from the URL for folder naming
@@ -176,7 +180,8 @@ def analyze_images(url, main_image_path):
     os.makedirs(main_download_folder, exist_ok=True)
 
     # Create a unique subfolder for each analysis to avoid file name conflicts
-    download_folder = os.path.join(main_download_folder, f'{file_name}_{datetime.now().strftime("%Y%m%d_%H%M%S")}')
+    download_folder = os.path.join(
+        main_download_folder, f'{file_name}_{datetime.now().strftime("%Y%m%d_%H%M%S")}')
     os.makedirs(download_folder, exist_ok=True)
 
     # print(f'Shahzaib Khan Prints {download_folder}')
@@ -188,8 +193,6 @@ def analyze_images(url, main_image_path):
 
     for image_url in slider_images:
         image_url_list.append(image_url)
-
-
 
     # Print or use image_url_list as needed
     # print("Image URLs:", image_url_list)
@@ -203,17 +206,12 @@ def analyze_images(url, main_image_path):
     # base_dir = os.path.dirname(os.path.abspath(__file__))
     # screenshots_dir = os.path.join(base_dir, download_folder)
 
-
     download_images_from_list(image_url_list, download_folder)
-
 
     main_image_path = main_image_path
     main_image = cv2.imread(main_image_path)
 
-
     other_images_path = download_folder
-
-
 
     other_images_folder = other_images_path
     other_image_files = get_image_files(other_images_folder)
@@ -223,7 +221,8 @@ def analyze_images(url, main_image_path):
 
     for other_image_file in other_image_files:
         other_image = cv2.imread(other_image_file)
-        total_similarity = calculate_similarity_percentage(main_image, other_image)
+        total_similarity = calculate_similarity_percentage(
+            main_image, other_image)
         similarity_scores.append(total_similarity)
         image_names.append(os.path.basename(other_image_file))
 
@@ -232,7 +231,8 @@ def analyze_images(url, main_image_path):
         # print(f"Similarity Score with Image '{image_name}': {ssim_score:.5f} - {match_status}")
 
     threshold_score = 80.0
-    is_score_above_threshold = any(score > threshold_score for score in similarity_scores)
+    is_score_above_threshold = any(
+        score > threshold_score for score in similarity_scores)
     visibility = 'yes' if is_score_above_threshold else 'no'
     print(f"Shahzaib Prints Visibility Score: {visibility}")
 

@@ -86,6 +86,7 @@ def get_refrence_image(campaignID):
     else:
         print("Image not found for the given Campaign ID.")
 
+
 def save_found_status(campaignID, found):
     # Create a new visibility record and add it to the database
     new_visibility = visibility(
@@ -95,10 +96,12 @@ def save_found_status(campaignID, found):
     db.session.add(new_visibility)
     db.session.commit()
 
+
 def calculate_success_rate(campaignID):
     # Query the visibility table to get counts
     total_count = visibility.query.filter_by(CampaignID=campaignID).count()
-    success_count = visibility.query.filter(func.lower(visibility.Found_Status) == 'yes', visibility.CampaignID == campaignID).count()
+    success_count = visibility.query.filter(func.lower(
+        visibility.Found_Status) == 'yes', visibility.CampaignID == campaignID).count()
 
     # if total_count > 0:
     #     success_rate = (success_count / total_count) * 100

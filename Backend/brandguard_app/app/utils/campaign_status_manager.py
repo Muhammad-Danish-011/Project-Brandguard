@@ -1,12 +1,9 @@
 from datetime import datetime
-from app.factory import create_app
+
 from app.extensions import db, scheduler
 from app.models.models import Campaigns
 from app.utils.img_grabber import schedule_screenshot_capture
 
-from datetime import datetime
-from app.extensions import db
-from app.models.models import Campaigns
 
 def check_and_update_campaign_status(app):
     with app.app_context():
@@ -25,6 +22,7 @@ def check_and_update_campaign_status(app):
                 campaign.Status = 'inactive'
                 db.session.commit()
                 # Stop the job (Shahzaib will implement it soon)
+
 
 def schedule_campaign(campaign):
     # Add the logic to schedule tasks for the campaign
