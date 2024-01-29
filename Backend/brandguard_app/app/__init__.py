@@ -1,5 +1,3 @@
-# app/__init__.py
-
 from app.extensions import scheduler
 from app.factory import create_app
 from app.utils.img_grabber import schedule_active_campaigns

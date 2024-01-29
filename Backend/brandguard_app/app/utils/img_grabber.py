@@ -188,7 +188,7 @@ def image_position(campaignID):
         print(refrence_image)
         if screenshots_path and refrence_image:
             position_result = find_image_position(
-                screenshots_path, refrence_image)
+                screenshots_path, refrence_image, campaignID)
             logging.info(f"Image Position Result {position_result}")
             return position_result
 

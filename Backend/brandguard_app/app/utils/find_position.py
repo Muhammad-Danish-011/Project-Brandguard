@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
 from app.models.models import *
+from sqlalchemy import func
 
 
-def find_image_position(screenshot_path, reference_image_path):
+def find_image_position(screenshot_path, reference_image_path, campaignID):
     # Read the screenshot and reference image
     screenshot = cv2.imread(screenshot_path)
     reference_image = cv2.imread(reference_image_path)
@@ -22,8 +23,17 @@ def find_image_position(screenshot_path, reference_image_path):
     # Switch x and y coordinates to (x, y)
     locations = list(zip(*locations[::-1]))
 
+    # if not locations:
+    #     return "Reference image not found."
+
     if not locations:
+        # Reference image not found
+        save_found_status(campaignID, found='no')
+        calculate_success_rate(campaignID)
         return "Reference image not found."
+     # Reference image found
+    save_found_status(campaignID, found='yes')
+    calculate_success_rate(campaignID)
 
     # For simplicity, take the first location found above the threshold
     max_loc = locations[0]
@@ -75,3 +85,30 @@ def get_refrence_image(campaignID):
         return (image_path)
     else:
         print("Image not found for the given Campaign ID.")
+
+def save_found_status(campaignID, found):
+    # Create a new visibility record and add it to the database
+    new_visibility = visibility(
+        CampaignID=campaignID,
+        Found_Status=found
+    )
+    db.session.add(new_visibility)
+    db.session.commit()
+
+def calculate_success_rate(campaignID):
+    # Query the visibility table to get counts
+    total_count = visibility.query.filter_by(CampaignID=campaignID).count()
+    success_count = visibility.query.filter(func.lower(visibility.Found_Status) == 'yes', visibility.CampaignID == campaignID).count()
+
+    # if total_count > 0:
+    #     success_rate = (success_count / total_count) * 100
+    #     print("\n\n")
+    #     print(f"campaignID: {campaignID}")
+    #     print(f"yes count: {success_count}")
+    #     print(f"total count: {total_count}")
+    #     print(f"Success Rate: {success_rate}%")
+    #     print("\n\n")
+    # else:
+    #     print("\n\n")
+    #     print("No detection results in the database.")
+    #     print("\n\n")

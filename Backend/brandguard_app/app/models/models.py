@@ -1,6 +1,7 @@
 
 from app.extensions import db
 from sqlalchemy import ForeignKey
+from datetime import datetime
 
 
 class Campaigns(db.Model):
@@ -74,3 +75,10 @@ class URLS(db.Model):
     URL_id = db.Column(db.Integer, primary_key=True)
     webpage_url = db.Column(db.String)
     template_url = db.Column(db.String)
+
+class visibility(db.Model):
+    __tablename__ = 'visibility'
+    VisibilityID = db.Column(db.Integer, primary_key=True)
+    CampaignID = db.Column(db.Integer, ForeignKey('campaigns.CampaignID'))
+    DateTime = db.Column(db.DateTime, default=datetime.now)
+    Found_Status = db.Column(db.String)
