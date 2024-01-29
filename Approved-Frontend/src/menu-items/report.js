@@ -17,7 +17,7 @@ const Report= {
   children: [
     {
       id: 'Scraping-Report',
-      title: 'Scraping-Report',
+      title: 'Scraping Report',
       type: 'item',
       url: '/Scraping-Report',
       icon: icons.LineChartOutlined,
@@ -25,7 +25,7 @@ const Report= {
     },
     {
       id: 'Screenshots-Report',
-      title: 'Screenshots-Report',
+      title: 'Screenshots Report',
       type: 'item',
       url: '/Screenshots-Report',
       icon: icons.BarChartOutlined,

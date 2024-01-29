@@ -33,7 +33,6 @@ const headCells = [
   },
   { id: "endDate", align: "left", disablePadding: false, label: "End Date" },
   { id: "websites", align: "left", disablePadding: false, label: "Websites" },
-  { id: "images", align: "left", disablePadding: false, label: "Images" },
   {
     id: "screenshotPosition",
     align: "left",
@@ -83,7 +82,6 @@ const mockApiData = [
     startDate: "2024-01-01",
     endDate: "2024-02-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Top Left",
     AdVisibility: 80,
   },
@@ -93,7 +91,6 @@ const mockApiData = [
     startDate: "2024-02-01",
     endDate: "2024-03-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Bottom Right",
     AdVisibility: 75,
   },
@@ -103,7 +100,6 @@ const mockApiData = [
     startDate: "2024-03-01",
     endDate: "2024-04-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Top Right",
     AdVisibility: 85,
   },
@@ -113,7 +109,6 @@ const mockApiData = [
     startDate: "2024-04-01",
     endDate: "2024-05-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Bottom Left",
     AdVisibility: 90,
   },
@@ -123,7 +118,6 @@ const mockApiData = [
     startDate: "2024-05-01",
     endDate: "2024-06-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Center",
     AdVisibility: 70,
   },
@@ -133,7 +127,6 @@ const mockApiData = [
     startDate: "2024-06-01",
     endDate: "2024-07-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Top Center",
     AdVisibility: 95,
   },
@@ -143,7 +136,6 @@ const mockApiData = [
     startDate: "2024-07-01",
     endDate: "2024-08-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Bottom Center",
     AdVisibility: 60,
   },
@@ -153,7 +145,6 @@ const mockApiData = [
     startDate: "2024-08-01",
     endDate: "2024-09-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Right Center",
     AdVisibility: 75,
   },
@@ -163,7 +154,6 @@ const mockApiData = [
     startDate: "2024-09-01",
     endDate: "2024-10-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Left Center",
     AdVisibility: 85,
   },
@@ -173,7 +163,6 @@ const mockApiData = [
     startDate: "2024-10-01",
     endDate: "2024-11-01",
     websites: "www.daraz.pk",
-    images: "new.png",
     screenshotPosition: "Random",
     AdVisibility: 80,
   },
@@ -239,7 +228,7 @@ export default function CampaignTable() {
                   <TableCell>{row.startDate}</TableCell>
                   <TableCell>{row.endDate}</TableCell>
                   <TableCell>{row.websites}</TableCell>
-                  <TableCell>{row.images}</TableCell>
+                  
                   <TableCell>{row.screenshotPosition}</TableCell>
                   <TableCell>{row.AdVisibility}</TableCell>
                 </TableRow>
