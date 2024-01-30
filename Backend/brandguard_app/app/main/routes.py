@@ -1,13 +1,13 @@
+import os
 from datetime import datetime  # Corrected import statement
 
 from app.extensions import db
 from app.main import bp
 from app.models.models import *
 from app.utils.img_grabber import *
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, current_app, jsonify, request
 from flask_cors import CORS
-from apscheduler.schedulers.background import BackgroundScheduler
-import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -373,6 +373,7 @@ def img_position(campaignID):
     result = image_position(campaignID)
     return jsonify(result)
 
+
 # Use the absolute path for the destination directory
 UPLOAD_FOLDER = os.path.abspath('./reference_images')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -384,8 +385,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # Function to check if the file extension is allowed
+
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @bp.route('/upload', methods=['POST'])
 def upload_image():
@@ -419,6 +423,7 @@ def upload_image():
             return {"error": "Internal Server Error"}, 500
 
     return 'Invalid file format', 400
+
 
 @bp.route('/save_image_path', methods=['POST'])
 def save_image_path():

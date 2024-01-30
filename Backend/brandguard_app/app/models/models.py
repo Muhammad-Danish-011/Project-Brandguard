@@ -50,13 +50,16 @@ class Screenshots(db.Model):
     # def generate_screenshot_path(self):
     #     return f"{str(self.CampaignID).zfill(3)}_{str(self.ScreenshotID).zfill(3)}_{self.Timestamp}.{self.Extension}"
 
+
 class AdPositions(db.Model):
     __tablename__ = 'ad_positions'
     AdPositionID = db.Column(db.Integer, primary_key=True)
-    ScreenshotID = db.Column(db.Integer, ForeignKey('screenshots.ScreenshotID'))
-    CampaignID = db.Column(db.Integer, ForeignKey('campaigns.CampaignID'), nullable=False)
+    ScreenshotID = db.Column(
+        db.Integer, ForeignKey('screenshots.ScreenshotID'))
+    CampaignID = db.Column(db.Integer, ForeignKey(
+        'campaigns.CampaignID'), nullable=False)
     Campaign = db.relationship('Campaigns', foreign_keys=[CampaignID])
-    #Website = db.Column(db.String, ForeignKey('websites.WebsiteURL'), nullable=False)
+    # Website = db.Column(db.String, ForeignKey('websites.WebsiteURL'), nullable=False)
     Capture_DateTime = db.Column(db.DateTime, default=datetime.now)
     Found_Status = db.Column(db.String)
 
@@ -65,12 +68,14 @@ class AdPositions(db.Model):
     start_date = column_property(Campaigns.StartDate, deferred=True)
     end_date = column_property(Campaigns.EndDate, deferred=True)
 
+
 class Scrape_Image_Status(db.Model):
     __tablename__ = 'scrape_image_status'
     StatusID = db.Column(db.Integer, primary_key=True)
     CampaignID = db.Column(db.Integer, ForeignKey('campaigns.CampaignID'))
     DateTime = db.Column(db.DateTime, default=datetime.now)
     Found_Status = db.Column(db.String)
+
 
 class ScrapedImages(db.Model):
     __tablename__ = 'scraped_images'

@@ -236,15 +236,13 @@ def analyze_images(url, main_image_path, campaignID):
     visibility = 'yes' if is_score_above_threshold else 'no'
 
     new_Scrape_Image_Status = Scrape_Image_Status(
-    CampaignID=campaignID,
-    Found_Status=visibility
+        CampaignID=campaignID,
+        Found_Status=visibility
     )
     db.session.add(new_Scrape_Image_Status)
     db.session.commit()
 
-
     # print(f"Shahzaib Prints Visibility Score: {visibility}")
-
 
     # plt.figure(figsize=(10, 5))
     # colors = ['green' if score > 80.0 else 'red' for score in similarity_scores]

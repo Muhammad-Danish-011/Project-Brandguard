@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from app.models.models import *
-from sqlalchemy import func
 
 
 def find_image_position(screenshot_path, reference_image_path, campaignID):
@@ -92,7 +91,7 @@ def save_found_status(campaignID, found):
     screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
         Screenshots.Timestamp.desc()).first()
     if screenshot:
-            screenshotID = screenshot.ScreenshotID
+        screenshotID = screenshot.ScreenshotID
 
     new_AdPositions = AdPositions(
         ScreenshotID=screenshotID,
