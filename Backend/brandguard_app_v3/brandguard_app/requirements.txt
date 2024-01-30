@@ -1,0 +1,13 @@
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+psycopg2-binary
+python-dotenv
+SQLAlchemy
+selenium
+selenium_stealth
+apscheduler
+numpy
+opencv-python
+webdriver-manager
+scikit-image
