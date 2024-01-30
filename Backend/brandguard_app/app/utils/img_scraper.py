@@ -168,7 +168,7 @@ def download_images_from_list(url_list, output_folder):
         print(f"Error creating folder {output_folder}: {e}")
 
 
-def analyze_images(url, main_image_path):
+def analyze_images(url, main_image_path, campaignID):
     # Get the root domain from the URL for folder naming
     file_name = get_root_domain(url)
 
@@ -234,7 +234,17 @@ def analyze_images(url, main_image_path):
     is_score_above_threshold = any(
         score > threshold_score for score in similarity_scores)
     visibility = 'yes' if is_score_above_threshold else 'no'
-    print(f"Shahzaib Prints Visibility Score: {visibility}")
+
+    new_Scrape_Image_Status = Scrape_Image_Status(
+    CampaignID=campaignID,
+    Found_Status=visibility
+    )
+    db.session.add(new_Scrape_Image_Status)
+    db.session.commit()
+
+
+    # print(f"Shahzaib Prints Visibility Score: {visibility}")
+
 
     # plt.figure(figsize=(10, 5))
     # colors = ['green' if score > 80.0 else 'red' for score in similarity_scores]
@@ -272,4 +282,4 @@ def image_scraping(campaignID):
         # main_image_path = r"/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/reference_images/50e3cb98-f34a-48b5-99aa-37e4e3dd413b.jpg"
 
         # url = 'https://www.daraz.pk/'
-        analyze_images(website_url, refrence_image)
+        analyze_images(website_url, refrence_image, campaignID)

@@ -14,8 +14,8 @@ if not scheduler.running:
 
     try:
         schedule_active_campaigns(app)
-    except:
-        pass
+    except Exception as e:
+        app.logger.error(f"Error occurred: {e}")
 
     import atexit
     atexit.register(lambda: scheduler.shutdown())

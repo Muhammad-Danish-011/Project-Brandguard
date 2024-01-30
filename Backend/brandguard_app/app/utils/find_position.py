@@ -29,11 +29,11 @@ def find_image_position(screenshot_path, reference_image_path, campaignID):
     if not locations:
         # Reference image not found
         save_found_status(campaignID, found='no')
-        calculate_success_rate(campaignID)
+        # calculate_success_rate(campaignID)
         return "Reference image not found."
      # Reference image found
     save_found_status(campaignID, found='yes')
-    calculate_success_rate(campaignID)
+    # calculate_success_rate(campaignID)
 
     # For simplicity, take the first location found above the threshold
     max_loc = locations[0]
@@ -89,19 +89,25 @@ def get_refrence_image(campaignID):
 
 def save_found_status(campaignID, found):
     # Create a new visibility record and add it to the database
-    new_visibility = visibility(
+    screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
+        Screenshots.Timestamp.desc()).first()
+    if screenshot:
+            screenshotID = screenshot.ScreenshotID
+
+    new_AdPositions = AdPositions(
+        ScreenshotID=screenshotID,
         CampaignID=campaignID,
         Found_Status=found
     )
-    db.session.add(new_visibility)
+    db.session.add(new_AdPositions)
     db.session.commit()
 
 
-def calculate_success_rate(campaignID):
-    # Query the visibility table to get counts
-    total_count = visibility.query.filter_by(CampaignID=campaignID).count()
-    success_count = visibility.query.filter(func.lower(
-        visibility.Found_Status) == 'yes', visibility.CampaignID == campaignID).count()
+# def calculate_success_rate(campaignID):
+#     # Query the visibility table to get counts
+#     total_count = visibility.query.filter_by(CampaignID=campaignID).count()
+#     success_count = visibility.query.filter(func.lower(
+#         visibility.Found_Status) == 'yes', visibility.CampaignID == campaignID).count()
 
     # if total_count > 0:
     #     success_rate = (success_count / total_count) * 100
