@@ -1,5 +1,6 @@
 # Directories
 venv/
+myapp/
 env/
 build/
 *.egg-info/
