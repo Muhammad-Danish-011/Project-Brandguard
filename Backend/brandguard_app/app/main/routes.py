@@ -4,7 +4,19 @@ from app.extensions import db
 from app.main import bp
 from app.models.models import *
 from app.utils.img_grabber import *
-from flask import current_app, jsonify, request
+from flask import Flask, current_app, jsonify, request
+from flask_cors import CORS
+from apscheduler.schedulers.background import BackgroundScheduler
+import os
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+CORS(bp)
 
 
 @bp.route('/')
@@ -330,7 +342,7 @@ def add_campaign_details():
         if new_campaign.Status == 'active':
             schedule_campaign(new_campaign.CampaignID, interval_time)
 
-        return jsonify({"status": "Campaign added successfully. With status {new_campaign.Status}"}), 201
+        return jsonify({"status": "Campaign added successfully."}), 201
 
     except Exception as e:
         current_app.logger.error(
@@ -360,3 +372,70 @@ def schedule_campaign(campaignID, interval_time):
 def img_position(campaignID):
     result = image_position(campaignID)
     return jsonify(result)
+
+# Use the absolute path for the destination directory
+UPLOAD_FOLDER = os.path.abspath('./reference_images')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# ...
+# ... (other imports and configurations)
+
+# Define allowed file extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Function to check if the file extension is allowed
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@bp.route('/upload', methods=['POST'])
+def upload_image():
+    # Check if the post request has the file part
+    if 'image' not in request.files:
+        return 'No file part', 400
+
+    file = request.files['image']
+
+    # If the user does not select a file, the browser submits an empty file without a filename
+    if file.filename == '':
+        return 'No selected file', 400
+
+    if file and allowed_file(file.filename):
+        # Use secure_filename to avoid security issues
+        filename = secure_filename(file.filename)
+
+        # Save the file to the specified upload folder
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        # Ensure the directory exists before saving
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        file.save(file_path)
+
+        try:
+            # Return the path of the saved file
+            return {"message": "File uploaded successfully", "file_path": file_path}
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return {"error": "Internal Server Error"}, 500
+
+    return 'Invalid file format', 400
+
+@bp.route('/save_image_path', methods=['POST'])
+def save_image_path():
+    try:
+        data = request.get_json()
+
+        # Make sure the key matches the JSON you're sending
+        new_image_path = data.get('new_image_path', '')
+        print("Received file path:", new_image_path)
+
+        if new_image_path:  # Check if the path is not empty
+            new_image = Images(ImagePath=new_image_path)
+            db.session.add(new_image)
+            db.session.commit()
+            return jsonify({"message": "Image path saved successfully"})
+        else:
+            return jsonify({"error": "No image path provided"}), 400
+    except Exception as e:
+        traceback.print_exc()  # This will print the stack trace to the console
+        return jsonify({"error": f"Error saving image path: {str(e)}"}), 500
