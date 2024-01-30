@@ -3,7 +3,8 @@ from datetime import datetime
 
 from app.extensions import db
 from sqlalchemy import ForeignKey
-
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import column_property
 
 class Campaigns(db.Model):
     __tablename__ = 'campaigns'
@@ -54,9 +55,16 @@ class AdPositions(db.Model):
     __tablename__ = 'ad_positions'
     AdPositionID = db.Column(db.Integer, primary_key=True)
     ScreenshotID = db.Column(db.Integer, ForeignKey('screenshots.ScreenshotID'))
-    CampaignID = db.Column(db.Integer, ForeignKey('campaigns.CampaignID'))
-    DateTime = db.Column(db.DateTime, default=datetime.now)
+    CampaignID = db.Column(db.Integer, ForeignKey('campaigns.CampaignID'), nullable=False)
+    Campaign = db.relationship('Campaigns', foreign_keys=[CampaignID])
+    #Website = db.Column(db.String, ForeignKey('websites.WebsiteURL'), nullable=False)
+    Capture_DateTime = db.Column(db.DateTime, default=datetime.now)
     Found_Status = db.Column(db.String)
+
+    # Additional columns for data from related tables
+    campaign_name = column_property(Campaigns.CampaignName, deferred=True)
+    start_date = column_property(Campaigns.StartDate, deferred=True)
+    end_date = column_property(Campaigns.EndDate, deferred=True)
 
 
 class Scrap_Image_Status(db.Model):

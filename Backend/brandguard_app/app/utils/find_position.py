@@ -106,21 +106,47 @@ def save_found_status(campaignID, found):
     db.session.commit()
 
 
-def calculate_success_rate(campaignID):
-    # Query the visibility table to get counts
-    total_count = AdPositions.query.filter_by(CampaignID=campaignID).count()
-    success_count = AdPositions.query.filter(func.lower(
-        AdPositions.Found_Status) == 'yes', AdPositions.CampaignID == campaignID).count()
+# def calculate_success_rate(campaignID):
+#     # Query the visibility table to get counts
+#     total_count = AdPositions.query.filter_by(CampaignID=campaignID).count()
+#     success_count = AdPositions.query.filter(func.lower(
+#         AdPositions.Found_Status) == 'yes', AdPositions.CampaignID == campaignID).count()
 
-    # if total_count > 0:
-    #     success_rate = (success_count / total_count) * 100
-    #     print("\n\n")
-    #     print(f"campaignID: {campaignID}")
-    #     print(f"yes count: {success_count}")
-    #     print(f"total count: {total_count}")
-    #     print(f"Success Rate: {success_rate}%")
-    #     print("\n\n")
-    # else:
-    #     print("\n\n")
-    #     print("No detection results in the database.")
-    #     print("\n\n")
+
+
+################################          for testing purpose by gpt
+
+# def calculate_success_rate(campaignID):
+#     # Join the AdPositions, Campaigns, and Websites tables
+#     query_result = db.session.query(
+#         AdPositions.CampaignID,
+#         Campaigns.CampaignName,                                                   
+#         Campaigns.StartDate,
+#         Campaigns.EndDate,
+#         Websites.WebsiteURL,
+#         AdPositions.Found_Status
+#     ).join(Campaigns, AdPositions.CampaignID == Campaigns.CampaignID) \
+#      .join(Websites, AdPositions.ScreenshotID == Websites.WebsiteID) \
+#      .filter(AdPositions.CampaignID == campaignID).all()
+
+#     # Print the results in a table format
+#     print("{:<15} {:<20} {:<20} {:<20} {:<20} {:<15}".format(
+#         "Campaign ID", "Campaign Name", "Start Date", "End Date", "Website URL", "Found Status"))
+    
+#     for result in query_result:
+#         campaign_id, campaign_name, start_date, end_date, website_url, found_status = result
+#         print("{:<15} {:<20} {:<20} {:<20} {:<20} {:<15}".format(
+#             campaign_id, campaign_name, start_date, end_date, website_url, found_status))
+    
+
+#######################             testing purpose by hammad
+    
+# def calculate_success_rate(campaignID):
+# # Create a new visibility record and add it to the database
+#     campaigns = Campaigns.query.filter_by(CampaignID=campaignID).first()
+#     if campaigns:
+#             campaignName = campaigns.CampaignName
+#             start_date = campaigns.StartDate
+#             end_date = campaigns.EndDate
+
+#             print(f"\n\n\n\n\n\n\n\n\nHammad print screenshotID {campaignName}+++++++++++++++{start_date}+++++++++++++++{end_date} \n\n\n\n\n\n\n\n\n\n")
