@@ -182,19 +182,20 @@ const savePathToDB = (path) => {
 
         <CardContent>
           <form className="form">
-            <Grid container spacing={2} item xs={12}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                
                   label="Campaign Name"
+                  placeholder="Campaign Name"
                   onChange={handleTextChange}
                   type="text"
-                  placeholder="Campaign Name"
                   value={CampaignName}
                   autoComplete="given-name"
                   variant="standard"
                   required
+                  margin="normal"
+
                 />
               </Grid>
               <Grid item xs={12}>
