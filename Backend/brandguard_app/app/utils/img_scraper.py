@@ -138,6 +138,57 @@ def get_slider_images(url):
     driver.quit()
     return list(image_urls)
 
+def scrape_images_from_url(url):
+    # Create Chrome options
+    chrome_options = Options()
+    chrome_options.add_argument("--start-maximized")
+    # This line makes Chrome run in headless mode
+    chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36")
+    driver = webdriver.Chrome(options=chrome_options)
+    try:
+        driver.get(url)
+        driver.implicitly_wait(10)
+        scroll_full_page(driver)
+        page_source = driver.page_source
+        all_image_urls = extract_img_urls_by_class(driver, "img-responsive")
+        all_image_urls.extend(extract_iframe_img_urls(driver, page_source))
+        return all_image_urls
+    finally:
+        driver.quit()
+
+
+def scroll_full_page(driver):
+    # Auto scroll to the middle of the page
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 2);")
+    time.sleep(3)
+    # Auto scroll to the bottom of the page
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(3)
+
+def extract_img_urls_by_class(driver, class_name):
+    img_urls = []
+    elements = driver.find_elements(By.CLASS_NAME, class_name)
+    for element in elements:
+        img_url = element.get_attribute('src')
+        if img_url and img_url.lower().endswith('.jpg'):
+            img_urls.append(img_url)
+    return img_urls
+
+def extract_iframe_img_urls(driver, content):
+    matches = re.findall(r'<iframe id="([^"]+)"', content)
+    url_content = []
+
+    for match in matches:
+        iframe_element = driver.find_element(By.ID, match)
+        driver.switch_to.frame(iframe_element)
+        inner_html_content = driver.page_source
+        img_urls = re.findall(r'<img src="([^"]+)"', inner_html_content)
+        url_content.extend(img_urls)
+        driver.switch_to.default_content()
+
+    return url_content
+
 
 def download_images_from_list(url_list, output_folder):
     try:
@@ -188,10 +239,15 @@ def analyze_images(url, main_image_path,campaignID):
 
     slider_images = get_slider_images(url)
 
+    other_images = scrape_images_from_url(url)
+
    # List to store image URLs
     image_url_list = []
 
     for image_url in slider_images:
+        image_url_list.append(image_url)
+
+    for image_url in other_images:
         image_url_list.append(image_url)
 
     # Print or use image_url_list as needed
