@@ -12,8 +12,8 @@ import {
   Select,
   MenuItem,
   Button,
+  CircularProgress,
 } from "@mui/material";
-
 
 import { useNavigate } from "react-router-dom";
 
@@ -58,53 +58,53 @@ const headCells = [
   },
 ];
 
-const mockApiData = [
-  {
-    campaignName: "Campaign 1",
-    campaignId: 123,
-    startDate: "2024-01-01",
-    endDate: "2024-02-01",
-    websites: "www.daraz.pk",
-    screenshotPosition: "Top Left",
-    AdVisibility: 80,
-    MatchingPercentage: 75,
-  },
-  {
-    campaignName: "Campaign 2",
-    campaignId: 124,
-    startDate: "2024-01-01",
-    endDate: "2024-02-01",
-    websites: "www.amazon.com",
-    screenshotPosition: "Top Right",
-    AdVisibility: 75,
-    MatchingPercentage: 75,
-  },
-  // ... (other data entries)
-];
-
-
 export default function CampaignTable() {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("campaignName");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null); // Set initial state to null
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedCampaign, setSelectedCampaign] = useState("");
   const [selectedReportType, setSelectedReportType] = useState("screenshot");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setData(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://127.0.0.1:5000/general_report");
+        const result = await response.json();
+        setData(result);
+        setError(null);
+      } catch (error) {
+        setError("Error fetching data from the API");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (data === null) {
+      // Avoid trying to filter when data is null
+      return;
+    }
+
+    setData((prevData) => {
       if (selectedReportType === "none") {
-        return mockApiData;
+        return prevData;
       } else if (!selectedCampaign) {
-        return mockApiData;
+        return prevData;
       } else if (selectedCampaign) {
-        return mockApiData.filter((item) => item.campaignId === selectedCampaign);
+        return prevData.filter((item) => item.campaignId === selectedCampaign);
       } else {
         return [];
       }
     });
-  }, [selectedCampaign, selectedReportType]);
+  }, [selectedCampaign, selectedReportType, data]);
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -183,115 +183,119 @@ export default function CampaignTable() {
           : "Report"}
       </Typography>
 
-      <FormControl>
-        <Select
-          value={selectedCampaign}
-          onChange={handleCampaignChange}
-          displayEmpty
-        >
-          <MenuItem value="">Select Campaign</MenuItem>
-          {mockApiData.map((item) => (
-            <MenuItem key={item.campaignId} value={item.campaignId}>
-              {item.campaignName}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      {loading && <CircularProgress />}
 
-      <FormControl>
-        <Select
-          value={selectedReportType}
-          onChange={handleReportTypeChange}
-          displayEmpty
-        >
-          <MenuItem value="">Select Report Type</MenuItem>
-          <MenuItem value="screenshot">Screenshot Report</MenuItem>
-          <MenuItem value="scraping">Scraping Report</MenuItem>
-        </Select>
-      </FormControl>
+      {error && <Typography variant="body1" color="error">{error}</Typography>}
 
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {filteredHeadCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  align={headCell.align}
-                  padding={headCell.disablePadding ? "none" : "normal"}
-                >
-              <Typography
-  variant="subtitle3"
-  fontWeight="bold"
-  color="primary"
-  onClick={() => handleRequestSort(headCell.id)}
-  style={{ cursor: "pointer" }}
->
-  {headCell.label}
-</Typography>
-
-                </TableCell>
+      {!loading && !error && data !== null && data.length > 0 && (
+        <>
+          <FormControl>
+            <Select
+              value={selectedCampaign}
+              onChange={handleCampaignChange}
+              displayEmpty
+            >
+              <MenuItem value="">Select Campaign</MenuItem>
+              {data.map((item) => (
+                <MenuItem key={item.campaignId} value={item.campaignId}>
+                  {item.campaignName}
+                </MenuItem>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {stableSort(data, getComparator(order, orderBy)).map((row, index) => (
-              <TableRow key={index}>
-                {selectedReportType === "scraping" && (
-                  <>
-                    <TableCell>{row.campaignId}</TableCell>
-                    <TableCell>{row.campaignName}</TableCell>
-                    <TableCell>{row.startDate}</TableCell>
-                    <TableCell>{row.endDate}</TableCell>
-                    <TableCell>{row.websites}</TableCell>
-                    <TableCell>{row.MatchingPercentage}</TableCell>
-                  </>
-                )}
+            </Select>
+          </FormControl>
 
-                {selectedReportType === "screenshot" && (
-                  <>
-                    <TableCell>{row.campaignId}</TableCell>
-                    <TableCell>{row.campaignName}</TableCell>
-                    <TableCell>{row.startDate}</TableCell>
-                    <TableCell>{row.endDate}</TableCell>
-                    <TableCell>{row.websites}</TableCell>
-                    <TableCell>{row.screenshotPosition}</TableCell>
-                    <TableCell>{row.AdVisibility}</TableCell>
-                  </>
-                )}
+          <FormControl>
+            <Select
+              value={selectedReportType}
+              onChange={handleReportTypeChange}
+              displayEmpty
+            >
+              <MenuItem value="">Select Report Type</MenuItem>
+              <MenuItem value="screenshot">Screenshot Report</MenuItem>
+              <MenuItem value="scraping">Scraping Report</MenuItem>
+            </Select>
+          </FormControl>
 
-                {selectedReportType === "" && (
-                  <>
-                    <TableCell>{row.campaignId}</TableCell>
-                    <TableCell>{row.campaignName}</TableCell>
-                    <TableCell>{row.startDate}</TableCell>
-                    <TableCell>{row.endDate}</TableCell>
-                    <TableCell>{row.websites}</TableCell>
-                    <TableCell>{row.MatchingPercentage}</TableCell>
-                    <TableCell>{row.screenshotPosition}</TableCell>
-                    <TableCell>{row.AdVisibility}</TableCell>
-                  </>
-                )}
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {filteredHeadCells.map((headCell) => (
+                    <TableCell
+                      key={headCell.id}
+                      align={headCell.align}
+                      padding={headCell.disablePadding ? "none" : "normal"}
+                    >
+                      <Typography
+                        variant="subtitle3"
+                        fontWeight="bold"
+                        color="primary"
+                        onClick={() => handleRequestSort(headCell.id)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {headCell.label}
+                      </Typography>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {stableSort(data, getComparator(order, orderBy)).map(
+                  (row, index) => (
+                    <TableRow key={index}>
+                      {selectedReportType === "scraping" && (
+                        <>
+                          <TableCell>{row.campaignId}</TableCell>
+                          <TableCell>{row.campaignName}</TableCell>
+                          <TableCell>{row.startDate}</TableCell>
+                          <TableCell>{row.endDate}</TableCell>
+                          <TableCell>{row.websites}</TableCell>
+                          <TableCell>{row.MatchingPercentage}</TableCell>
+                        </>
+                      )}
 
-                {/* Add a button in each row to navigate to details page */}
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => navigate(`/details/${row.campaignId}`)}
-                  >
-                    View Details
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                      {selectedReportType === "screenshot" && (
+                        <>
+                          <TableCell>{row.campaignId}</TableCell>
+                          <TableCell>{row.campaignName}</TableCell>
+                          <TableCell>{row.startDate}</TableCell>
+                          <TableCell>{row.endDate}</TableCell>
+                          <TableCell>{row.websites}</TableCell>
+                          <TableCell>{row.screenshotPosition}</TableCell>
+                          <TableCell>{row.AdVisibility}</TableCell>
+                        </>
+                      )}
+
+                      {selectedReportType === "" && (
+                        <>
+                          <TableCell>{row.campaignId}</TableCell>
+                          <TableCell>{row.campaignName}</TableCell>
+                          <TableCell>{row.startDate}</TableCell>
+                          <TableCell>{row.endDate}</TableCell>
+                          <TableCell>{row.websites}</TableCell>
+                          <TableCell>{row.MatchingPercentage}</TableCell>
+                          <TableCell>{row.screenshotPosition}</TableCell>
+                          <TableCell>{row.AdVisibility}</TableCell>
+                        </>
+                      )}
+
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => navigate(`/details/${row.campaignId}`)}
+                        >
+                          View Details
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
+      )}
     </Box>
-
-  
-  
-
   );
 }

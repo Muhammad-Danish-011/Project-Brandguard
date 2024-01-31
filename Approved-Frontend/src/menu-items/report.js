@@ -26,7 +26,7 @@ const Report= {
     // {
     //   id: 'Screenshots-Report',
     //   title: 'Screenshots Report',
-    //   type: 'item',
+    //   type: 'button',
     //   url: '/Screenshots-Report',
     //   icon: icons.BarChartOutlined,
     //   breadcrumbs: false

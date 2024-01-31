@@ -1,7 +1,8 @@
 
 // project import
 import ScrapingReport from "../pages/Report/Scraping-Report";
-import ScreeningReport from "../pages/Report/Screenshots-Report";
+import ScreeningReport from "../pages/Report/Details";
+import DetailPage from "../pages/Report/Details";
 // ==============================|| MAIN ROUTING ||============================== //
 
 const ReportsRoutes = {
@@ -16,6 +17,10 @@ const ReportsRoutes = {
       path: "/Screenshots-Report",
       element: <ScreeningReport />,
     },
+    {
+      path: "/details/:campaignId" ,
+      element: <DetailPage />
+    }
    
   ],
 };
