@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -12,7 +11,11 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
+
+
+import { useNavigate } from "react-router-dom";
 
 const headCells = [
   {
@@ -79,6 +82,7 @@ const mockApiData = [
   // ... (other data entries)
 ];
 
+
 export default function CampaignTable() {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("campaignName");
@@ -86,8 +90,9 @@ export default function CampaignTable() {
   const [selectedCampaign, setSelectedCampaign] = useState("");
   const [selectedReportType, setSelectedReportType] = useState("screenshot");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // Simulate fetching data from API based on the selected campaign and report type
     setData(() => {
       if (selectedReportType === "none") {
         return mockApiData;
@@ -164,14 +169,13 @@ export default function CampaignTable() {
         headCell.id === "MatchingPercentage"
       );
     } else {
-      // Display all columns when selectedReportType is empty
       return true;
     }
   });
-  
+
   return (
     <Box>
-        <Typography variant="h2" className="header">
+      <Typography variant="h2" className="header">
         {selectedReportType === "screenshot"
           ? "Screenshot Report"
           : selectedReportType === "scraping"
@@ -216,72 +220,78 @@ export default function CampaignTable() {
                   align={headCell.align}
                   padding={headCell.disablePadding ? "none" : "normal"}
                 >
-                  <Typography
-                    variant="subtitle3"
-                    fontWeight="bold"
-                    color="primary"
-                  >
-                    {headCell.disablePadding ? (
-                      headCell.label
-                    ) : (
-                      <Link
-                        color="inherit"
-                        href="#"
-                        onClick={() => handleRequestSort(headCell.id)}
-                      >
-                        {headCell.label}
-                      </Link>
-                    )}
-                  </Typography>
+              <Typography
+  variant="subtitle3"
+  fontWeight="bold"
+  color="primary"
+  onClick={() => handleRequestSort(headCell.id)}
+  style={{ cursor: "pointer" }}
+>
+  {headCell.label}
+</Typography>
+
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {stableSort(data, getComparator(order, orderBy)).map(
-              (row, index) => (
-                <TableRow key={index}>
-                  {selectedReportType === "scraping" && (
-                    <>
-                      <TableCell>{row.campaignId}</TableCell>
-                      <TableCell>{row.campaignName}</TableCell>
-                      <TableCell>{row.startDate}</TableCell>
-                      <TableCell>{row.endDate}</TableCell>
-                      <TableCell>{row.websites}</TableCell>
-                      <TableCell>{row.MatchingPercentage}</TableCell>
-                    </>
-                  )}
+            {stableSort(data, getComparator(order, orderBy)).map((row, index) => (
+              <TableRow key={index}>
+                {selectedReportType === "scraping" && (
+                  <>
+                    <TableCell>{row.campaignId}</TableCell>
+                    <TableCell>{row.campaignName}</TableCell>
+                    <TableCell>{row.startDate}</TableCell>
+                    <TableCell>{row.endDate}</TableCell>
+                    <TableCell>{row.websites}</TableCell>
+                    <TableCell>{row.MatchingPercentage}</TableCell>
+                  </>
+                )}
 
-                  {selectedReportType === "screenshot" && (
-                    <>
-                      <TableCell>{row.campaignId}</TableCell>
-                      <TableCell>{row.campaignName}</TableCell>
-                      <TableCell>{row.startDate}</TableCell>
-                      <TableCell>{row.endDate}</TableCell>
-                      <TableCell>{row.websites}</TableCell>
-                      <TableCell>{row.screenshotPosition}</TableCell>
-                      <TableCell>{row.AdVisibility}</TableCell>
-                    </>
-                  )}
-                  
-                  {selectedReportType === "" && (
-                    <>
-                      <TableCell>{row.campaignId}</TableCell>
-                      <TableCell>{row.campaignName}</TableCell>
-                      <TableCell>{row.startDate}</TableCell>
-                      <TableCell>{row.endDate}</TableCell>
-                      <TableCell>{row.websites}</TableCell>
-                      <TableCell>{row.MatchingPercentage}</TableCell>
-                      <TableCell>{row.screenshotPosition}</TableCell>
-                      <TableCell>{row.AdVisibility}</TableCell>
-                    </>
-                  )}
-                </TableRow>
-              )
-            )}
+                {selectedReportType === "screenshot" && (
+                  <>
+                    <TableCell>{row.campaignId}</TableCell>
+                    <TableCell>{row.campaignName}</TableCell>
+                    <TableCell>{row.startDate}</TableCell>
+                    <TableCell>{row.endDate}</TableCell>
+                    <TableCell>{row.websites}</TableCell>
+                    <TableCell>{row.screenshotPosition}</TableCell>
+                    <TableCell>{row.AdVisibility}</TableCell>
+                  </>
+                )}
+
+                {selectedReportType === "" && (
+                  <>
+                    <TableCell>{row.campaignId}</TableCell>
+                    <TableCell>{row.campaignName}</TableCell>
+                    <TableCell>{row.startDate}</TableCell>
+                    <TableCell>{row.endDate}</TableCell>
+                    <TableCell>{row.websites}</TableCell>
+                    <TableCell>{row.MatchingPercentage}</TableCell>
+                    <TableCell>{row.screenshotPosition}</TableCell>
+                    <TableCell>{row.AdVisibility}</TableCell>
+                  </>
+                )}
+
+                {/* Add a button in each row to navigate to details page */}
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => navigate(`/details/${row.campaignId}`)}
+                  >
+                    View Details
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
+
+  
+  
+
   );
 }
