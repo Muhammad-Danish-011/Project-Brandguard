@@ -61,13 +61,13 @@ const Register = () => {
     }
   };
 
-  const addUrlField = (name) => {
-    if (name === "webUrls") {
-      setWebUrls([...webUrls, ""]);
-    } else if (name === "exactPageUrls") {
-      setExactPageUrls([...exactPageUrls, ""]);
-    }
-  };
+  // const addUrlField = (name) => {
+  //   if (name === "webUrls") {
+  //     setWebUrls([...webUrls, ""]);
+  //   } else if (name === "exactPageUrls") {
+  //     setExactPageUrls([...exactPageUrls, ""]);
+  //   }
+  // };
 
   const handleStartDateChange = (newDate) => {
     setStartDate(newDate);
@@ -191,11 +191,12 @@ const savePathToDB = (path) => {
                   onChange={handleTextChange}
                   type="text"
                   value={CampaignName}
-                  autoComplete="given-name"
+                  // autoComplete="given-name"
                   variant="standard"
                   required
-                  margin="normal"
-
+                  // InputLabelProps={{
+                  //   shrink: true,
+                  // }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -206,6 +207,7 @@ const savePathToDB = (path) => {
                       <DateTimePicker
                         fullWidth
                         label="Start Date"
+                        placeholder="Start Date"
                         value={startDate}
                         onChange={handleStartDateChange}
                         format="yyyy-MM-dd HH:mm:ss"
@@ -246,13 +248,13 @@ const savePathToDB = (path) => {
                   />
                 </Grid>
               {/* </Grid> */}
-              <Grid container spacing={1} item xs={12}>
+              <Grid container spacing={0} item xs={12}>
                 {webUrls.map((url, index) => (
                   <Grid item xs={12} key={index}>
                     <TextField
                       fullWidth
-                      label={`Web URL ${index + 1}`}
-                      placeholder={`Web URL ${index + 1}`}
+                      label={`Website`}
+                      placeholder={`Website`}
                       type="url"
                       value={url}
                       onChange={(e) => handleInputChange(e, "webUrls", index)}
@@ -268,7 +270,7 @@ const savePathToDB = (path) => {
                     />
                   </Grid>
                 ))}
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Button 
                     variant="contained"
                     color="primary"
@@ -276,7 +278,7 @@ const savePathToDB = (path) => {
                   >
                     Add URL
                   </Button>
-                </Grid>
+                </Grid> */}
                
               </Grid>
               <Grid container spacing={1} item xs={12}>

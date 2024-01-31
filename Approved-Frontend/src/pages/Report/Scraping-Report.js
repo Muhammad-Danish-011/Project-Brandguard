@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
   Link,
@@ -10,6 +9,9 @@ import {
   TableHead,
   TableRow,
   Typography,
+  FormControl,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const headCells = [
@@ -39,35 +41,19 @@ const headCells = [
     disablePadding: false,
     label: "Matching Percentage %",
   },
+  {
+    id: "screenshotPosition",
+    align: "left",
+    disablePadding: false,
+    label: "Screenshot Position",
+  },
+  {
+    id: "AdVisibility",
+    align: "left",
+    disablePadding: false,
+    label: "Ad Visibility %",
+  },
 ];
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 const mockApiData = [
   {
@@ -76,112 +62,44 @@ const mockApiData = [
     startDate: "2024-01-01",
     endDate: "2024-02-01",
     websites: "www.daraz.pk",
-    
     screenshotPosition: "Top Left",
-    MatchingPercentage: 80,
+    AdVisibility: 80,
+    MatchingPercentage: 75,
   },
   {
-    campaignId: 456,
     campaignName: "Campaign 2",
-    startDate: "2024-02-01",
-    endDate: "2024-03-01",
-    websites: "www.daraz.pk",
-   
-    screenshotPosition: "Bottom Right",
-    MatchingPercentage: 75,
-  },
-  {
-    campaignId: 789,
-    campaignName: "Campaign 3",
-    startDate: "2024-03-01",
-    endDate: "2024-04-01",
-    websites: "www.daraz.pk",
-    
+    campaignId: 124,
+    startDate: "2024-01-01",
+    endDate: "2024-02-01",
+    websites: "www.amazon.com",
     screenshotPosition: "Top Right",
-    MatchingPercentage: 85,
-  },
-  {
-    campaignId: 1011,
-    campaignName: "Campaign 4",
-    startDate: "2024-04-01",
-    endDate: "2024-05-01",
-    websites: "www.daraz.pk",
-    
-    screenshotPosition: "Bottom Left",
-    MatchingPercentage: 90,
-  },
-  {
-    campaignId: 1213,
-    campaignName: "Campaign 5",
-    startDate: "2024-05-01",
-    endDate: "2024-06-01",
-    websites: "www.daraz.pk",
-   
-    screenshotPosition: "Center",
-    MatchingPercentage: 70,
-  },
-  {
-    campaignId: 1415,
-    campaignName: "Campaign 6",
-    startDate: "2024-06-01",
-    endDate: "2024-07-01",
-    websites: "www.daraz.pk",
- 
-    screenshotPosition: "Top Center",
-    MatchingPercentage: 95,
-  },
-  {
-    campaignId: 1617,
-    campaignName: "Campaign 7",
-    startDate: "2024-07-01",
-    endDate: "2024-08-01",
-    websites: "www.daraz.pk",
-   
-    screenshotPosition: "Bottom Center",
-    MatchingPercentage: 60,
-  },
-  {
-    campaignId: 1819,
-    campaignName: "Campaign 8",
-    startDate: "2024-08-01",
-    endDate: "2024-09-01",
-    websites: "www.daraz.pk",
-
-    screenshotPosition: "Right Center",
+    AdVisibility: 75,
     MatchingPercentage: 75,
   },
-  {
-    campaignId: 2021,
-    campaignName: "Campaign 9",
-    startDate: "2024-09-01",
-    endDate: "2024-10-01",
-    websites: "www.daraz.pk",
- 
-    screenshotPosition: "Left Center",
-    MatchingPercentage: 85,
-  },
-  {
-    campaignId: 2223,
-    campaignName: "Campaign 10",
-    startDate: "2024-10-01",
-    endDate: "2024-11-01",
-    websites: "www.daraz.pk",
-
-    screenshotPosition: "Random",
-    MatchingPercentage: 80,
-  },
-  // Add more data as needed
+  // ... (other data entries)
 ];
 
 export default function CampaignTable() {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("campaignName");
   const [data, setData] = useState([]);
+  const [selectedCampaign, setSelectedCampaign] = useState("");
+  const [selectedReportType, setSelectedReportType] = useState("screenshot");
 
   useEffect(() => {
-    // Simulate fetching data from API
-    setData(mockApiData);
-  }, []);
+    // Simulate fetching data from API based on the selected campaign and report type
+    setData(() => {
+      if (selectedReportType === "none") {
+        return mockApiData;
+      } else if (!selectedCampaign) {
+        return mockApiData;
+      } else if (selectedCampaign) {
+        return mockApiData.filter((item) => item.campaignId === selectedCampaign);
+      } else {
+        return [];
+      }
+    });
+  }, [selectedCampaign, selectedReportType]);
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -189,13 +107,110 @@ export default function CampaignTable() {
     setOrderBy(property);
   };
 
+  const handleCampaignChange = (event) => {
+    setSelectedCampaign(event.target.value);
+  };
+
+  const handleReportTypeChange = (event) => {
+    setSelectedReportType(event.target.value);
+  };
+
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function getComparator(order, orderBy) {
+    return order === "desc"
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+
+  const filteredHeadCells = headCells.filter((headCell) => {
+    if (selectedReportType === "screenshot") {
+      return (
+        headCell.id === "website" ||
+        headCell.id === "endDate" ||
+        headCell.id === "startDate" ||
+        headCell.id === "campaignName" ||
+        headCell.id === "campaignId" ||
+        headCell.id === "screenshotPosition" ||
+        headCell.id === "AdVisibility"
+      );
+    } else if (selectedReportType === "scraping") {
+      return (
+        headCell.id === "website" ||
+        headCell.id === "endDate" ||
+        headCell.id === "startDate" ||
+        headCell.id === "campaignName" ||
+        headCell.id === "campaignId" ||
+        headCell.id === "MatchingPercentage"
+      );
+    } else {
+      // Display all columns when selectedReportType is empty
+      return true;
+    }
+  });
+  
   return (
     <Box>
+        <Typography variant="h2" className="header">
+        {selectedReportType === "screenshot"
+          ? "Screenshot Report"
+          : selectedReportType === "scraping"
+          ? "Scraping Report"
+          : "Report"}
+      </Typography>
+
+      <FormControl>
+        <Select
+          value={selectedCampaign}
+          onChange={handleCampaignChange}
+          displayEmpty
+        >
+          <MenuItem value="">Select Campaign</MenuItem>
+          {mockApiData.map((item) => (
+            <MenuItem key={item.campaignId} value={item.campaignId}>
+              {item.campaignName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl>
+        <Select
+          value={selectedReportType}
+          onChange={handleReportTypeChange}
+          displayEmpty
+        >
+          <MenuItem value="">Select Report Type</MenuItem>
+          <MenuItem value="screenshot">Screenshot Report</MenuItem>
+          <MenuItem value="scraping">Scraping Report</MenuItem>
+        </Select>
+      </FormControl>
+
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              {headCells.map((headCell) => (
+              {filteredHeadCells.map((headCell) => (
                 <TableCell
                   key={headCell.id}
                   align={headCell.align}
@@ -211,8 +226,7 @@ export default function CampaignTable() {
                     ) : (
                       <Link
                         color="inherit"
-                        component={RouterLink}
-                        to=""
+                        href="#"
                         onClick={() => handleRequestSort(headCell.id)}
                       >
                         {headCell.label}
@@ -227,14 +241,41 @@ export default function CampaignTable() {
             {stableSort(data, getComparator(order, orderBy)).map(
               (row, index) => (
                 <TableRow key={index}>
-                  <TableCell>{row.campaignId}</TableCell>
-                  <TableCell>{row.campaignName}</TableCell>
-                  <TableCell>{row.startDate}</TableCell>
-                  <TableCell>{row.endDate}</TableCell>
-                  <TableCell>{row.websites}</TableCell>
-                 
-                  <TableCell>{row.MatchingPercentage}</TableCell>
+                  {selectedReportType === "scraping" && (
+                    <>
+                      <TableCell>{row.campaignId}</TableCell>
+                      <TableCell>{row.campaignName}</TableCell>
+                      <TableCell>{row.startDate}</TableCell>
+                      <TableCell>{row.endDate}</TableCell>
+                      <TableCell>{row.websites}</TableCell>
+                      <TableCell>{row.MatchingPercentage}</TableCell>
+                    </>
+                  )}
+
+                  {selectedReportType === "screenshot" && (
+                    <>
+                      <TableCell>{row.campaignId}</TableCell>
+                      <TableCell>{row.campaignName}</TableCell>
+                      <TableCell>{row.startDate}</TableCell>
+                      <TableCell>{row.endDate}</TableCell>
+                      <TableCell>{row.websites}</TableCell>
+                      <TableCell>{row.screenshotPosition}</TableCell>
+                      <TableCell>{row.AdVisibility}</TableCell>
+                    </>
+                  )}
                   
+                  {selectedReportType === "" && (
+                    <>
+                      <TableCell>{row.campaignId}</TableCell>
+                      <TableCell>{row.campaignName}</TableCell>
+                      <TableCell>{row.startDate}</TableCell>
+                      <TableCell>{row.endDate}</TableCell>
+                      <TableCell>{row.websites}</TableCell>
+                      <TableCell>{row.MatchingPercentage}</TableCell>
+                      <TableCell>{row.screenshotPosition}</TableCell>
+                      <TableCell>{row.AdVisibility}</TableCell>
+                    </>
+                  )}
                 </TableRow>
               )
             )}

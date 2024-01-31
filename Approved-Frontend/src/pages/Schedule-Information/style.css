@@ -3,7 +3,7 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   
   .container {
@@ -13,8 +13,8 @@ body {
     min-height: 1vh; /* Adjusted min-height value for better visibility */
     margin-top: 0;
     background: linear-gradient(180deg, #f0f0f0 0%, #fff8f8 100%);
-    background-image: url("../../assets/images/brandguard_logo_black.png");
-    background-size: 100vh 40vh; 
+    /* background-image: url("../../assets/images/brandguard_logo_black.png"); */
+    background-size: 70vh 40vh; 
     background-repeat: no-repeat;
     background-position: center;
   }

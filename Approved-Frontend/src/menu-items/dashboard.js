@@ -24,7 +24,7 @@ const dashboard = {
     },
     {
       id: 'Register',
-      title: 'Schedule-Information',
+      title: 'Schedule Information',
       type: 'item',
       url: '/Schedule-Information/Register',
       icon: icons.ProfileOutlined,
