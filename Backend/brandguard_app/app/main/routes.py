@@ -444,3 +444,133 @@ def save_image_path():
     except Exception as e:
         traceback.print_exc()  # This will print the stack trace to the console
         return jsonify({"error": f"Error saving image path: {str(e)}"}), 500
+
+@bp.route('/general_report', methods=['GET'])
+def get_general_report():
+    try:
+        # Fetch data from Campaigns, Websites, AdPositions, and Scrape_Image_Status tables
+        campaigns = Campaigns.query.all()
+
+        general_report = []
+        for campaign in campaigns:
+            # Fetch data for each campaign
+            campaign_data = {
+                'CampaignID': campaign.CampaignID,
+                'CampaignName': campaign.CampaignName,
+                'StartDate': campaign.StartDate.strftime('%Y-%m-%d %H:%M:%S'),
+                'EndDate': campaign.EndDate.strftime('%Y-%m-%d %H:%M:%S'),
+                'WebsiteURL': [],
+                'Found_Status_Screenshot': 0,  # Initialize to 0, will be calculated later
+                'Found_Status_Scraping': 0  # Initialize to 0, will be calculated later
+            }
+
+            # Fetch associated websites for the campaign
+            websites = Websites.query.filter_by(CampaignID=campaign.CampaignID).all()
+            for website in websites:
+                campaign_data['WebsiteURL'].append(website.WebsiteURL)
+
+            # Fetch AdPositions for the campaign
+            ad_positions = AdPositions.query.filter_by(CampaignID=campaign.CampaignID).all()
+
+            # Calculate Found_Status_Screenshot as a percentage
+            total_positions = len(ad_positions)
+            found_positions_screenshot = sum(1 for ad_position in ad_positions if ad_position.Found_Status == 'yes')
+
+            if total_positions > 0:
+                campaign_data['Found_Status_Screenshot'] = found_positions_screenshot / total_positions * 100
+
+            # Fetch Scrape_Image_Status for the campaign
+            scrape_image_statuses = Scrape_Image_Status.query.filter_by(CampaignID=campaign.CampaignID).all()
+
+            # Calculate Found_Status_Scraping as a percentage
+            total_scrape_statuses = len(scrape_image_statuses)
+            found_scrape_statuses = sum(1 for scrape_status in scrape_image_statuses if scrape_status.Found_Status == 'yes')
+
+            if total_scrape_statuses > 0:
+                campaign_data['Found_Status_Scraping'] = found_scrape_statuses / total_scrape_statuses * 100
+
+            general_report.append(campaign_data)
+
+        return jsonify(general_report)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in get_general_report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@bp.route('/scraping_report/<int:campaignID>', methods=['GET'])
+def get_scraping_report(campaignID):
+    try:
+        # Fetch data from Campaigns, Websites, and Scrape_Image_Status tables for the specified campaignID
+        campaign = Campaigns.query.get(campaignID)
+
+        if not campaign:
+            return jsonify({"error": "Campaign not found"}), 404
+
+        scraping_report = {
+            'CampaignID': campaign.CampaignID,
+            'CampaignName': campaign.CampaignName,
+            'WebsiteURL': [],
+            'ScrapeImageStatus': []
+        }
+
+        # Fetch associated websites for the campaign
+        websites = Websites.query.filter_by(CampaignID=campaign.CampaignID).all()
+        for website in websites:
+            scraping_report['WebsiteURL'].append(website.WebsiteURL)
+
+        # Fetch Scrape_Image_Status for the campaign
+        scrape_image_statuses = Scrape_Image_Status.query.filter_by(CampaignID=campaign.CampaignID).all()
+
+        for scrape_status in scrape_image_statuses:
+            scrape_data = {
+                'DateTime': scrape_status.DateTime.strftime('%Y-%m-%d %H:%M:%S'),
+                'Found_Status': scrape_status.Found_Status
+            }
+            scraping_report['ScrapeImageStatus'].append(scrape_data)
+
+        return jsonify(scraping_report)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in get_scraping_report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@bp.route('/screenshot_report/<int:campaignID>', methods=['GET'])
+def get_screenshot_report(campaignID):
+    try:
+        # Fetch data from Campaigns, Websites, AdPositions, and Screenshots tables for the specified campaignID
+        campaign = Campaigns.query.get(campaignID)
+
+        if not campaign:
+            return jsonify({"error": "Campaign not found"}), 404
+
+        screenshot_report = {
+            'CampaignID': campaign.CampaignID,
+            'CampaignName': campaign.CampaignName,
+            'WebsiteURL': [],
+            'AdPositions': []
+        }
+
+        # Fetch associated websites for the campaign
+        websites = Websites.query.filter_by(CampaignID=campaign.CampaignID).all()
+        for website in websites:
+            screenshot_report['WebsiteURL'].append(website.WebsiteURL)
+
+        # Fetch AdPositions and Screenshots for the campaign
+        ad_positions = AdPositions.query.filter_by(CampaignID=campaign.CampaignID).all()
+
+        for ad_position in ad_positions:
+            # Fetch the corresponding screenshot to get FilePath
+            screenshot = Screenshots.query.filter_by(ScreenshotID=ad_position.ScreenshotID).first()
+
+            screenshot_data = {
+                'Capture_DateTime': ad_position.Capture_DateTime.strftime('%Y-%m-%d %H:%M:%S'),
+                'FilePath': screenshot.FilePath if screenshot else None,
+                'Found_Status': ad_position.Found_Status
+            }
+            screenshot_report['AdPositions'].append(screenshot_data)
+
+        return jsonify(screenshot_report)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in get_screenshot_report: {e}")
+        return jsonify({"error": str(e)}), 500
