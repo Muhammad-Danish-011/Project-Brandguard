@@ -366,6 +366,12 @@ def schedule_campaign(campaignID, interval_time):
         minutes=interval_time,
         args=[campaignID]
     )
+    scheduler.add_job(
+        image_scraping,
+        'interval',
+        minutes=interval_time,
+        args=[campaignID]
+    )
 
 
 @bp.route('/image_position/<int:campaignID>', methods=['GET'])

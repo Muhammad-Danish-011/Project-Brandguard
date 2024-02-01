@@ -38,17 +38,17 @@ def fullpage_screenshot(driver, folder, file):
     # Scroll through the page to trigger lazy loading
     for y in range(0, scroll_height, 200):
         driver.execute_script(f"window.scrollTo(0, {y});")
-        time.sleep(1)  # short sleep between scrolls
+        time.sleep(3)  # short sleep between scrolls
 
     # Set window size to capture the entire page
     driver.set_window_size(1920, scroll_height)
 
     # Scroll horizontally to the right
-    driver.execute_script("window.scrollTo(5000, 0);")
+    # driver.execute_script("window.scrollTo(5000, 0);")
 
-    driver.refresh()
+    # driver.refresh()
 
-    time.sleep(3)
+    # time.sleep(3)
 
     # Create subfolder if it doesn't exist
     if not os.path.exists(folder):
