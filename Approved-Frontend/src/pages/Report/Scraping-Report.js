@@ -37,35 +37,38 @@ const headCells = [
     label: "Start Date",
   },
   { id: "endDate", align: "left", disablePadding: false, label: "End Date" },
-  { id: "website", align: "left", disablePadding: false, label: "Websites" },
+  { id: "websites", align: "left", disablePadding: false, label: "Websites" },
   {
-    id: "MatchingPercentage",
+ 
+    id: "Found_Status_Screenshot",
     align: "left",
     disablePadding: false,
-    label: "Matching Percentage %",
+    label: "Found Status Screenshot",
   },
   {
-    id: "screenshotPosition",
+    id: "Found_Status_Scraping",
     align: "left",
     disablePadding: false,
-    label: "Screenshot Position",
+    label: "Found Status Scraping",
   },
-  {
-    id: "AdVisibility",
-    align: "left",
-    disablePadding: false,
-    label: "Ad Visibility %",
-  },
+  // {
+  //   id: "AdVisibility",
+  //   align: "left",
+  //   disablePadding: false,
+  //   label: "Ad Visibility %",
+  // },
 ];
+
+
+ // ... (imports remain unchanged)
 
 export default function CampaignTable() {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("campaignName");
-  const [data, setData] = useState(null); // Set initial state to null
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCampaign, setSelectedCampaign] = useState("");
-  const [selectedReportType, setSelectedReportType] = useState("screenshot");
 
   const navigate = useNavigate();
 
@@ -87,25 +90,6 @@ export default function CampaignTable() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (data === null) {
-      // Avoid trying to filter when data is null
-      return;
-    }
-
-    setData((prevData) => {
-      if (selectedReportType === "none") {
-        return prevData;
-      } else if (!selectedCampaign) {
-        return prevData;
-      } else if (selectedCampaign) {
-        return prevData.filter((item) => item.campaignId === selectedCampaign);
-      } else {
-        return [];
-      }
-    });
-  }, [selectedCampaign, selectedReportType, data]);
-
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -116,71 +100,10 @@ export default function CampaignTable() {
     setSelectedCampaign(event.target.value);
   };
 
-  const handleReportTypeChange = (event) => {
-    setSelectedReportType(event.target.value);
-  };
-
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-
-  function getComparator(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-
-  const filteredHeadCells = headCells.filter((headCell) => {
-    if (selectedReportType === "screenshot") {
-      return (
-        headCell.id === "website" ||
-        headCell.id === "endDate" ||
-        headCell.id === "startDate" ||
-        headCell.id === "campaignName" ||
-        headCell.id === "campaignId" ||
-        headCell.id === "screenshotPosition" ||
-        headCell.id === "AdVisibility"
-      );
-    } else if (selectedReportType === "scraping") {
-      return (
-        headCell.id === "website" ||
-        headCell.id === "endDate" ||
-        headCell.id === "startDate" ||
-        headCell.id === "campaignName" ||
-        headCell.id === "campaignId" ||
-        headCell.id === "MatchingPercentage"
-      );
-    } else {
-      return true;
-    }
-  });
-
   return (
     <Box>
       <Typography variant="h2" className="header">
-        {selectedReportType === "screenshot"
-          ? "Screenshot Report"
-          : selectedReportType === "scraping"
-          ? "Scraping Report"
-          : "Report"}
+        All Campaigns Report
       </Typography>
 
       {loading && <CircularProgress />}
@@ -197,22 +120,10 @@ export default function CampaignTable() {
             >
               <MenuItem value="">Select Campaign</MenuItem>
               {data.map((item) => (
-                <MenuItem key={item.campaignId} value={item.campaignId}>
-                  {item.campaignName}
+                <MenuItem key={item.CampaignID} value={item.CampaignID}>
+                  {item.CampaignName}
                 </MenuItem>
               ))}
-            </Select>
-          </FormControl>
-
-          <FormControl>
-            <Select
-              value={selectedReportType}
-              onChange={handleReportTypeChange}
-              displayEmpty
-            >
-              <MenuItem value="">Select Report Type</MenuItem>
-              <MenuItem value="screenshot">Screenshot Report</MenuItem>
-              <MenuItem value="scraping">Scraping Report</MenuItem>
             </Select>
           </FormControl>
 
@@ -220,7 +131,7 @@ export default function CampaignTable() {
             <Table>
               <TableHead>
                 <TableRow>
-                  {filteredHeadCells.map((headCell) => (
+                  {headCells.map((headCell) => (
                     <TableCell
                       key={headCell.id}
                       align={headCell.align}
@@ -240,57 +151,44 @@ export default function CampaignTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {stableSort(data, getComparator(order, orderBy)).map(
-                  (row, index) => (
+                {data
+                  .filter((item) =>
+                    selectedCampaign
+                      ? item.CampaignID === selectedCampaign
+                      : true
+                  )
+                  .map((row, index) => (
                     <TableRow key={index}>
-                      {selectedReportType === "scraping" && (
-                        <>
-                          <TableCell>{row.campaignId}</TableCell>
-                          <TableCell>{row.campaignName}</TableCell>
-                          <TableCell>{row.startDate}</TableCell>
-                          <TableCell>{row.endDate}</TableCell>
-                          <TableCell>{row.websites}</TableCell>
-                          <TableCell>{row.MatchingPercentage}</TableCell>
-                        </>
-                      )}
+                      <TableCell>{row.CampaignID}</TableCell>
+                      <TableCell>{row.CampaignName}</TableCell>
+                      <TableCell>{row.StartDate}</TableCell>
+                      <TableCell>{row.EndDate}</TableCell>
+                     
+                    
+                      <TableCell>
+                        {row.WebsiteURL.map((url) => (
+                          <div key={url}>{url}</div>
+                        ))}
+                      </TableCell>
+                      <TableCell>{row.Found_Status_Scraping}</TableCell>
+                      <TableCell>{row.Found_Status_Screenshot}</TableCell>
 
-                      {selectedReportType === "screenshot" && (
-                        <>
-                          <TableCell>{row.campaignId}</TableCell>
-                          <TableCell>{row.campaignName}</TableCell>
-                          <TableCell>{row.startDate}</TableCell>
-                          <TableCell>{row.endDate}</TableCell>
-                          <TableCell>{row.websites}</TableCell>
-                          <TableCell>{row.screenshotPosition}</TableCell>
-                          <TableCell>{row.AdVisibility}</TableCell>
-                        </>
-                      )}
-
-                      {selectedReportType === "" && (
-                        <>
-                          <TableCell>{row.campaignId}</TableCell>
-                          <TableCell>{row.campaignName}</TableCell>
-                          <TableCell>{row.startDate}</TableCell>
-                          <TableCell>{row.endDate}</TableCell>
-                          <TableCell>{row.websites}</TableCell>
-                          <TableCell>{row.MatchingPercentage}</TableCell>
-                          <TableCell>{row.screenshotPosition}</TableCell>
-                          <TableCell>{row.AdVisibility}</TableCell>
-                        </>
-                      )}
-
+                      {/* <TableCell>{row.MatchingPercentage}</TableCell>
+                      <TableCell>{row.ScreenshotPosition}</TableCell>
+                      <TableCell>{row.AdVisibility}</TableCell> */}
                       <TableCell>
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={() => navigate(`/details/${row.campaignId}`)}
+                          onClick={() =>
+                            navigate(`/details/${row.CampaignID}`)
+                          }
                         >
                           View Details
                         </Button>
                       </TableCell>
                     </TableRow>
-                  )
-                )}
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>

@@ -57,9 +57,9 @@ const DetailPage = ({ campaignId }) => {
       <h2>Details Page for Campaign {campaignId}</h2>
       {campaignDetails && (
         <div>
-          {/* Display campaign details based on the received data */}
-          <p>Campaign Name: {campaignDetails.campaignName}</p>
-          <p>Start Date: {campaignDetails.startDate}</p>
+          <p>Campaign Name: {campaignDetails.CampaignName}</p>
+          <p>Campaign ID: {campaignDetails.CampaignID}</p>
+          <p>Website URL: {campaignDetails.WebsiteURL[0]}</p>
           {/* Add more details as needed */}
         </div>
       )}
