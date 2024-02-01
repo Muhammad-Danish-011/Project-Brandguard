@@ -50,6 +50,12 @@ const headCells = [
     disablePadding: false,
     label: "Found Status Scraping",
   },
+  {
+    id: "action",
+    align: "left",
+    disablePadding: false,
+    label: "Action",
+  },
   // {
   //   id: "AdVisibility",
   //   align: "left",
@@ -143,7 +149,7 @@ export default function CampaignTable() {
                       <Typography
                         variant="subtitle3"
                         fontWeight="bold"
-                        
+
                         onClick={() => handleRequestSort(headCell.id)}
                         style={{ cursor: "pointer" }}
                       >
@@ -172,8 +178,8 @@ export default function CampaignTable() {
                           <div key={url}>{url}</div>
                         ))}
                       </TableCell>
-                      <TableCell>{row.Found_Status_Scraping}</TableCell>
                       <TableCell>{row.Found_Status_Screenshot}</TableCell>
+                      <TableCell>{row.Found_Status_Scraping}</TableCell>
 
                       {/* <TableCell>{row.MatchingPercentage}</TableCell>
                       <TableCell>{row.ScreenshotPosition}</TableCell>
@@ -184,9 +190,9 @@ export default function CampaignTable() {
                           color="primary"
                           onClick={() => {
                             navigate(`/details/${row.CampaignID}`);
-                        
-                              
-                             
+
+
+
                           }}
                         >
                           View Details

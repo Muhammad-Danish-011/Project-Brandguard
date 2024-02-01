@@ -8,28 +8,40 @@ const DetailPage = () => {
   const [campaignDetails, setCampaignDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showScreenshotDetails, setScreenshotDetails] = useState(true)
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:5000/screenshot_report/${campaignId}`);
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data. Status: ${response.status}`);
-        }
+  const fetchData = async (name) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/${name}/${campaignId}`);
 
-        const data = await response.json();
-        setCampaignDetails(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data. Status: ${response.status}`);
       }
-    };
 
-    fetchData();
-  }, [campaignId]);
+      const data = await response.json();
+      setCampaignDetails(data);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
+
+    if(showScreenshotDetails) {
+      setCampaignDetails(null)
+      fetchData('screenshot_report');
+    }
+    else {
+      setCampaignDetails(null)
+      fetchData('scraping_report');
+    }
+
+  }, [showScreenshotDetails]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,7 +53,7 @@ const DetailPage = () => {
 
   return (
     <div>
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         onClick={() => {
@@ -53,9 +65,118 @@ const DetailPage = () => {
         }}
       >
         Scraping Details
-      </Button>
+      </Button> */}
       <h2>Details Page for Campaign {campaignId}</h2>
-      {campaignDetails && (
+
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={showScreenshotDetails}
+          onClick={() => {
+            setScreenshotDetails(true)
+          }}
+          style={{}}
+        >
+          Screenshot Details
+        </Button>
+        <Button
+        variant="contained"
+        color="primary"
+        disabled={!showScreenshotDetails}
+        onClick={() => {
+          setScreenshotDetails(false)
+        }}
+        style={{}}
+      >
+        Scraping Details
+      </Button>
+      </div>
+
+      {showScreenshotDetails ?
+        (campaignDetails && <div>
+          <h1>Screenshot Details</h1>
+          <p>Campaign ID: {campaignDetails.CampaignID}</p>
+          <p>Website URL: {campaignDetails.WebsiteURL}</p>
+          <p>Campaign Name: {campaignDetails.CampaignName}</p>
+
+          <TableContainer component={Paper}>
+            <Table style={{ backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+              <TableHead>
+                <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
+                  <TableCell>Capture Date Time</TableCell>
+                  <TableCell>File Path</TableCell>
+                  <TableCell>Found Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+              {campaignDetails.AdPositions?.length > 0 ? (
+                  campaignDetails.AdPositions?.map(({Capture_DateTime, FilePath, Found_Status}) => (
+                      <>
+                      <TableRow>
+                      <TableCell>
+                      {Capture_DateTime}
+                      </TableCell>
+                      <TableCell>
+                      {FilePath}
+                      </TableCell>
+                      <TableCell>
+                      {Found_Status}
+                      </TableCell>
+                      </TableRow>
+
+                      </>
+                    )
+                  )
+                  ) : (
+                    "No Ad Positions"
+                  )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+        </div>) :
+        (campaignDetails && <div>
+          <h1>Scraping Details</h1>
+          <p>Campaign ID: {campaignDetails.CampaignID}</p>
+          <p>Website URL: {campaignDetails.WebsiteURL}</p>
+          <p>Campaign Name: {campaignDetails.CampaignName}</p>
+
+          <TableContainer component={Paper}>
+            <Table style={{ backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+              <TableHead>
+                <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
+                  <TableCell>Capture Date Time</TableCell>
+                  <TableCell>Found Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+              {campaignDetails.ScrapeImageStatus?.length > 0 ? (
+                  campaignDetails.ScrapeImageStatus?.map(({DateTime, Found_Status}) => (
+                      <>
+                      <TableRow>
+                      <TableCell>
+                      {DateTime}
+                      </TableCell>
+                      <TableCell>
+                      {Found_Status}
+                      </TableCell>
+                      </TableRow>
+
+                      </>
+                    )
+                  )
+                  ) : (
+                    "No Ad Positions"
+                  )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+        </div>)
+      }
+
+      {/* {campaignDetails && (
         <div>
           <TableContainer component={Paper}>
             <Table style={{ backgroundColor: '#E3F2FD', color: '#1976D2' }}>
@@ -77,7 +198,6 @@ const DetailPage = () => {
                       <ul>
                         {campaignDetails.AdPositions.map((adPosition, index) => (
                           <li key={index}>
-                            {/* Render each property of the adPosition object */}
                             <div>
                               <strong>Capture Date Time:</strong> {adPosition.Capture_DateTime}
                             </div>
@@ -99,7 +219,7 @@ const DetailPage = () => {
             </Table>
           </TableContainer>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
