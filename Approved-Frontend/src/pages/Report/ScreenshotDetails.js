@@ -41,64 +41,66 @@ const DetailPage = () => {
 
   return (
     <div>
-        <Button  variant="contained"
-                          color="primary"
-                          onClick={() => {
-                            navigate(`/ScrapingDetails/${campaignId}`)}}
-                            style={{
-                              position: 'absolute',
-                              
-                               right: '56px',  
-                              
-                            }}
-                            >
-          Scraping Details
-        </Button>
-      <h2>Details Page for Campaign {campaignId}</h2>
-      {campaignDetails && (
-  <div>
-   
-    <TableContainer component={Paper}>
-      <Table  style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
-        <TableHead>
-          <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
-            <TableCell>Website URL</TableCell>
-            <TableCell>Campaign ID</TableCell>
-            <TableCell>Campaign Name</TableCell>
-            <TableCell>Ad Positions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow >
-            <TableCell>{campaignDetails.WebsiteURL}</TableCell>
-            <TableCell>{campaignDetails.CampaignID}</TableCell>
-            <TableCell>{campaignDetails.CampaignName}</TableCell>
-            <TableCell>
-              {campaignDetails.AdPositions.length > 0 ? (
-                <ul>
-                  {campaignDetails.AdPositions.map((adPosition, index) => (
-                    <li key={index}>{adPosition}</li>
-                  ))}
-                </ul>
-              ) : (
-                "No Ad Positions"
-              )}
-
-            </TableCell>
-            
-          </TableRow>
-      
-        </TableBody>
-      </Table>
-    </TableContainer>
-   
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => {
+        navigate(`/ScrapingDetails/${campaignId}`);
+      }}
+      style={{
+        position: 'absolute',
+        right: '56px',
+      }}
+    >
+      Scraping Details
+    </Button>
+    <h2>Details Page for Campaign {campaignId}</h2>
+    {campaignDetails && (
+      <div>
+        <TableContainer component={Paper}>
+          <Table style={{ backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+            <TableHead>
+              <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
+                <TableCell>Website URL</TableCell>
+                <TableCell>Campaign ID</TableCell>
+                <TableCell>Campaign Name</TableCell>
+                <TableCell>Ad Positions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>{campaignDetails.WebsiteURL}</TableCell>
+                <TableCell>{campaignDetails.CampaignID}</TableCell>
+                <TableCell>{campaignDetails.CampaignName}</TableCell>
+                <TableCell>
+                  {campaignDetails.AdPositions.length > 0 ? (
+                    <ul>
+                      {campaignDetails.AdPositions.map((adPosition, index) => (
+                        <li key={index}>
+                          {/* Render each property of the adPosition object */}
+                          <div>
+                            <strong>Capture Date Time:</strong> {adPosition.Capture_DateTime}
+                          </div>
+                          <div>
+                            <strong>File Path:</strong> {adPosition.FilePath}
+                          </div>
+                          <div>
+                            <strong>Found Status:</strong> {adPosition.Found_Status}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "No Ad Positions"
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    )}
   </div>
-  
-)}   
-  
-        
-    
-</div>
   );
 };
 
