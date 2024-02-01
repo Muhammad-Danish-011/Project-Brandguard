@@ -59,9 +59,9 @@ const DetailPage = () => {
   <div>
    
     <TableContainer component={Paper}>
-      <Table>
+      <Table  style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
         <TableHead>
-          <TableRow style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+          <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
             <TableCell>Website URL</TableCell>
             <TableCell>Campaign ID</TableCell>
             <TableCell>Campaign Name</TableCell>

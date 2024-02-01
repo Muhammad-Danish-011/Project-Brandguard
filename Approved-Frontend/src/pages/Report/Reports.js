@@ -131,8 +131,8 @@ export default function CampaignTable() {
           </FormControl>
 
           <TableContainer>
-            <Table>
-              <TableHead style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+            <Table  style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+              <TableHead style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
               <TableRow >
                   {headCells.map((headCell) => (
                     <TableCell
@@ -143,7 +143,7 @@ export default function CampaignTable() {
                       <Typography
                         variant="subtitle3"
                         fontWeight="bold"
-                        color="primary"
+                        
                         onClick={() => handleRequestSort(headCell.id)}
                         style={{ cursor: "pointer" }}
                       >

@@ -55,9 +55,9 @@ const ScrapingDetails = () => {
       {campaignDetails ? (
         <div>
           <TableContainer component={Paper}>
-            <Table>
+            <Table style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
               <TableHead>
-              <TableRow style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+              <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
                   <TableCell>Website URL</TableCell>
                   <TableCell>Campaign ID</TableCell>
                   <TableCell>Campaign Name</TableCell>
@@ -69,6 +69,11 @@ const ScrapingDetails = () => {
                   <TableCell>{campaignDetails.WebsiteURL}</TableCell>
                   <TableCell>{campaignDetails.CampaignID}</TableCell>
                   <TableCell>{campaignDetails.CampaignName}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
                   <TableCell>
                     {campaignDetails.ScrapeImageStatus.length > 0 ? (
                       <ul>
