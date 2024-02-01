@@ -6,26 +6,32 @@ from datetime import datetime
 from urllib.parse import urlparse
 import os
 import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from app.extensions import scheduler
 from app.models.models import *
 from app.utils.find_position import *
-from app.utils.img_scraper import *
 from flask import jsonify
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium_stealth import stealth
 from webdriver_manager.chrome import ChromeDriverManager
-<<<<<<< HEAD
 from flask import jsonify
 import traceback
 from app.extensions import scheduler
 import logging
 from app.utils.find_position import *
 from urllib.parse import urlparse
-=======
+from selenium.common.exceptions import TimeoutException
+from PIL import Image
+from io import BytesIO
+import app
 
 
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
+
+
+(Make changes in capturing screenshot function in img_grabber.py)
 
 # Configure logging (usually done in your Flask app initialization)
 logging.basicConfig(
@@ -36,32 +42,120 @@ logging.basicConfig(
         logging.StreamHandler()  # Log to the console
     ]
 )
+
+
 def fullpage_screenshot(driver, folder, file):
     """Capture a full-page screenshot using JavaScript"""
-    js = (
+    current_url = driver.current_url
+    if  current_url == 'https://www.cozmetica.pk/':
+        js = (
+                "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
+                "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
+                "document.documentElement.offsetHeight);"
+            )
+        scroll_height = driver.execute_script(js)
+        time.sleep(5)
+            
+        for y in range(0, scroll_height, 100):
+            driver.execute_script(f"window.scrollTo(0, {y});")
+            time.sleep(5)  # Adjust this sleep time as needed to allow content to load
+
+        # Scroll through the page in chunks to capture lazy-loaded content
+
+        time.sleep(30)
+
+        # Set window size to capture the entire page
+        driver.set_window_size(700, scroll_height)
+
+        # Scroll the page to the top
+        driver.execute_script("window.scrollTo(0, 0);")
+
+        # Sleep for a longer time to ensure all content is loaded
+        time.sleep(80)  # Adjust this sleep time as needed
+
+
+        # Create subfolder if it doesn't exist
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+        
+        # Capture screenshot in the subfolder
+        file_path = os.path.join(folder, file)
+        driver.save_screenshot(file_path)
+        driver.quit()
+    elif current_url == 'https://www.naheed.pk/':
+        time.sleep(30)
+    
+        js = (
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
             "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
             "document.documentElement.offsetHeight);"
         )
-    scroll_height = driver.execute_script(js)
-   
-    # Scroll through the page to trigger lazy loading
-    for y in range(0, scroll_height, 100):
-        driver.execute_script(f"window.scrollTo(0, {y});")
-        time.sleep(2)  # short sleep between scrolls
+        scroll_height = driver.execute_script(js)
+        print(scroll_height)
 
-    # Set window size to capture the entire page
-    driver.set_window_size(1920, scroll_height)
+        # Scroll through the page to trigger lazy loading
+        for y in range(0, scroll_height, 100):
+            driver.execute_script(f"window.scrollTo(0, {y});")
+            time.sleep(2)  # short sleep between scrolls
+        # time.sleep(5)
+        # Set window size to capture the entire page
+        driver.set_window_size(1500, scroll_height)
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(30)
+        # Create subfolder if it doesn't exist
+        if not os.path.exists(folder):
+            os.makedirs(folder)
 
-    # Create subfolder if it doesn't exist
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+        # Define the height of each scroll portion
+        # scroll_step = 500  # Adjust as needed
+
+        # Capture and save portions of the page
+        # for y in range(0, scroll_height, scroll_step):
+        #     driver.execute_script(f"window.scrollTo(0, {y});")
+        #     time.sleep(5)  # short sleep between scrolls
+            # file_name = f"{file}_part_{y}.png"
+        file_path = os.path.join(folder, file)
+        driver.save_screenshot(file_path)
+    else:
     
-    # Capture screenshot in the subfolder
-    file_path = os.path.join(folder, file)
-    driver.save_screenshot(file_path)
-    driver.quit()
+    	js = (
+		"return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
+		"document.documentElement.clientHeight, document.documentElement.scrollHeight, "
+		"document.documentElement.offsetHeight);"
+	    )
 
+
+	    scroll_height = driver.execute_script(js)
+	    # print(scroll_height)
+	    time.sleep(10)
+	    
+	    # Scroll through the page to trigger lazy loading
+	    for y in range(0, scroll_height, 100):
+		driver.execute_script(f"window.scrollTo(0, {y});")
+		time.sleep(2)
+		
+	    
+	    # Set window size to capture the entire page
+	    driver.set_window_size(1920, scroll_height)
+
+	    # Scroll the page using the scroll_full_page function
+	    # scroll_full_page(driver)
+	    driver.execute_script("window.scrollTo(5000, 0);")
+
+	    # driver.refresh()
+
+	    time.sleep(80)
+
+	    # Create subfolder if it doesn't exist
+	    if not os.path.exists(folder):
+		os.makedirs(folder)
+	    
+	    # Capture screenshot in the subfolder
+	    file_path = os.path.join(folder, file)
+	    driver.save_screenshot(file_path)
+	    driver.quit()
+	    
+        
 
 # Function to capture screenshots at intervals
 def capture_screenshots(driver, folder):
@@ -70,14 +164,9 @@ def capture_screenshots(driver, folder):
     fullpage_screenshot(driver, folder, file_name)
     logging.info(f"Capturing screenshots for CampaignID ")
     return file_name
-<<<<<<< HEAD
 
-
-def get_interval_time(campainID):
-=======
-    
 def get_interval_time(campaignID):
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
+
     try:
         campaign = Campaigns.query.filter_by(CampaignID=campaignID).first()
         if campaign:
@@ -87,7 +176,8 @@ def get_interval_time(campaignID):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return {"error": str(e)}, 500
-        
+
+
 def get_website(campaign_id):
     try:
         campaign = Campaigns.query.filter_by(CampaignID=campaign_id).first()
@@ -105,7 +195,6 @@ def get_website(campaign_id):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return jsonify({"error": str(e)}), 500
-<<<<<<< HEAD
 
 # def generate_screenshot_path(path):
 #     # Extract domain from the website URL
@@ -119,8 +208,6 @@ def get_website(campaign_id):
 #     # Combine to create the full path
 #     full_path = path
 #     return full_path
-=======
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
 
 
 def capture_screenshot_by_campaignid(campaignID):
@@ -174,13 +261,13 @@ def capture_screenshot_by_campaignid(campaignID):
         # Create a subfolder for each capture
         current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
         folder_name = f"{website_url.replace('https://', '').replace('/', ' ')} - {current_datetime}"
-<<<<<<< HEAD
+
         full_folder_path = os.path.join("screenshots", folder_name)
-=======
+
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
         screenshots_dir = os.path.join(base_dir, "screenshots", folder_name)
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
+
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
         screenshots_dir = os.path.join(base_dir, "screenshots", folder_name)
@@ -189,22 +276,17 @@ def capture_screenshot_by_campaignid(campaignID):
         driver.get(website_url)
         # Capture screenshots at the specified interval for the given duration
         c_sc = capture_screenshots(driver, screenshots_dir)
-<<<<<<< HEAD
-        # screenshot_path = generate_screenshot_path(c_sc)
-=======
 
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
+
         screenshot_path = os.path.join(screenshots_dir, c_sc)
 
         # Quit the WebDriver
         driver.quit()
         # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
-<<<<<<< HEAD
-            CampaignID=campainID,
-=======
+
+
             CampaignID=campaignID,
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
             WebsiteID=website_id,
             Extension='png',
             Timestamp=current_datetime,
@@ -215,15 +297,10 @@ def capture_screenshot_by_campaignid(campaignID):
         db.session.commit()
         logging.info("Screenshots captured successfully")
         return {"status": "Screenshots captured successfully"}
-
-<<<<<<< HEAD
-def image_position(campainID):
-    from app import create_app
-=======
-
+    
 def image_position(campaignID):
     from app.factory import create_app
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
+
 
     with create_app().app_context():
         screenshots_path = get_screenshot_path(campaignID)
@@ -231,12 +308,9 @@ def image_position(campaignID):
         refrence_image = get_refrence_image(campaignID)
         print(refrence_image)
         if screenshots_path and refrence_image:
-<<<<<<< HEAD
-            position_result = find_image_position(screenshots_path,refrence_image)
-=======
             position_result = find_image_position(
-                screenshots_path, refrence_image, campaignID)
->>>>>>> 0399c90a (Make changes in capturing screenshot function in img_grabber.py)
+            screenshots_path, refrence_image, campaignID)
+
             logging.info(f"Image Position Result {position_result}")
             return position_result
 
