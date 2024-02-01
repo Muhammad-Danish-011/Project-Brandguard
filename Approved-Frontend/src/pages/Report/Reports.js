@@ -132,8 +132,8 @@ export default function CampaignTable() {
 
           <TableContainer>
             <Table>
-              <TableHead>
-                <TableRow>
+              <TableHead style={{  backgroundColor: '#E3F2FD', color: '#1976D2' }}>
+              <TableRow >
                   {headCells.map((headCell) => (
                     <TableCell
                       key={headCell.id}

@@ -1,8 +1,8 @@
 
 // project import
-import ScrapingReport from "../pages/Report/Scraping-Report";
-import ScreeningReport from "../pages/Report/Details";
-import DetailPage from "../pages/Report/Details";
+import ScrapingReport from "../pages/Report/Reports";
+import ScreeningReport from "../pages/Report/ScreenshotDetails";
+import DetailPage from "../pages/Report/ScreenshotDetails";
 // ==============================|| MAIN ROUTING ||============================== //
 
 const ReportsRoutes = {

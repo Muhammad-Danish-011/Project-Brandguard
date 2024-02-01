@@ -4,9 +4,9 @@ import { lazy } from "react";
 import Loadable from "components/Loadable";
 import MainLayout from "layout/MainLayout";
 import Register from "pages/Schedule-Information/Register.js";
-import ScrapingReport from "../pages/Report/Scraping-Report";
-import DetailPage from "../pages/Report/Details";
-
+import ScrapingReport from "../pages/Report/Reports";
+import DetailPage from "../pages/Report/ScreenshotDetails";
+import ScarpingDetails from "../pages/Report/ScrapingDetails"
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import("pages/dashboard")));
 
@@ -37,7 +37,10 @@ const MainRoutes = {
       path: "/details/:campaignId" ,
       element: <DetailPage />
     },
-
+    {
+      path: "/ScrapingDetails/:campaignId" ,
+      element: <ScarpingDetails />
+    },
     {
       path: "dashboard",
       children: [
