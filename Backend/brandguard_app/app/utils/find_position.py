@@ -29,11 +29,11 @@ def find_image_position(screenshot_path, reference_image_path, campaignID):
     if not locations:
         # Reference image not found
         save_found_status(campaignID, found='no')
-        calculate_success_rate(campaignID)
+        # calculate_success_rate(campaignID)
         return "Reference image not found."
      # Reference image found
     save_found_status(campaignID, found='yes')
-    calculate_success_rate(campaignID)
+    # calculate_success_rate(campaignID)
 
     # For simplicity, take the first location found above the threshold
     max_loc = locations[0]

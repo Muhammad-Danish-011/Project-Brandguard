@@ -56,11 +56,39 @@ def get_image_files(folder_name):
 #     return [os.path.join(folder_path, f) for f in image_files]
 
 
+# def calculate_similarity_percentage(main_image, other_image):
+#     # Feature-based matching using ORB
+#     orb = cv2.ORB_create()
+#     keypoints1, descriptors1 = orb.detectAndCompute(main_image, None)
+#     keypoints2, descriptors2 = orb.detectAndCompute(other_image, None)
+
+#     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+#     matches = bf.match(descriptors1, descriptors2)
+
+#     # Calculate similarity percentage based on the number of matches
+#     similarity_percentage = len(
+#         matches) / max(len(keypoints1), len(keypoints2)) * 100
+
+#     return similarity_percentage
+
 def calculate_similarity_percentage(main_image, other_image):
+    # print(f"Type of main_image: {type(main_image)}")
+    # print(f"Type of other_image: {type(other_image)}")                testing
+    
+    # Check if either main_image or other_image is None
+    if main_image is None or other_image is None:
+        print("Error: One of the images is None.")
+        return 0.0  # Return 0 similarity in case of an error
+
     # Feature-based matching using ORB
     orb = cv2.ORB_create()
     keypoints1, descriptors1 = orb.detectAndCompute(main_image, None)
     keypoints2, descriptors2 = orb.detectAndCompute(other_image, None)
+
+    # Check if descriptors1 or descriptors2 is None
+    if descriptors1 is None or descriptors2 is None:
+        print("Error: One of the image descriptors is None.")
+        return 0.0  # Return 0 similarity in case of an error
 
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
     matches = bf.match(descriptors1, descriptors2)
@@ -70,6 +98,7 @@ def calculate_similarity_percentage(main_image, other_image):
         matches) / max(len(keypoints1), len(keypoints2)) * 100
 
     return similarity_percentage
+
 
 
 def get_slider_images(url):
@@ -126,6 +155,15 @@ def get_slider_images(url):
             if src and "/magicslider" in src:
                 image_urls.add(src)
 
+
+    elif 'cozmetica.pk' in url:
+        images = driver.find_elements(By.TAG_NAME, 'img')
+        for img in images:
+            src = img.get_attribute('src')
+            if src and src.startswith('http') and 'shopify' in src:
+                # print(src)
+                image_urls.add(src)
+
     else:
         # General logic for other URLs
         images = driver.find_elements(By.TAG_NAME, 'img')
@@ -158,13 +196,27 @@ def scrape_images_from_url(url):
         driver.quit()
 
 
+# def scroll_full_page(driver):
+#     # Auto scroll to the middle of the page
+#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 2);")
+#     time.sleep(3)
+#     # Auto scroll to the bottom of the page
+#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+#     time.sleep(3)
+        
 def scroll_full_page(driver):
-    # Auto scroll to the middle of the page
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 2);")
-    time.sleep(3)
-    # Auto scroll to the bottom of the page
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(3)
+    scroll_height = driver.execute_script(
+        "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
+        "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
+        "document.documentElement.offsetHeight);"
+    )
+    scroll_step = 500
+    current_scroll = 0
+    while current_scroll < scroll_height:
+        driver.execute_script(f"window.scrollTo(0, {current_scroll});")
+        time.sleep(0.5)
+        current_scroll += scroll_step
+
 
 def extract_img_urls_by_class(driver, class_name):
     img_urls = []
@@ -192,28 +244,31 @@ def extract_iframe_img_urls(driver, content):
 
 def download_images_from_list(url_list, output_folder):
     try:
-        # Create the output folder if it doesn't exist
         os.makedirs(output_folder, exist_ok=True)
 
-        for url in url_list:
+        for image_url in url_list:
             try:
-                response = requests.get(url.strip())
+                response = requests.get(image_url.strip())
+                response.raise_for_status()
 
-                if response.status_code == 200:
-                    # Get the image filename from the URL
-                    image_name = os.path.join(
-                        output_folder, os.path.basename(url.strip()))
+                # Extracting image name from the URL
+                parsed_url = urlparse(image_url)
+                image_name = os.path.basename(parsed_url.path)
 
-                    # Save the image to the specified folder
-                    with open(image_name, 'wb') as img_file:
-                        img_file.write(response.content)
-                        print(f"Image downloaded: {image_name}")
-                else:
-                    print(
-                        f"Failed to download image from {url.strip()}. Status code: {response.status_code}")
+                # Remove invalid characters from the image name
+                image_name = ''.join(c for c in image_name if c.isalnum() or c in ('.', '_'))
+
+                # If the image name is still empty, generate a random name or handle it accordingly
+                if not image_name:
+                    raise ValueError("Invalid image name")
+
+                file_path = os.path.join(output_folder, image_name)
+                with open(file_path, 'wb') as img_file:
+                    img_file.write(response.content)
+                    print(f"Image downloaded: {file_path}")
 
             except Exception as e:
-                print(f"Error downloading {url.strip()}: {e}")
+                print(f"Error downloading {image_url.strip()}: {e}")
 
     except Exception as e:
         print(f"Error creating folder {output_folder}: {e}")
@@ -290,7 +345,7 @@ def analyze_images(url, main_image_path,campaignID):
     is_score_above_threshold = any(
         score > threshold_score for score in similarity_scores)
     visibility = 'yes' if is_score_above_threshold else 'no'
-    print(f"Shahzaib Prints Visibility Score: {visibility}")
+    # print(f"Shahzaib Prints campID:{campaignID}...Visibility Score: {visibility}")                testing
 
     new_Scrap_Image_Status = Scrap_Image_Status(
         CampaignID=campaignID,
