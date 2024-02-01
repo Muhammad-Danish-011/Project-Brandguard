@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+import { useState, React ,useEffect } from "react";
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { useParams } from "../../../node_modules/react-router-dom/dist/index";
 
-const DetailPage = ({ campaignId }) => {
+const DetailPage = () => {
+  const {campaignId}=useParams();
   const [campaignDetails, setCampaignDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("campaignId:", campaignId);
     const fetchData = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:5000/screenshot_report/${campaignId}`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch data. Status: ${response.status}`);
-        }
-
-        // Check if the response is JSON
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          // Handle non-JSON response
-          const text = await response.text();
-          console.error("Non-JSON response:", text);
-          throw new Error("Invalid response format");
         }
 
         const data = await response.json();
@@ -36,11 +30,6 @@ const DetailPage = ({ campaignId }) => {
     fetchData();
   }, [campaignId]);
 
-  const handleScrapeDetails = () => {
-    // Implement scraping logic here
-    console.log('Scraping details...');
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -51,19 +40,49 @@ const DetailPage = ({ campaignId }) => {
 
   return (
     <div>
-      <div style={{ marginBottom: '10px' }}>
-        <Button onClick={handleScrapeDetails}>Scraping Details</Button>
-      </div>
+      
       <h2>Details Page for Campaign {campaignId}</h2>
       {campaignDetails && (
-        <div>
-          <p>Campaign Name: {campaignDetails.CampaignName}</p>
-          <p>Campaign ID: {campaignDetails.CampaignID}</p>
-          <p>Website URL: {campaignDetails.WebsiteURL[0]}</p>
-          {/* Add more details as needed */}
-        </div>
-      )}
-    </div>
+  <div>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Website URL</TableCell>
+            <TableCell>Campaign ID</TableCell>
+            <TableCell>Campaign Name</TableCell>
+            <TableCell>Ad Positions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>{campaignDetails.WebsiteURL}</TableCell>
+            <TableCell>{campaignDetails.CampaignID}</TableCell>
+            <TableCell>{campaignDetails.CampaignName}</TableCell>
+            <TableCell>
+              {campaignDetails.AdPositions.length > 0 ? (
+                <ul>
+                  {campaignDetails.AdPositions.map((adPosition, index) => (
+                    <li key={index}>{adPosition}</li>
+                  ))}
+                </ul>
+              ) : (
+                "No Ad Positions"
+              )}
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </div>
+  
+)}   
+  <div style={{ marginBottom: '10px' }}>
+        <Button variant="contained" color="primary" onClick={() => console.log("Scraping Details")}>
+          Scraping Details
+        </Button>
+      </div> 
+</div>
   );
 };
 

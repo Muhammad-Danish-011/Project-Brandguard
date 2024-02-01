@@ -39,7 +39,6 @@ const headCells = [
   { id: "endDate", align: "left", disablePadding: false, label: "End Date" },
   { id: "websites", align: "left", disablePadding: false, label: "Websites" },
   {
- 
     id: "Found_Status_Screenshot",
     align: "left",
     disablePadding: false,
@@ -59,8 +58,7 @@ const headCells = [
   // },
 ];
 
-
- // ... (imports remain unchanged)
+// ... (imports remain unchanged)
 
 export default function CampaignTable() {
   const [order, setOrder] = useState("asc");
@@ -79,6 +77,7 @@ export default function CampaignTable() {
         const response = await fetch("http://127.0.0.1:5000/general_report");
         const result = await response.json();
         setData(result);
+        console.log(result);
         setError(null);
       } catch (error) {
         setError("Error fetching data from the API");
@@ -108,7 +107,11 @@ export default function CampaignTable() {
 
       {loading && <CircularProgress />}
 
-      {error && <Typography variant="body1" color="error">{error}</Typography>}
+      {error && (
+        <Typography variant="body1" color="error">
+          {error}
+        </Typography>
+      )}
 
       {!loading && !error && data !== null && data.length > 0 && (
         <>
@@ -163,8 +166,7 @@ export default function CampaignTable() {
                       <TableCell>{row.CampaignName}</TableCell>
                       <TableCell>{row.StartDate}</TableCell>
                       <TableCell>{row.EndDate}</TableCell>
-                     
-                    
+
                       <TableCell>
                         {row.WebsiteURL.map((url) => (
                           <div key={url}>{url}</div>
@@ -180,9 +182,12 @@ export default function CampaignTable() {
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={() =>
-                            navigate(`/details/${row.CampaignID}`)
-                          }
+                          onClick={() => {
+                            navigate(`/details/${row.CampaignID}`);
+                        
+                              
+                             
+                          }}
                         >
                           View Details
                         </Button>
