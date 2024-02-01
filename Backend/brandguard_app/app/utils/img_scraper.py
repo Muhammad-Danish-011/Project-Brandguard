@@ -9,14 +9,13 @@ import requests
 from app.models.models import *
 from app.utils.find_position import *
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium_stealth import stealth
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def get_root_domain(url):
@@ -104,7 +103,6 @@ def calculate_similarity_percentage(main_image, other_image):
     return similarity_percentage
 
 
-
 def get_slider_images(url):
     # Create Chrome options
     # chrome_options = Options()
@@ -180,7 +178,6 @@ def get_slider_images(url):
             if src and "/magicslider" in src:
                 image_urls.add(src)
 
-
     elif 'cozmetica.pk' in url:
         images = driver.find_elements(By.TAG_NAME, 'img')
         for img in images:
@@ -190,7 +187,8 @@ def get_slider_images(url):
                 image_urls.add(src)
 
     elif 'foodpanda.pk' in url:
-        images = driver.find_elements(By.XPATH, "//img[contains(@class, 'groceries-image') and contains(@data-testid, 'campaign-banners-swiper')]")
+        images = driver.find_elements(
+            By.XPATH, "//img[contains(@class, 'groceries-image') and contains(@data-testid, 'campaign-banners-swiper')]")
         for img in images:
             src = img.get_attribute('src')
             if src and src.startswith('http'):
@@ -207,6 +205,7 @@ def get_slider_images(url):
 
     driver.quit()
     return list(image_urls)
+
 
 def scrape_images_from_url(url):
     # Create Chrome options
@@ -281,6 +280,7 @@ def extract_img_urls_by_class(driver, class_name):
             img_urls.append(img_url)
     return img_urls
 
+
 def extract_iframe_img_urls(driver, content):
     matches = re.findall(r'<iframe id="([^"]+)"', content)
     url_content = []
@@ -294,6 +294,7 @@ def extract_iframe_img_urls(driver, content):
         driver.switch_to.default_content()
 
     return url_content
+
 
 def download_images_from_list(url_list, folder_path):
     for image_url in url_list:
@@ -341,16 +342,18 @@ def download_images_from_list(url_list, folder_path):
 #     except Exception as e:
 #         print(f"Error creating folder {output_folder}: {e}")
 
+
 def close_popup(driver):
     try:
-        close_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.close")))
+        close_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "button.close")))
         close_button.click()
         print("Pop-up closed.")
     except (NoSuchElementException, TimeoutException):
         print("No pop-up found or unable to close.")
 
 
-def analyze_images(url, main_image_path,campaignID):
+def analyze_images(url, main_image_path, campaignID):
     # Get the root domain from the URL for folder naming
     file_name = get_root_domain(url)
 
@@ -470,4 +473,4 @@ def image_scraping(campaignID):
         # main_image_path = r"/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/reference_images/50e3cb98-f34a-48b5-99aa-37e4e3dd413b.jpg"
 
         # url = 'https://www.daraz.pk/'
-        analyze_images(website_url, refrence_image,campaignID)
+        analyze_images(website_url, refrence_image, campaignID)
