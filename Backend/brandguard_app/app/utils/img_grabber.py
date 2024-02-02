@@ -4,34 +4,16 @@ import time
 import traceback
 from datetime import datetime
 from urllib.parse import urlparse
-import os
-import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 from app.extensions import scheduler
 from app.models.models import *
 from app.utils.find_position import *
+from app.utils.img_scraper import *
 from flask import jsonify
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium_stealth import stealth
 from webdriver_manager.chrome import ChromeDriverManager
-from flask import jsonify
-import traceback
-from app.extensions import scheduler
-import logging
-from app.utils.find_position import *
-from urllib.parse import urlparse
-from selenium.common.exceptions import TimeoutException
-from PIL import Image
-from io import BytesIO
-import app
-
-
-
-
-(Make changes in capturing screenshot function in img_grabber.py)
 
 # Configure logging (usually done in your Flask app initialization)
 logging.basicConfig(
@@ -123,9 +105,7 @@ def fullpage_screenshot(driver, folder, file):
 		"document.documentElement.clientHeight, document.documentElement.scrollHeight, "
 		"document.documentElement.offsetHeight);"
 	    )
-
-
-	    scroll_height = driver.execute_script(js)
+        scroll_height = driver.execute_script(js)
 	    # print(scroll_height)
 	    time.sleep(10)
 	    
@@ -154,10 +134,15 @@ def fullpage_screenshot(driver, folder, file):
 	    file_path = os.path.join(folder, file)
 	    driver.save_screenshot(file_path)
 	    driver.quit()
+
+
+	    
 	    
         
 
 # Function to capture screenshots at intervals
+
+
 def capture_screenshots(driver, folder):
     timestamp = time.strftime("%Y%m%d%H%M%S")
     file_name = f"screenshot_{timestamp}.png"
@@ -165,8 +150,8 @@ def capture_screenshots(driver, folder):
     logging.info(f"Capturing screenshots for CampaignID ")
     return file_name
 
-def get_interval_time(campaignID):
 
+def get_interval_time(campaignID):
     try:
         campaign = Campaigns.query.filter_by(CampaignID=campaignID).first()
         if campaign:
@@ -195,19 +180,6 @@ def get_website(campaign_id):
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return jsonify({"error": str(e)}), 500
-
-# def generate_screenshot_path(path):
-#     # Extract domain from the website URL
-#     parsed_url = urlparse(website_url)
-#     domain = parsed_url.netloc.replace('www.', '')  # Removes 'www.' if present
-
-#     # Format folder and file names
-#     folder_name = f"screenshots/{domain} - {timestamp}"
-#     file_name = f"screenshot_{timestamp}.{extension}"
-
-#     # Combine to create the full path
-#     full_path = path
-#     return full_path
 
 
 def capture_screenshot_by_campaignid(campaignID):
@@ -262,13 +234,6 @@ def capture_screenshot_by_campaignid(campaignID):
         current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
         folder_name = f"{website_url.replace('https://', '').replace('/', ' ')} - {current_datetime}"
 
-        full_folder_path = os.path.join("screenshots", folder_name)
-
-
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        screenshots_dir = os.path.join(base_dir, "screenshots", folder_name)
-
-
         base_dir = os.path.dirname(os.path.abspath(__file__))
         screenshots_dir = os.path.join(base_dir, "screenshots", folder_name)
 
@@ -277,15 +242,12 @@ def capture_screenshot_by_campaignid(campaignID):
         # Capture screenshots at the specified interval for the given duration
         c_sc = capture_screenshots(driver, screenshots_dir)
 
-
         screenshot_path = os.path.join(screenshots_dir, c_sc)
 
         # Quit the WebDriver
         driver.quit()
         # Create a new Screenshots object and save it to the database
         screenshot = Screenshots(
-
-
             CampaignID=campaignID,
             WebsiteID=website_id,
             Extension='png',
@@ -296,23 +258,21 @@ def capture_screenshot_by_campaignid(campaignID):
         db.session.add(screenshot)
         db.session.commit()
         logging.info("Screenshots captured successfully")
+
+        position_result = image_position(campaignID)
+        logging.info(f"Image Position Result {position_result}")
         return {"status": "Screenshots captured successfully"}
-    
+
+
 def image_position(campaignID):
-    from app.factory import create_app
-
-
-    with create_app().app_context():
-        screenshots_path = get_screenshot_path(campaignID)
-        print(screenshots_path)
-        refrence_image = get_refrence_image(campaignID)
-        print(refrence_image)
-        if screenshots_path and refrence_image:
-            position_result = find_image_position(
+    screenshots_path = get_screenshot_path(campaignID)
+    print(screenshots_path)
+    refrence_image = get_refrence_image(campaignID)
+    print(refrence_image)
+    if screenshots_path and refrence_image:
+        position_result = find_image_position(
             screenshots_path, refrence_image, campaignID)
-
-            logging.info(f"Image Position Result {position_result}")
-            return position_result
+        return position_result
 
 
 def schedule_screenshot_capture(campaignID, Interval_time):
@@ -320,10 +280,6 @@ def schedule_screenshot_capture(campaignID, Interval_time):
     print(f'Campaign ID is {campaignID} and its interval is {Interval_time}')
     scheduler.add_job(capture_screenshot_by_campaignid,
                       'interval', minutes=Interval_time, args=[campaignID])
-
-    scheduler.add_job(image_position, 'interval',
-                      minutes=Interval_time, args=[campaignID])
-
     scheduler.add_job(image_scraping, 'interval',
                       minutes=Interval_time, args=[campaignID])
 
