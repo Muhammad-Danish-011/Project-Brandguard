@@ -80,7 +80,7 @@ def calculate_similarity_percentage(main_image, other_image):
 
     # Check if either main_image or other_image is None
     if main_image is None or other_image is None:
-        print("Error: One of the images is None.")
+        # print("Error: One of the images is None.")
         return 0.0  # Return 0 similarity in case of an error
 
     # Feature-based matching using ORB
@@ -355,6 +355,11 @@ def close_popup(driver):
 
 def analyze_images(url, main_image_path, campaignID):
     # Get the root domain from the URL for folder naming
+    if "www." not in url:
+        # Split the URL at the double slash "//" and insert "www." after it
+        parts = url.split("//")
+        url = parts[0] + "//www." + parts[1]
+
     file_name = get_root_domain(url)
 
     # Get the path to the 'utils' directory

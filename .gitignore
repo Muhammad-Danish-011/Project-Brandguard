@@ -7,6 +7,8 @@ __pycache__/
 /model/trained_model/
 migrations/
 node_modules
+download_images/
+screenshots/
 
 # File formats
 *.pyc
