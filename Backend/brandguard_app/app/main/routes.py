@@ -1,21 +1,36 @@
-from flask import render_template, request, jsonify,current_app
-from app.extensions import db
-from app.models.models import *
-from app.main import bp
+import os
 from datetime import datetime  # Corrected import statement
+
+from app.extensions import db
+from app.main import bp
+from app.models.models import *
 from app.utils.img_grabber import *
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask, current_app, jsonify, request
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from app.utils import img_grabber
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+CORS(bp)
+
 
 @bp.route('/')
 def index():
     return 'Welcome to Brandguard!'
+
 
 @bp.route('/hello/')
 def hello():
     return 'Hello, World!'
 
 # Create a new Campaign
+
+
 @bp.route('/campaigns', methods=['POST'])
 def create_campaign():
     data = request.get_json()
@@ -25,14 +40,17 @@ def create_campaign():
 
     new_campaign = Campaigns(
         CampaignName=data['CampaignName'],
-        StartDate=datetime.strptime(data['StartDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
-        EndDate=datetime.strptime(data['EndDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
+        StartDate=datetime.strptime(
+            data['StartDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
+        EndDate=datetime.strptime(
+            data['EndDate'], '%Y-%m-%d %H:%M:%S'),  # Convert to datetime
         IntervalTime=data['IntervalTime'],
         Status=data['Status']
     )
     db.session.add(new_campaign)
     db.session.commit()
     return jsonify(message='Campaign created successfully'), 201
+
 
 @bp.route('/campaigns', methods=['GET'])
 def get_campaigns():
@@ -48,8 +66,6 @@ def get_campaigns():
             'Status': campaign.Status
         })
     return jsonify(result)
-
-
 
 
 # Create a new Website
@@ -69,7 +85,6 @@ def create_website():
     return jsonify(message='Website created successfully'), 201
 
 
-
 # Get all Websites
 @bp.route('/websites', methods=['GET'])
 def get_websites():
@@ -84,8 +99,7 @@ def get_websites():
     return jsonify(result)
 
 
-
-# # Create an Image
+# Create an Image
 @bp.route('/images', methods=['POST'])
 def create_image():
     data = request.get_json()
@@ -99,6 +113,8 @@ def create_image():
     return jsonify({'message': 'Image created successfully'}), 201
 
 # Get All Images
+
+
 @bp.route('/images', methods=['GET'])
 def get_images():
     images = Images.query.all()
@@ -112,7 +128,9 @@ def get_images():
         })
     return jsonify(result)
 
-# # Create a Screenshot
+# Create a Screenshot
+
+
 @bp.route('/screenshots', methods=['POST'])
 def create_screenshot():
     data = request.get_json()
@@ -128,7 +146,9 @@ def create_screenshot():
     db.session.commit()
     return jsonify({'message': 'Screenshot created successfully'}), 201
 
-# # Get All Screenshots
+# Get All Screenshots
+
+
 @bp.route('/screenshots', methods=['GET'])
 def get_screenshots():
     screenshots = Screenshots.query.all()
@@ -146,7 +166,7 @@ def get_screenshots():
     return jsonify(result)
 
 
-# # Create an Ad Position
+# Create an Ad Position
 @bp.route('/adpositions', methods=['POST'])
 def create_ad_position():
     data = request.get_json()
@@ -159,7 +179,9 @@ def create_ad_position():
     db.session.commit()
     return jsonify({'message': 'Ad Position created successfully'}), 201
 
-# # Get All Ad Positions
+# Get All Ad Positions
+
+
 @bp.route('/adpositions', methods=['GET'])
 def get_ad_positions():
     ad_positions = AdPositions.query.all()
@@ -174,7 +196,7 @@ def get_ad_positions():
     return jsonify(result)
 
 
-# # Create a Scraped Image
+# Create a Scraped Image
 @bp.route('/scraped-images', methods=['POST'])
 def create_scraped_image():
     data = request.get_json()
@@ -187,7 +209,9 @@ def create_scraped_image():
     db.session.commit()
     return jsonify({'message': 'Scraped Image created successfully'}), 201
 
-# # Get All Scraped Images
+# Get All Scraped Images
+
+
 @bp.route('/scraped-images', methods=['GET'])
 def get_scraped_images():
     scraped_images = ScrapedImages.query.all()
@@ -201,7 +225,9 @@ def get_scraped_images():
         })
     return jsonify(result)
 
-# # Create a URL
+# Create a URL
+
+
 @bp.route('/urls', methods=['POST'])
 def create_url():
     data = request.get_json()
@@ -214,6 +240,8 @@ def create_url():
     return jsonify({'message': 'URL created successfully'}), 201
 
 # Get All URLs
+
+
 @bp.route('/urls', methods=['GET'])
 def get_urls():
     urls = URLS.query.all()
@@ -227,7 +255,7 @@ def get_urls():
     return jsonify(result)
 
 
-# Define an API endpoint to capture screenshots by compainID
+# Define an API endpoint to capture screenshots by campaignID
 @bp.route('/screenshot/<int:campaignID>', methods=['GET'])
 def capture_screenshot_api(campaignID):
     try:
@@ -238,21 +266,20 @@ def capture_screenshot_api(campaignID):
         return {"error": str(e)}, 500
 
 
-
-
-@bp.route('/interval_time/<int:compainID>', methods=['GET'])
-def interval_time(campainID):
+@bp.route('/interval_time/<int:campaignID>', methods=['GET'])
+def interval_time(campaignID):
     try:
-        result = get_interval_time(campainID)
+        result = get_interval_time(campaignID)
         return jsonify(result)
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
         return {"error": str(e)}, 500
 
-@bp.route('/get_website/<int:compainID>', methods=['GET'])
-def getwebsite(campainID):
+
+@bp.route('/get_website/<int:campaignID>', methods=['GET'])
+def getwebsite(campaignID):
     try:
-        result = get_website(campainID)
+        result = get_website(campaignID)
         return (result)
     except Exception as e:
         traceback.print_exc()  # Log the exception traceback
@@ -265,14 +292,18 @@ def add_campaign_details():
         # Extract data from the request JSON
         data = request.get_json()
         campaign_name = data.get('CampaignName')
-        start_date = data.get('StartDate')
-        end_date = data.get('EndDate')
-        interval_time = data.get('IntervalTime')
-        status = data.get('Status')
+        start_date = datetime.strptime(
+            data.get('StartDate'), '%Y-%m-%d %H:%M:%S')
+        end_date = datetime.strptime(data.get('EndDate'), '%Y-%m-%d %H:%M:%S')
+        interval_time = int(data.get('IntervalTime'))
         websites = data.get('Websites')
         images = data.get('Images')
-        # Create a new campaign and add it to the database
-        # Create a new campaign without websites
+        current_datetime = datetime.now()
+
+        # Determine the status based on the current date
+        status = 'active' if start_date <= current_datetime <= end_date else 'inactive'
+
+        # Create a new campaign
         new_campaign = Campaigns(
             CampaignName=campaign_name,
             StartDate=start_date,
@@ -280,9 +311,10 @@ def add_campaign_details():
             IntervalTime=interval_time,
             Status=status
         )
+
         # Create a list of website instances
         website_instances = [Websites() for _ in websites]
-          # Create image instances
+        # Create image instances
 
         # Create image instances
         image_instances = []
@@ -297,21 +329,263 @@ def add_campaign_details():
         new_campaign.websites.extend(website_instances)
         new_campaign.images.extend(image_instances)
 
-        # Add the campaign and websites to the database
+        # Add the campaign and related entities to the database
         db.session.add(new_campaign)
         db.session.add_all(website_instances)
         db.session.add_all(image_instances)
-
-        # Commit the changes
         db.session.commit()
 
-        return jsonify({"status": "Campaign added successfully"}), 201
+        current_app.logger.info(
+            f"Campaign status set to: {new_campaign.Status}")  # Logging status
+
+        # Schedule the campaign if it's active
+        if new_campaign.Status == 'active':
+            schedule_campaign(new_campaign.CampaignID, interval_time)
+
+        return jsonify({"status": "Campaign added successfully."}), 201
 
     except Exception as e:
+        current_app.logger.error(
+            f"Error in add_campaign_details: {e}")  # Log the exception
         return jsonify({"error": str(e)}), 500
 
 
-@bp.route('/image_position/<int:campaignID>', methods = ['GET'])
+def schedule_campaign(campaignID, interval_time):
+    """
+    Schedule tasks for a specific campaign.
+    """
+    scheduler.add_job(
+        capture_screenshot_by_campaignid,
+        'interval',
+        minutes=interval_time,
+        args=[campaignID]
+    )
+    scheduler.add_job(
+        image_scraping,
+        'interval',
+        minutes=interval_time,
+        args=[campaignID]
+    )
+
+
+@bp.route('/image_position/<int:campaignID>', methods=['GET'])
 def img_position(campaignID):
     result = image_position(campaignID)
     return jsonify(result)
+
+
+# Use the absolute path for the destination directory
+UPLOAD_FOLDER = os.path.abspath('./reference_images')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# ...
+# ... (other imports and configurations)
+
+# Define allowed file extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Function to check if the file extension is allowed
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@bp.route('/upload', methods=['POST'])
+def upload_image():
+    # Check if the post request has the file part
+    if 'image' not in request.files:
+        return 'No file part', 400
+
+    file = request.files['image']
+
+    # If the user does not select a file, the browser submits an empty file without a filename
+    if file.filename == '':
+        return 'No selected file', 400
+
+    if file and allowed_file(file.filename):
+        # Use secure_filename to avoid security issues
+        filename = secure_filename(file.filename)
+
+        # Save the file to the specified upload folder
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        # Ensure the directory exists before saving
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        file.save(file_path)
+
+        try:
+            # Return the path of the saved file
+            return {"message": "File uploaded successfully", "file_path": file_path}
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return {"error": "Internal Server Error"}, 500
+
+    return 'Invalid file format', 400
+
+
+@bp.route('/save_image_path', methods=['POST'])
+def save_image_path():
+    try:
+        data = request.get_json()
+
+        # Make sure the key matches the JSON you're sending
+        new_image_path = data.get('new_image_path', '')
+        print("Received file path:", new_image_path)
+
+        if new_image_path:  # Check if the path is not empty
+            new_image = Images(ImagePath=new_image_path)
+            db.session.add(new_image)
+            db.session.commit()
+            return jsonify({"message": "Image path saved successfully"})
+        else:
+            return jsonify({"error": "No image path provided"}), 400
+    except Exception as e:
+        traceback.print_exc()  # This will print the stack trace to the console
+        return jsonify({"error": f"Error saving image path: {str(e)}"}), 500
+
+
+@bp.route('/general_report', methods=['GET'])
+def get_general_report():
+    try:
+        # Fetch data from Campaigns, Websites, AdPositions, and Scrape_Image_Status tables
+        campaigns = Campaigns.query.all()
+
+        general_report = []
+        for campaign in campaigns:
+            # Fetch data for each campaign
+            campaign_data = {
+                'CampaignID': campaign.CampaignID,
+                'CampaignName': campaign.CampaignName,
+                'StartDate': campaign.StartDate.strftime('%Y-%m-%d %H:%M:%S'),
+                'EndDate': campaign.EndDate.strftime('%Y-%m-%d %H:%M:%S'),
+                'WebsiteURL': [],
+                'Found_Status_Screenshot': 0,  # Initialize to 0, will be calculated later
+                'Found_Status_Scraping': 0  # Initialize to 0, will be calculated later
+            }
+
+            # Fetch associated websites for the campaign
+            websites = Websites.query.filter_by(
+                CampaignID=campaign.CampaignID).all()
+            for website in websites:
+                campaign_data['WebsiteURL'].append(website.WebsiteURL)
+
+            # Fetch AdPositions for the campaign
+            ad_positions = AdPositions.query.filter_by(
+                CampaignID=campaign.CampaignID).all()
+
+            # Calculate Found_Status_Screenshot as a percentage
+            total_positions = len(ad_positions)
+            found_positions_screenshot = sum(
+                1 for ad_position in ad_positions if ad_position.Found_Status == 'yes')
+
+            if total_positions > 0:
+                campaign_data['Found_Status_Screenshot'] = found_positions_screenshot / \
+                    total_positions * 100
+
+            # Fetch Scrape_Image_Status for the campaign
+            scrape_image_statuses = Scrape_Image_Status.query.filter_by(
+                CampaignID=campaign.CampaignID).all()
+
+            # Calculate Found_Status_Scraping as a percentage
+            total_scrape_statuses = len(scrape_image_statuses)
+            found_scrape_statuses = sum(
+                1 for scrape_status in scrape_image_statuses if scrape_status.Found_Status == 'yes')
+
+            if total_scrape_statuses > 0:
+                campaign_data['Found_Status_Scraping'] = found_scrape_statuses / \
+                    total_scrape_statuses * 100
+
+            general_report.append(campaign_data)
+
+        return jsonify(general_report)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in get_general_report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/scraping_report/<int:campaignID>', methods=['GET'])
+def get_scraping_report(campaignID):
+    try:
+        # Fetch data from Campaigns, Websites, and Scrape_Image_Status tables for the specified campaignID
+        campaign = Campaigns.query.get(campaignID)
+
+        if not campaign:
+            return jsonify({"error": "Campaign not found"}), 404
+
+        scraping_report = {
+            'CampaignID': campaign.CampaignID,
+            'CampaignName': campaign.CampaignName,
+            'WebsiteURL': [],
+            'ScrapeImageStatus': []
+        }
+
+        # Fetch associated websites for the campaign
+        websites = Websites.query.filter_by(
+            CampaignID=campaign.CampaignID).all()
+        for website in websites:
+            scraping_report['WebsiteURL'].append(website.WebsiteURL)
+
+        # Fetch Scrape_Image_Status for the campaign
+        scrape_image_statuses = Scrape_Image_Status.query.filter_by(
+            CampaignID=campaign.CampaignID).all()
+
+        for scrape_status in scrape_image_statuses:
+            scrape_data = {
+                'DateTime': scrape_status.DateTime.strftime('%Y-%m-%d %H:%M:%S'),
+                'Found_Status': scrape_status.Found_Status
+            }
+            scraping_report['ScrapeImageStatus'].append(scrape_data)
+
+        return jsonify(scraping_report)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in get_scraping_report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/screenshot_report/<int:campaignID>', methods=['GET'])
+def get_screenshot_report(campaignID):
+    try:
+        # Fetch data from Campaigns, Websites, AdPositions, and Screenshots tables for the specified campaignID
+        campaign = Campaigns.query.get(campaignID)
+
+        if not campaign:
+            return jsonify({"error": "Campaign not found"}), 404
+
+        screenshot_report = {
+            'CampaignID': campaign.CampaignID,
+            'CampaignName': campaign.CampaignName,
+            'WebsiteURL': [],
+            'AdPositions': []
+        }
+
+        # Fetch associated websites for the campaign
+        websites = Websites.query.filter_by(
+            CampaignID=campaign.CampaignID).all()
+        for website in websites:
+            screenshot_report['WebsiteURL'].append(website.WebsiteURL)
+
+        # Fetch AdPositions and Screenshots for the campaign
+        ad_positions = AdPositions.query.filter_by(
+            CampaignID=campaign.CampaignID).all()
+
+        for ad_position in ad_positions:
+            # Fetch the corresponding screenshot to get FilePath
+            screenshot = Screenshots.query.filter_by(
+                ScreenshotID=ad_position.ScreenshotID).first()
+
+            screenshot_data = {
+                'Capture_DateTime': ad_position.Capture_DateTime.strftime('%Y-%m-%d %H:%M:%S'),
+                'FilePath': screenshot.FilePath if screenshot else None,
+                'Found_Status': ad_position.Found_Status
+            }
+            screenshot_report['AdPositions'].append(screenshot_data)
+
+        return jsonify(screenshot_report)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in get_screenshot_report: {e}")
+        return jsonify({"error": str(e)}), 500
