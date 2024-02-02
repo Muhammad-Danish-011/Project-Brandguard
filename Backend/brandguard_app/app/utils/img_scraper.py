@@ -403,7 +403,7 @@ def analyze_images(url, main_image_path, campaignID):
 
     cleaned_urls = [url.split('?')[0] for url in image_url_list]
 
-    print(cleaned_urls)
+    # print(cleaned_urls)
 
     download_images_from_list(cleaned_urls, download_folder)
 

@@ -207,7 +207,7 @@ def schedule_screenshot_capture(campaignID, Interval_time):
     # Interval_time = get_interval_time(campaignID)
     print(f'Campaign ID is {campaignID} and its interval is {Interval_time}')
     scheduler.add_job(capture_screenshot_by_campaignid,
-                      'interval', minutes=Interval_time, args=[campaignID])
+                      'interval', minutes=Interval_time, args=[campaignID], max_instances=5)
 
     # scheduler.add_job(image_position, 'interval',
     #                   minutes=Interval_time, args=[campaignID])
