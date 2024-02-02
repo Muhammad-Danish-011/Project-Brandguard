@@ -365,12 +365,12 @@ def schedule_campaign(campaignID, interval_time):
         minutes=interval_time,
         args=[campaignID]
     )
-    scheduler.add_job(
-        image_position,
-        'interval',
-        minutes=interval_time,
-        args=[campaignID]
-    )
+    # scheduler.add_job(
+    #     image_position,
+    #     'interval',
+    #     minutes=interval_time,
+    #     args=[campaignID]
+    # )
     scheduler.add_job(
         image_scraping,
         'interval',

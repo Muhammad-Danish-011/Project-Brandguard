@@ -175,14 +175,7 @@ def capture_screenshot_by_campaignid(campaignID):
 
         db.session.add(screenshot)
         db.session.commit()
-        logging.info("Screenshots captured successfully")
-        return {"status": "Screenshots captured successfully"}
 
-
-def image_position(campaignID):
-    from app.factory import create_app
-
-    with create_app().app_context():
         screenshots_path = get_screenshot_path(campaignID)
         print(screenshots_path)
         refrence_image = get_refrence_image(campaignID)
@@ -190,8 +183,24 @@ def image_position(campaignID):
         if screenshots_path and refrence_image:
             position_result = find_image_position(
                 screenshots_path, refrence_image, campaignID)
-            logging.info(f"Image Position Result {position_result}")
-            return position_result
+
+        logging.info("Screenshots captured successfully")
+        return {"status": "Screenshots captured successfully"}
+
+
+# def image_position(campaignID):
+#     from app.factory import create_app
+
+#     with create_app().app_context():
+#         screenshots_path = get_screenshot_path(campaignID)
+#         print(screenshots_path)
+#         refrence_image = get_refrence_image(campaignID)
+#         print(refrence_image)
+#         if screenshots_path and refrence_image:
+#             position_result = find_image_position(
+#                 screenshots_path, refrence_image, campaignID)
+#             logging.info(f"Image Position Result {position_result}")
+#             return position_result
 
 
 def schedule_screenshot_capture(campaignID, Interval_time):
@@ -200,8 +209,8 @@ def schedule_screenshot_capture(campaignID, Interval_time):
     scheduler.add_job(capture_screenshot_by_campaignid,
                       'interval', minutes=Interval_time, args=[campaignID])
 
-    scheduler.add_job(image_position, 'interval',
-                      minutes=Interval_time, args=[campaignID])
+    # scheduler.add_job(image_position, 'interval',
+    #                   minutes=Interval_time, args=[campaignID])
 
     scheduler.add_job(image_scraping, 'interval',
                       minutes=Interval_time, args=[campaignID])
