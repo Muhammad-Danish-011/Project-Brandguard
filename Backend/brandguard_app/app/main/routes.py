@@ -393,7 +393,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # ... (other imports and configurations)
 
 # Define allowed file extensions
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
 # Function to check if the file extension is allowed
 
