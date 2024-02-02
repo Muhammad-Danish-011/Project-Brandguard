@@ -443,10 +443,12 @@ def save_image_path():
 
         # Make sure the key matches the JSON you're sending
         new_image_path = data.get('new_image_path', '')
+        new_campaign_id = data.get('campaign_id', '')
         print("Received file path:", new_image_path)
 
         if new_image_path:  # Check if the path is not empty
-            new_image = Images(ImagePath=new_image_path)
+            new_image = Images(CampaignID=new_campaign_id,
+                               ImagePath=new_image_path)
             db.session.add(new_image)
             db.session.commit()
             return jsonify({"message": "Image path saved successfully"})

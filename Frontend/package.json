@@ -64,7 +64,7 @@
         "files": [
           "**/*.js"
         ],
-        "processor": "babel-eslint",
+        "parser": "babel-eslint",
         "parserOptions": {
           "requireConfigFile": false
         }

@@ -21,7 +21,9 @@ import "./style.css";
 
 
 
+
 const Register = () => {
+
   const [webUrls, setWebUrls] = useState([""]);
   const [exactPageUrls, setExactPageUrls] = useState([""]);
   const [startDate, setStartDate] = useState(null);
@@ -34,7 +36,7 @@ const Register = () => {
 
   const [new_image_path, setnew_image_path] = useState([]);
 
- 
+
 
   const handleTimeChange = (e) => {
     setIntervalTime(e.target.value);
@@ -76,7 +78,6 @@ const Register = () => {
   const handleEndDateChange = (newDate) => {
     setEndDate(newDate);
   };
-
   const handleSaveClick = async () => {
     try {
       // 1. Prepare data to send to the campaign_details API
@@ -89,7 +90,7 @@ const Register = () => {
         Images: Images.filter((imageName) => imageName.trim() !== ""),
         new_image_path: new_image_path,
       };
-  
+
       // Make API call to save campaign details
       const campaignResponse = await fetch("http://127.0.0.1:5000/campaign_details", {
         method: "POST",
@@ -98,72 +99,74 @@ const Register = () => {
         },
         body: JSON.stringify(campaignData),
       });
-  
+
       if (!campaignResponse.ok) {
         throw new Error(`HTTP error! Status: ${campaignResponse.status}`);
       }
-  
+
       const campaignResult = await campaignResponse.json();
       console.log("Campaign data saved successfully:", campaignResult);
-  
+
+      // Extract the campaign ID from the response
+      const campaignId = campaignResult.CampaignID;
+
       // 2. Upload image and save image path to the database
       if (selectedFile) {
         const formData = new FormData();
         formData.append("image", selectedFile);
-  
+        formData.append("campaign_id", campaignId);
+
         const uploadResponse = await fetch("http://127.0.0.1:5000/upload", {
           method: "POST",
           body: formData,
         });
-  
+
         if (uploadResponse.ok) {
           const uploadResult = await uploadResponse.json();
           console.log("Image uploaded successfully. Result:", uploadResult);
           const imagePath = uploadResult.file_path;
-          await savePathToDB(imagePath);
+
+          await savePathToDB(imagePath, campaignId);
           setShowPopup(true);
           setnew_image_path(imagePath);
+          console.log("All API calls completed successfully!");
         } else {
           console.error("Image upload failed");
         }
       }
-  
-      console.log("All API calls completed successfully!");
     } catch (error) {
       console.error("Error during save operation:", error);
     }
   };
-  
+
       // Make API call to save image path
-     
 
-const savePathToDB = (path) => {
-  fetch("http://127.0.0.1:5000/save_image_path", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ new_image_path: path }), // Use 'new_image_path' as the key
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Handle success
-      console.log("Image path saved in the database:", data);
-    })
-    .catch((error) => {
-      // Handle error
-      console.error("Error saving image path in the database:", error);
-    });
-    
-     
-}
 
-  
+      const savePathToDB = async (path, campaignId) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/save_image_path", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ new_image_path: path, campaign_id: campaignId }),
+          });
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            console.error("Error response from server:", errorResponse);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("Image path saved in the database:", data);
+        } catch (error) {
+          console.error("Error saving image path in the database:", error);
+        }
+      };
+
+
+
+
   const closePopup = () => {
     setShowPopup(false);
   };
@@ -214,7 +217,7 @@ const savePathToDB = (path) => {
                         disablePast
                       />
                     </Grid>
-                  
+
 
                     <Grid item xs={12}>
                       <DateTimePicker
@@ -226,7 +229,7 @@ const savePathToDB = (path) => {
                         disablePast
                       />
                     </Grid>
-                   
+
                   </Grid>
                 </MuiPickersUtilsProvider>
 
@@ -244,7 +247,7 @@ const savePathToDB = (path) => {
                     autoComplete="given-name"
                   variant="standard"
                   required
-                    
+
                   />
                 </Grid>
               {/* </Grid> */}
@@ -266,12 +269,12 @@ const savePathToDB = (path) => {
                       autoComplete="given-name"
                      variant="standard"
                      required
-                      
+
                     />
                   </Grid>
                 ))}
                 {/* <Grid item xs={12}>
-                  <Button 
+                  <Button
                     variant="contained"
                     color="primary"
                     onClick={() => addUrlField("webUrls")}
@@ -279,7 +282,7 @@ const savePathToDB = (path) => {
                     Add URL
                   </Button>
                 </Grid> */}
-               
+
               </Grid>
               <Grid container spacing={1} item xs={12}>
                 <Grid item xs={12}>
@@ -289,7 +292,7 @@ const savePathToDB = (path) => {
                     accept="image/*"
                   />
                 </Grid>
-               
+
               </Grid>
               <Grid item xs={12}>
                 <Button
@@ -302,7 +305,7 @@ const savePathToDB = (path) => {
                 </Button>
               </Grid>
             </Grid>
-            
+
           </form>
         </CardContent>
       </Card>
@@ -322,7 +325,7 @@ const savePathToDB = (path) => {
         </div>
       )}
     </div>
-   
+
     </React.Fragment>
   );
 };
