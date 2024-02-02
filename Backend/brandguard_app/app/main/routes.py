@@ -342,7 +342,12 @@ def add_campaign_details():
         if new_campaign.Status == 'active':
             schedule_campaign(new_campaign.CampaignID, interval_time)
 
-        return jsonify({"status": "Campaign added successfully."}), 201
+        response_data = {
+            "status": "Campaign added successfully.",
+            "CampaignID": new_campaign.CampaignID
+        }
+
+        return jsonify(response_data), 201
 
     except Exception as e:
         current_app.logger.error(
