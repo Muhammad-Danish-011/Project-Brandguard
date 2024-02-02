@@ -21,7 +21,9 @@ import "./style.css";
 
 
 
+
 const Register = () => {
+
   const [webUrls, setWebUrls] = useState([""]);
   const [exactPageUrls, setExactPageUrls] = useState([""]);
   const [startDate, setStartDate] = useState(null);
@@ -76,7 +78,6 @@ const Register = () => {
   const handleEndDateChange = (newDate) => {
     setEndDate(newDate);
   };
-
   const handleSaveClick = async () => {
     try {
       // 1. Prepare data to send to the campaign_details API
@@ -106,10 +107,14 @@ const Register = () => {
       const campaignResult = await campaignResponse.json();
       console.log("Campaign data saved successfully:", campaignResult);
   
+      // Extract the campaign ID from the response
+      const campaignId = campaignResult.CampaignID;
+  
       // 2. Upload image and save image path to the database
       if (selectedFile) {
         const formData = new FormData();
         formData.append("image", selectedFile);
+        formData.append("campaign_id", campaignId);
   
         const uploadResponse = await fetch("http://127.0.0.1:5000/upload", {
           method: "POST",
@@ -120,15 +125,15 @@ const Register = () => {
           const uploadResult = await uploadResponse.json();
           console.log("Image uploaded successfully. Result:", uploadResult);
           const imagePath = uploadResult.file_path;
-          await savePathToDB(imagePath);
+  
+          await savePathToDB(imagePath, campaignId);
           setShowPopup(true);
           setnew_image_path(imagePath);
+          console.log("All API calls completed successfully!");
         } else {
           console.error("Image upload failed");
         }
       }
-  
-      console.log("All API calls completed successfully!");
     } catch (error) {
       console.error("Error during save operation:", error);
     }
@@ -137,31 +142,29 @@ const Register = () => {
       // Make API call to save image path
      
 
-const savePathToDB = (path) => {
-  fetch("http://127.0.0.1:5000/save_image_path", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ new_image_path: path }), // Use 'new_image_path' as the key
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Handle success
-      console.log("Image path saved in the database:", data);
-    })
-    .catch((error) => {
-      // Handle error
-      console.error("Error saving image path in the database:", error);
-    });
-    
-     
-}
+      const savePathToDB = async (path, campaignId) => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/save_image_path", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ new_image_path: path, campaign_id: campaignId }),
+          });
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            console.error("Error response from server:", errorResponse);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          console.log("Image path saved in the database:", data);
+        } catch (error) {
+          console.error("Error saving image path in the database:", error);
+        }
+      };
+      
+      
 
   
   const closePopup = () => {
