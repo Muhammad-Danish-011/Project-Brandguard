@@ -13,6 +13,7 @@ repos:
     rev: v2.0.4
     hooks:
     -   id: autopep8
+        exclude: 'brandguard_app/app/main/__init__.py'
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
     hooks:

@@ -193,7 +193,7 @@ const Register = () => {
                   placeholder="Campaign Name"
                   onChange={handleTextChange}
                   type="text"
-                  value={CampaignName}
+                  // value={CampaignName}
                   // autoComplete="given-name"
                   variant="standard"
                   required
