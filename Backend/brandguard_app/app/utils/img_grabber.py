@@ -111,10 +111,10 @@ def fullpage_screenshot(driver, folder, file):
             driver.quit()
     else:
     
-    	 js = (
-            "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
-            "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
-            "document.documentElement.offsetHeight);"
+        js = (
+        "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
+        "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
+        "document.documentElement.offsetHeight);"
         )
         scroll_height = driver.execute_script(js)
         # print(scroll_height)
@@ -144,6 +144,7 @@ def fullpage_screenshot(driver, folder, file):
         file_path = os.path.join(folder, file)
         driver.save_screenshot(file_path)
         driver.quit()
+
 
     
 
