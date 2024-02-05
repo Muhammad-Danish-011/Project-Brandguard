@@ -285,7 +285,6 @@ def allowed_file(filename):
 #         traceback.print_exc()  # Log the exception traceback
 #         return {"error": str(e)}, 500
 
-
 @bp.route('/campaign_details', methods=['POST'])
 def add_campaign_details():
     try:
@@ -419,23 +418,30 @@ def save_image_path():
     try:
         data = request.get_json()
 
-        # Make sure the key matches the JSON you're sending
+        # Make sure the keys match the JSON you're sending
         new_image_path = data.get('new_image_path', '')
-        new_campaign_id = data.get('campaign_id', '')
+        campaign_id = data.get('campaign_id', '')
+
         print("Received file path:", new_image_path)
 
-        if new_image_path:  # Check if the path is not empty
-            new_image = Images(CampaignID=new_campaign_id,
-                               ImagePath=new_image_path)
+        if new_image_path and campaign_id:  # Check if both the path and campaign_id are provided
+            # Validate campaign_id (optional, depending on your requirements)
+            # campaign = Campaign.query.get_or_404(campaign_id)
+
+            new_image = Images(CampaignID=campaign_id, ImagePath=new_image_path)
+
             db.session.add(new_image)
             db.session.commit()
-            return jsonify({"message": "Image path saved successfully"})
+
+            # Extract the CampaignID from the new_image object
+            saved_campaign_id = new_image.CampaignID
+
+            return jsonify({"message": "Image path saved successfully", "campaign_id": saved_campaign_id})
         else:
-            return jsonify({"error": "No image path provided"}), 400
+            return jsonify({"error": "Invalid data provided"}), 400
     except Exception as e:
         traceback.print_exc()  # This will print the stack trace to the console
         return jsonify({"error": f"Error saving image path: {str(e)}"}), 500
-
 
 @bp.route('/general_report', methods=['GET'])
 def get_general_report():

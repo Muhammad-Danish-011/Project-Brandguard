@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from app.extensions import db
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import column_property
 
 
@@ -16,6 +16,9 @@ class Campaigns(db.Model):
     Status = db.Column(db.String, nullable=True)
     websites = db.relationship('Websites', backref='campaign', lazy=True)
     images = db.relationship('Images', backref='campaign', lazy=True)
+    __table_args__ = (
+        UniqueConstraint('CampaignName'),
+    )
 
 
 class Websites(db.Model):
