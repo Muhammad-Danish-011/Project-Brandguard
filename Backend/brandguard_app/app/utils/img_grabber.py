@@ -4,6 +4,8 @@ import time
 import traceback
 from datetime import datetime
 from urllib.parse import urlparse
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from app.extensions import scheduler
 from app.models.models import *
@@ -65,76 +67,85 @@ def fullpage_screenshot(driver, folder, file):
         driver.save_screenshot(file_path)
         driver.quit()
     elif current_url == 'https://www.naheed.pk/':
-        time.sleep(30)
     
-        js = (
+        js_scroll_to_bottom = "window.scrollTo(0, document.body.scrollHeight);"
+        driver.execute_script(js_scroll_to_bottom)
+        time.sleep(10)  # Wait for lazy-loading content to load (adjust as needed)
+
+        # Calculate the total scroll height of the page
+        js_get_scroll_height = (
+            "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
+            "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
+            "document.documentElement.offsetHeight);"
+        )
+        scroll_height = driver.execute_script(js_get_scroll_height)
+        print(scroll_height)
+
+        # Set window size to capture the entire page
+        driver.set_window_size(1920, scroll_height)
+
+        # Wait for an element with a specific XPath to become clickable
+        try:
+            WebDriverWait(driver, 50).until(
+                EC.element_to_be_clickable((By.XPATH, "//*[@id='maincontent']/div[2]/div/div[2]/div[9]/div[7]"))
+            )
+
+            # Scroll back to the top of the page
+            driver.execute_script("window.scrollTo(0, 0)")
+            time.sleep(2)  # Optional: Wait for any animations to finish
+
+             # Create subfolder if it doesn't exist
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            
+            # Capture screenshot in the subfolder
+            file_path = os.path.join(folder, file)
+            driver.save_screenshot(file_path)
+            
+            print(f"Screenshot saved to {file_path}")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+        finally:
+            driver.quit()
+    else:
+    
+    	 js = (
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
             "document.documentElement.clientHeight, document.documentElement.scrollHeight, "
             "document.documentElement.offsetHeight);"
         )
         scroll_height = driver.execute_script(js)
-        print(scroll_height)
+        # print(scroll_height)
+        time.sleep(10)
 
         # Scroll through the page to trigger lazy loading
         for y in range(0, scroll_height, 100):
             driver.execute_script(f"window.scrollTo(0, {y});")
-            time.sleep(2)  # short sleep between scrolls
-        # time.sleep(5)
+            time.sleep(2)
+
         # Set window size to capture the entire page
-        driver.set_window_size(1500, scroll_height)
-        driver.execute_script("window.scrollTo(0, 0);")
-        time.sleep(30)
+        driver.set_window_size(1920, scroll_height)
+
+        # Scroll the page using the scroll_full_page function
+        # scroll_full_page(driver)
+        driver.execute_script("window.scrollTo(5000, 0);")
+
+        # driver.refresh()
+
+        time.sleep(80)
+
         # Create subfolder if it doesn't exist
         if not os.path.exists(folder):
             os.makedirs(folder)
 
-        # Define the height of each scroll portion
-        # scroll_step = 500  # Adjust as needed
-
-        # Capture and save portions of the page
-        # for y in range(0, scroll_height, scroll_step):
-        #     driver.execute_script(f"window.scrollTo(0, {y});")
-        #     time.sleep(5)  # short sleep between scrolls
-            # file_name = f"{file}_part_{y}.png"
+        # Capture screenshot in the subfolder
         file_path = os.path.join(folder, file)
         driver.save_screenshot(file_path)
-    else:
+        driver.quit()
+
     
-    	js = (
-		"return Math.max(document.body.scrollHeight, document.body.offsetHeight, "
-		"document.documentElement.clientHeight, document.documentElement.scrollHeight, "
-		"document.documentElement.offsetHeight);"
-	    )
-        scroll_height = driver.execute_script(js)
-	    # print(scroll_height)
-	    time.sleep(10)
-	    
-	    # Scroll through the page to trigger lazy loading
-	    for y in range(0, scroll_height, 100):
-		driver.execute_script(f"window.scrollTo(0, {y});")
-		time.sleep(2)
-		
-	    
-	    # Set window size to capture the entire page
-	    driver.set_window_size(1920, scroll_height)
-
-	    # Scroll the page using the scroll_full_page function
-	    # scroll_full_page(driver)
-	    driver.execute_script("window.scrollTo(5000, 0);")
-
-	    # driver.refresh()
-
-	    time.sleep(80)
-
-	    # Create subfolder if it doesn't exist
-	    if not os.path.exists(folder):
-		os.makedirs(folder)
-	    
-	    # Capture screenshot in the subfolder
-	    file_path = os.path.join(folder, file)
-	    driver.save_screenshot(file_path)
-	    driver.quit()
-
 
 	    
 	    
