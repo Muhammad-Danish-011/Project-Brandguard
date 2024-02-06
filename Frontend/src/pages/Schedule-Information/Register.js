@@ -149,6 +149,7 @@ const Register = () => {
 
   const closeSuccessPopup = () => {
     setShowSuccessPopup(false);
+    window.location.reload();
   };
 
   const closeErrorPopup = () => {
