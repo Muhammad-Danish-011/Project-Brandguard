@@ -5,6 +5,10 @@ build/
 *.egg-info/
 __pycache__/
 /model/trained_model/
+migrations/
+node_modules
+download_images/
+screenshots/
 
 # File formats
 *.pyc
@@ -14,3 +18,5 @@ __pycache__/
 text.txt
 .DS_Store
 .mypy_cache
+app.db
+app.log
