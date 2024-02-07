@@ -20,6 +20,16 @@ const areaChartOptions = {
   },
   grid: {
     strokeDashArray: 0
+  },
+  xaxis: {
+    type: 'category' // Set x-axis type to category
+  },
+  tooltip: {
+    x: {
+      formatter: function(val) { // Customize tooltip to display date-time
+        return new Date(val).toLocaleString(); // Format date-time using toLocaleString
+      }
+    }
   }
 };
 
@@ -37,7 +47,7 @@ const IncomeAreaChart = ({ data }) => {
         ...prevState,
         colors: [theme.palette.primary.main],
         xaxis: {
-          categories: data.map(({ DateTime }) => DateTime),
+          categories: data.map(({ DateTime }) => DateTime), // Assuming DateTime is in proper format
           labels: {
             style: {
               colors: [secondary],
@@ -54,6 +64,9 @@ const IncomeAreaChart = ({ data }) => {
             style: {
               colors: [secondary],
               fontWeight: 'bold'
+            },
+            formatter: function(val) { // Customize y-axis labels to display "Yes" or "No"
+              return val === 'Yes' ? 'Yes' : 'No';
             }
           }
         },
@@ -79,7 +92,7 @@ const IncomeAreaChart = ({ data }) => {
   return (
     <>
       <Box sx={{ p: 2, bgcolor: '#BBDEFB', borderRadius: 1 }}>
-        <Typography variant="h3" sx={{ mb: 2 }}> Chart</Typography>
+        <Typography variant="h3" sx={{ mb: 2 }}>Chart</Typography>
         <ReactApexChart options={options} series={series} type="area" height={450} />
       </Box>
     </>
