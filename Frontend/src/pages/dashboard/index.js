@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const DashboardDefault = () => {
-  const [reportType, setReportType] = useState('screenshot');
   const [data, setData] = useState(null);
   const { campaignId } = useParams();
   const [selectedCampaign, setSelectedCampaign] = useState("");
@@ -25,51 +24,17 @@ const DashboardDefault = () => {
     fetchCampaigns();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response;
-        if (selectedCampaign) {
-          if (reportType === 'screenshot') {
-            response = await axios.get(`http://127.0.0.1:5000/screenshot_report/${selectedCampaign}`);
-          } else if (reportType === 'scraping') {
-            response = await axios.get(`http://127.0.0.1:5000/scraping_report/${selectedCampaign}`);
-          }
-          setData(response.data);
-        } else {
-          setData(null); 
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [reportType, selectedCampaign]);
-
   const handleCampaignChange = (event) => {
     const selectedValue = event.target.value;
-    if (!selectedValue) {
-      alert('This campaign has no data for graph.');
-    } else {
-      setSelectedCampaign(selectedValue);
-    }
+    setSelectedCampaign(selectedValue);
+    // Find the selected campaign data from the campaigns list
+    const selectedCampaignData = campaigns.find(campaign => campaign.CampaignID === selectedValue);
+    setData(selectedCampaignData);
   };
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-      <Grid item xs={12}>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h5">Report Type:</Typography>
-          <Select
-            value={reportType}
-            onChange={(e) => setReportType(e.target.value)}
-          >
-            <MenuItem value="screenshot">Screenshot</MenuItem>
-            <MenuItem value="scraping">Scraping</MenuItem>
-          </Select>
-        </Stack>
-      </Grid>
+   
       <Grid item xs={12}>
         <FormControl>
           <Select
@@ -90,7 +55,10 @@ const DashboardDefault = () => {
         <MainCard content={false}>
           <Box sx={{ pt: 1, pr: 2 }}>
             {data !== null ? (
-              <IncomeAreaChart data={data.AdPositions || data.ScrapeImageStatus} />
+              <IncomeAreaChart 
+                screenshotPercentage={data.Found_Status_Screenshot} 
+                scrapingPercentage={data.Found_Status_Scraping} 
+              />
             ) : (
               <Typography variant="body1">No data available for graph.</Typography>
             )}

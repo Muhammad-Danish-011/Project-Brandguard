@@ -33,65 +33,63 @@ const areaChartOptions = {
   }
 };
 
-const IncomeAreaChart = ({ data }) => {
+const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
   const theme = useTheme();
-  const { primary, secondary } = theme.palette.text;
+  const { secondary } = theme.palette.text;
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState(areaChartOptions);
   const [series, setSeries] = useState([]);
 
   useEffect(() => {
-    if (data) {
-      setOptions((prevState) => ({
-        ...prevState,
-        colors: [theme.palette.primary.main],
-        xaxis: {
-          categories: data.map(({ DateTime }) => DateTime), // Assuming DateTime is in proper format
-          labels: {
-            style: {
-              colors: [secondary],
-              fontWeight: 'bold'
-            }
-          },
-          axisBorder: {
-            show: true,
-            color: line
+    setOptions((prevState) => ({
+      ...prevState,
+      colors: [theme.palette.primary.main],
+      xaxis: {
+        categories: ['Screenshot', 'Scraping'], // Categories for screenshot and scraping
+        labels: {
+          style: {
+            colors: [secondary],
+            fontWeight: 'bold'
           }
         },
-        yaxis: {
-          labels: {
-            style: {
-              colors: [secondary],
-              fontWeight: 'bold'
-            },
-            formatter: function(val) { // Customize y-axis labels to display "Yes" or "No"
-              return val === 'Yes' ? 'Yes' : 'No';
-            }
-          }
-        },
-        grid: {
-          borderColor: line
-        },
-        tooltip: {
-          theme: 'light'
+        axisBorder: {
+          show: true,
+          color: line
         }
-      }));
-
-      const seriesData = Object.keys(data[0])
-        .filter(key => key !== 'DateTime')
-        .map(key => ({
-          name: key,
-          data: data.map(item => item[key])
-        }));
-
-      setSeries(seriesData);
-    }
-  }, [data, theme, secondary, line]);
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: [secondary],
+            fontWeight: 'bold'
+          }
+        }
+      },
+      grid: {
+        borderColor: line
+      },
+      tooltip: {
+        theme: 'light'
+      }
+    }));
+    const formattedScreenshotPercentage = `${screenshotPercentage.toFixed(2)}%`;
+    const formattedScrapingPercentage = `${scrapingPercentage.toFixed(2)}%`;
+    setSeries([
+      {
+        name: 'Screenshot',
+        data: [formattedScreenshotPercentage]
+      },
+      {
+        name: 'Scraping',
+        data: [formattedScrapingPercentage]
+      }
+    ]);
+  }, [screenshotPercentage, scrapingPercentage, theme, secondary, line]);
 
   return (
     <>
-      <Box sx={{ p: 2, bgcolor: '#BBDEFB', borderRadius: 1 }}>
+      <Box sx={{ p: 2, bgcolor:'#BBEEFB', borderRadius: 1 }}>
         <Typography variant="h3" sx={{ mb: 2 }}>Chart</Typography>
         <ReactApexChart options={options} series={series} type="area" height={450} />
       </Box>
@@ -100,12 +98,8 @@ const IncomeAreaChart = ({ data }) => {
 };
 
 IncomeAreaChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      DateTime: PropTypes.string.isRequired,
-      Found_Status: PropTypes.string.isRequired
-    })
-  ).isRequired
+  screenshotPercentage: PropTypes.number.isRequired,
+  scrapingPercentage: PropTypes.number.isRequired
 };
 
 export default IncomeAreaChart;
