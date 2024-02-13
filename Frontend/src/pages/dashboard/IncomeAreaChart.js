@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactApexChart from 'react-apexcharts';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles'; // Import useTheme from Material-UI
 
 const areaChartOptions = {
   chart: {
@@ -44,7 +45,7 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main],
+      colors: [theme.palette.primary.main, '#FF5733'], // Additional color for line
       xaxis: {
         categories: ['Screenshot', 'Scraping'], // Categories for screenshot and scraping
         labels: {
@@ -83,19 +84,31 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
       {
         name: 'Scraping',
         data: [formattedScrapingPercentage]
+      },
+      {
+        name: 'Threshold', // Add a line for threshold
+        type: 'line', // Set type to line
+        data: [formattedScreenshotPercentage, formattedScrapingPercentage], // Define data points for the line
+        strokeWidth: 2, // Adjust line width
+        dashArray: 4, // Set dash style for the line
+        markers: {
+          size: 5 // Hide markers
+        },
+        color: '#007bff' // Adjust line color
       }
     ]);
   }, [screenshotPercentage, scrapingPercentage, theme, secondary, line]);
 
   return (
     <>
-      <Box sx={{ p: 2, bgcolor:'#E6F7FF', borderRadius: 1 }}>
+      <Box sx={{ p: 2, bgcolor: '#E6F7FF', borderRadius: 1 }}>
         <Typography variant="h3" sx={{ mb: 4 }}>Chart</Typography>
         <ReactApexChart options={options} series={series} type="area" height={450} />
       </Box>
     </>
   );
 };
+
 
 IncomeAreaChart.propTypes = {
   screenshotPercentage: PropTypes.number.isRequired,
