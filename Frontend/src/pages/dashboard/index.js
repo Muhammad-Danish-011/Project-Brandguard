@@ -38,31 +38,32 @@ const DashboardDefault = () => {
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
        <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       row 1
-      <Grid item xs={12} sx={{ mb: -2.25 }}>
+      <Grid item xs={12} sx={{ mb: 1.25 }}>
         <Typography variant="h3">Dashboard</Typography>
       </Grid>
       {data && (
-        <>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <AnalyticEcommerce title="Campaign ID" count={data.CampaignID} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <AnalyticEcommerce title="Campaign Name" count={data.CampaignName} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <AnalyticEcommerce title="Start Date" count={data.StartDate} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <AnalyticEcommerce title="End Date" count={data.EndDate} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+  <>
+    {/* <Grid item xs={12} sm={6} md={4} lg={3} sx={{ bgcolor: '#B2EBF2', borderRadius: 1, p: 1 }}>
+      <AnalyticEcommerce title="Campaign ID" count={data.CampaignID} />
+    </Grid>
+    <Grid item xs={12} sm={6} md={4} lg={3} sx={{ bgcolor: '#B2EBF2', borderRadius: 1, p: 1 }}>
+      <AnalyticEcommerce title="Campaign Name" count={data.CampaignName} />
+    </Grid> */}
+    <Grid item xs={12} sm={6} md={4} lg={3} sx={{ bgcolor: '#E6F7FF', borderRadius: 1, p:6 }}>
+      <AnalyticEcommerce title="Start Date" count={data.StartDate} />
+    </Grid>
+    <Grid item xs={12} sm={6} md={4} lg={3} sx={{ bgcolor: '#E6F7FF', borderRadius: 1, p: 6 }}>
+      <AnalyticEcommerce title="End Date" count={data.EndDate} />
+    </Grid>
+    <Grid item xs={12} sm={6} md={4} lg={3} sx={{ bgcolor: '#E6F7FF', borderRadius: 1, p: 6 }}>
       <AnalyticEcommerce title="Screenshot Percentage" count={`${data.Found_Status_Screenshot.toFixed(2)}%`} />
     </Grid>
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid item xs={12} sm={6} md={4} lg={3} sx={{ bgcolor: '#E6F7FF', borderRadius: 1, p: 6 }}>
       <AnalyticEcommerce title="Scraping Percentage" count={`${data.Found_Status_Scraping.toFixed(2)}%`} />
     </Grid>
-        </>
-      )}
+  </>
+)}
+
 
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
@@ -73,6 +74,7 @@ const DashboardDefault = () => {
             value={selectedCampaign}
             onChange={handleCampaignChange}
             displayEmpty
+            sx={{ bgcolor: '#B2EBF2' }}
           >
             <MenuItem value="">Select Campaign</MenuItem>
             {campaigns.map((item) => (
@@ -92,7 +94,7 @@ const DashboardDefault = () => {
                 scrapingPercentage={data.Found_Status_Scraping} 
               />
             ) : (
-              <Typography variant="h">Please select campiagn for graph.</Typography>
+              <Typography variant="h4">Please select campiagn for graph.</Typography>
             )}
           </Box>
         </MainCard>
