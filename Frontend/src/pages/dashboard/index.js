@@ -69,12 +69,13 @@ const DashboardDefault = () => {
 
     
       <Grid item xs={12}>
-        <FormControl>
+        <FormControl  sx={{ display: 'flex', justifyContent: 'center' }}>
           <Select
             value={selectedCampaign}
             onChange={handleCampaignChange}
             displayEmpty
-            sx={{ bgcolor: '#B2EBF2' }}
+            color='primary'
+            sx={{ bgcolor: '#B2EBF2', display: 'flex', justifyContent: 'center'}}
           >
             <MenuItem value="">Select Campaign</MenuItem>
             {campaigns.map((item) => (

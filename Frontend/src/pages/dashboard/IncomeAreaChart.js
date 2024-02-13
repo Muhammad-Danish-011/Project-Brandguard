@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles'; // Import useTheme from Materia
 
 const areaChartOptions = {
   chart: {
-    height: 550,
+    height: 500,
     type: 'area',
     toolbar: {
       show: false
@@ -33,7 +33,6 @@ const areaChartOptions = {
     }
   }
 };
-
 const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
   const theme = useTheme();
   const { secondary } = theme.palette.text;
@@ -45,9 +44,9 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main, '#FF5733'], // Additional color for line
+      colors: ['#007bff', '#87CEEB', '#FF5733'], // Adjust colors to complement white and sky blue
       xaxis: {
-        categories: ['Screenshot', 'Scraping'], // Categories for screenshot and scraping
+        categories: ['Screenshot', 'Scraping'],
         labels: {
           style: {
             colors: [secondary],
@@ -56,7 +55,7 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
         },
         axisBorder: {
           show: true,
-          color: line
+          color: line // Adjust x-axis line color
         }
       },
       yaxis: {
@@ -79,35 +78,46 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
     setSeries([
       {
         name: 'Screenshot',
-        data: [formattedScreenshotPercentage]
+        type: 'line',
+        data: [formattedScreenshotPercentage, 0],
+        strokeWidth: 3, // Increase line thickness
+        dashArray: 0, // No dash style
+        markers: {
+          size: 6, // Increase marker size
+          strokeWidth: 0, // No marker border
+          fillColors: ['#0047AB'], // Marker fill color
+          strokeColors: ['#fff'] // Marker border color
+        },
+        color: '#0047AB', // Line color for screenshot
       },
       {
         name: 'Scraping',
-        data: [formattedScrapingPercentage]
-      },
-      {
-        name: 'Threshold', // Add a line for threshold
-        type: 'line', // Set type to line
-        data: [formattedScreenshotPercentage, formattedScrapingPercentage], // Define data points for the line
-        strokeWidth: 2, // Adjust line width
-        dashArray: 4, // Set dash style for the line
+        type: 'line',
+        data: [formattedScrapingPercentage, 0],
+        strokeWidth: 3, // Increase line thickness
+        dashArray: 5, // No dash style
         markers: {
-          size: 5 // Hide markers
+          size: 6, // Increase marker size
+          strokeWidth: 0, // No marker border
+          fillColors: ['#D50000'], // Marker fill color
+          strokeColors: ['#fff'] // Marker border color
         },
-        color: '#007bff' // Adjust line color
+        color: '#D50000', // Line color for scraping
       }
     ]);
+    
   }, [screenshotPercentage, scrapingPercentage, theme, secondary, line]);
-
+  
   return (
     <>
-      <Box sx={{ p: 2, bgcolor: '#E6F7FF', borderRadius: 1 }}>
-        <Typography variant="h3" sx={{ mb: 4 }}>Chart</Typography>
-        <ReactApexChart options={options} series={series} type="area" height={450} />
+      <Box sx={{ p: 6, bgcolor: '#E6F7FF', borderRadius: 0 }}>
+        <Typography variant="h3" sx={{ mb: 4 }}>GRAPHICAL REPRESENTATION:</Typography>
+        <ReactApexChart options={options} series={series} type="area" height={500} />
       </Box>
     </>
   );
 };
+
 
 
 IncomeAreaChart.propTypes = {
