@@ -59,7 +59,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+     "lint": "eslint . --ext .js"
   },
   "eslintConfig": {
     "overrides": [
@@ -67,7 +68,7 @@
         "files": [
           "**/*.js"
         ],
-        "processor": "babel-eslint",
+        "parser": "@babel/eslint-parser",
         "parserOptions": {
           "requireConfigFile": false
         }
@@ -93,7 +94,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@babel/eslint-parser": "^7.21.3",
+    "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
     "babel-eslint": "^10.1.0",

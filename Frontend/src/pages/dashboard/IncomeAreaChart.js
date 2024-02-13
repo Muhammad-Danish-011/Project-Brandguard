@@ -89,8 +89,8 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
 
   return (
     <>
-      <Box sx={{ p: 2, bgcolor:'#BBEEFB', borderRadius: 1 }}>
-        <Typography variant="h3" sx={{ mb: 2 }}>Chart</Typography>
+      <Box sx={{ p: 2, bgcolor:'#E6F7FF', borderRadius: 1 }}>
+        <Typography variant="h3" sx={{ mb: 4 }}>Chart</Typography>
         <ReactApexChart options={options} series={series} type="area" height={450} />
       </Box>
     </>
