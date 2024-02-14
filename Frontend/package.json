@@ -1,8 +1,8 @@
 {
-  "name": "mantis-free-react-admin-template",
+  "name": "Brandguard",
   "version": "1.1.2",
   "private": true,
-  "homepage": "https://mantisdashboard.io/free",
+  "homepage": "https://mantisdashboard.io",
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons": "^4.7.0",
@@ -21,6 +21,8 @@
     "@testing-library/user-event": "^14.4.3",
     "antd": "^5.13.3",
     "apexcharts": "^3.35.5",
+    "axios": "^1.6.7",
+    "chart.js": "^4.4.1",
     "date-fn": "^0.0.2",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
@@ -31,6 +33,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
+    "react-chartjs-2": "^5.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-datepicker": "^4.25.0",
     "react-device-detect": "^2.2.2",
@@ -56,7 +59,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js"
   },
   "eslintConfig": {
     "overrides": [
@@ -64,7 +68,7 @@
         "files": [
           "**/*.js"
         ],
-        "processor": "babel-eslint",
+        "parser": "@babel/eslint-parser",
         "parserOptions": {
           "requireConfigFile": false
         }
@@ -90,11 +94,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@babel/eslint-parser": "^7.21.3",
+    "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
     "babel-eslint": "^10.1.0",
-    "eslint": "^8.38.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-flowtype": "^8.0.3",

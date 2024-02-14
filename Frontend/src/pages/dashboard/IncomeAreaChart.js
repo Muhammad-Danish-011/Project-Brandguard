@@ -1,16 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-
-// material-ui
-import { useTheme } from '@mui/material/styles';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
+import { Box, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles'; // Import useTheme from Material-UI
 
-// chart options
 const areaChartOptions = {
   chart: {
-    height: 450,
+    height: 500,
     type: 'area',
     toolbar: {
       show: false
@@ -25,56 +21,48 @@ const areaChartOptions = {
   },
   grid: {
     strokeDashArray: 0
+  },
+  xaxis: {
+    type: 'category' // Set x-axis type to category
+  },
+  tooltip: {
+    x: {
+      formatter: function(val) { // Customize tooltip to display date-time
+        return new Date(val).toLocaleString(); // Format date-time using toLocaleString
+      }
+    }
   }
 };
-
-// ==============================|| INCOME AREA CHART ||============================== //
-
-const IncomeAreaChart = ({ slot }) => {
+const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
   const theme = useTheme();
-
-  const { primary, secondary } = theme.palette.text;
+  const { secondary } = theme.palette.text;
   const line = theme.palette.divider;
 
   const [options, setOptions] = useState(areaChartOptions);
+  const [series, setSeries] = useState([]);
 
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main, theme.palette.primary[700]],
+      colors: ['#007bff', '#87CEEB', '#FF5733'], // Adjust colors to complement white and sky blue
       xaxis: {
-        categories:
-          slot === 'month'
-            ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        categories: ['Screenshot', 'Scraping'],
         labels: {
           style: {
-            colors: [
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary
-            ]
+            colors: [secondary],
+            fontWeight: 'bold'
           }
         },
         axisBorder: {
           show: true,
-          color: line
-        },
-        tickAmount: slot === 'month' ? 11 : 7
+          color: line // Adjust x-axis line color
+        }
       },
       yaxis: {
         labels: {
           style: {
-            colors: [secondary]
+            colors: [secondary],
+            fontWeight: 'bold'
           }
         }
       },
@@ -85,37 +73,56 @@ const IncomeAreaChart = ({ slot }) => {
         theme: 'light'
       }
     }));
-  }, [primary, secondary, line, theme, slot]);
-
-  const [series, setSeries] = useState([
-    {
-      name: 'Page Views',
-      data: [0, 86, 28, 115, 48, 210, 136]
-    },
-    {
-      name: 'Sessions',
-      data: [0, 43, 14, 56, 24, 105, 68]
-    }
-  ]);
-
-  useEffect(() => {
+    const formattedScreenshotPercentage = `${screenshotPercentage.toFixed(2)}%`;
+    const formattedScrapingPercentage = `${scrapingPercentage.toFixed(2)}%`;
     setSeries([
       {
-        name: 'Page Views',
-        data: slot === 'month' ? [76, 85, 101, 98, 87, 105, 91, 114, 94, 86, 115, 35] : [31, 40, 28, 51, 42, 109, 100]
+        name: 'Screenshot',
+        type: 'line',
+        data: [formattedScreenshotPercentage, 0],
+        strokeWidth: 3, // Increase line thickness
+        dashArray: 0, // No dash style
+        markers: {
+          size: 6, // Increase marker size
+          strokeWidth: 0, // No marker border
+          fillColors: ['#0047AB'], // Marker fill color
+          strokeColors: ['#fff'] // Marker border color
+        },
+        color: '#0047AB', // Line color for screenshot
       },
       {
-        name: 'Sessions',
-        data: slot === 'month' ? [110, 60, 150, 35, 60, 36, 26, 45, 65, 52, 53, 41] : [11, 32, 45, 32, 34, 52, 41]
+        name: 'Scraping',
+        type: 'line',
+        data: [formattedScrapingPercentage, 0],
+        strokeWidth: 3, // Increase line thickness
+        dashArray: 5, // No dash style
+        markers: {
+          size: 6, // Increase marker size
+          strokeWidth: 0, // No marker border
+          fillColors: ['#D50000'], // Marker fill color
+          strokeColors: ['#fff'] // Marker border color
+        },
+        color: '#D50000', // Line color for scraping
       }
     ]);
-  }, [slot]);
-
-  return <ReactApexChart options={options} series={series} type="area" height={450} />;
+    
+  }, [screenshotPercentage, scrapingPercentage, theme, secondary, line]);
+  
+  return (
+    <>
+      <Box sx={{ p: 6, bgcolor: '#E6F7FF', borderRadius: 0 }}>
+        <Typography variant="h3" sx={{ mb: 4 }}>GRAPHICAL REPRESENTATION:</Typography>
+        <ReactApexChart options={options} series={series} type="area" height={500} />
+      </Box>
+    </>
+  );
 };
 
+
+
 IncomeAreaChart.propTypes = {
-  slot: PropTypes.string
+  screenshotPercentage: PropTypes.number.isRequired,
+  scrapingPercentage: PropTypes.number.isRequired
 };
 
 export default IncomeAreaChart;
