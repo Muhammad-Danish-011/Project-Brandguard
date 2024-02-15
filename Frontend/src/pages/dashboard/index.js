@@ -43,13 +43,19 @@ const DashboardDefault = () => {
   const handleCampaignChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedCampaign(selectedValue);
-    // Find the selected campaign data from the campaigns list
     const selectedCampaignData = campaigns.find(
       (campaign) => campaign.CampaignID === selectedValue
     );
     setData(selectedCampaignData);
-    setScreenshotPercentage(selectedCampaignData.Found_Status_Screenshot);
-    setScrapingPercentage(selectedCampaignData.Found_Status_Scraping);
+    setScreenshotPercentage(selectedCampaignData?.Found_Status_Screenshot || 0);
+    setScrapingPercentage(selectedCampaignData?.Found_Status_Scraping || 0);
+  };
+
+  const resetCampaignSelection = () => {
+    setSelectedCampaign("");
+    setData(null);
+    setScreenshotPercentage(0);
+    setScrapingPercentage(0);
   };
 
   // Aggregate data from all campaigns
@@ -82,6 +88,7 @@ const DashboardDefault = () => {
           <Typography variant="h2">Dashboard</Typography>
         </Grid>
         <Grid item xs={12}>
+    
           <FormControl sx={{ display: "flex", justifyContent: "center", alignItems: "center", Width: "70%" }}>
             <Select
               value={selectedCampaign}
@@ -89,11 +96,11 @@ const DashboardDefault = () => {
               displayEmpty
               color="primary"
               sx={{
-                bgcolor: "#E0F7FA",
+                bgcolor: "#AFEEEE",
               }}
             >
-              <MenuItem value="" disabled>
-                Select Campaign
+              <MenuItem value="">
+                No Campaign
               </MenuItem>
               {campaigns.map((item) => (
                 <MenuItem key={item.CampaignID} value={item.CampaignID}>
@@ -155,29 +162,23 @@ const DashboardDefault = () => {
             <Grid item xs={12} sm={6} md={3}>
               <AnalyticEcommerce
                 title="Screenshot Percentage"
-                count={`${data.Found_Status_Screenshot.toFixed(2)}%`}
+                count={`${screenshotPercentage.toFixed(2)}%`}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AnalyticEcommerce
                 title="Scraping Percentage"
-                count={`${data.Found_Status_Scraping.toFixed(2)}%`}
+                count={`${scrapingPercentage.toFixed(2)}%`}
               />
             </Grid>
             {/* Include the BarChart component */}
             <Grid item xs={12}>
               <MainCard content={false}>
                 <Box sx={{ pt: 1, pr: 2 }}>
-                  {data !== null ? (
-                    <BarChart
-                      screenshotPercentage={screenshotPercentage}
-                      scrapingPercentage={scrapingPercentage}
-                    />
-                  ) : (
-                    <Typography variant="h4">
-                      Please select a campaign for the graph.
-                    </Typography>
-                  )}
+                  <BarChart
+                    screenshotPercentage={screenshotPercentage}
+                    scrapingPercentage={scrapingPercentage}
+                  />
                 </Box>
               </MainCard>
             </Grid>
@@ -185,16 +186,10 @@ const DashboardDefault = () => {
             <Grid item xs={12}>
               <MainCard content={false}>
                 <Box sx={{ pt: 1, pr: 2 }}>
-                  {data !== null ? (
-                    <AreaChart
-                      screenshotPercentage={screenshotPercentage}
-                      scrapingPercentage={scrapingPercentage}
-                    />
-                  ) : (
-                    <Typography variant="h4">
-                      Please select a campaign for the graph.
-                    </Typography>
-                  )}
+                  <AreaChart
+                    screenshotPercentage={screenshotPercentage}
+                    scrapingPercentage={scrapingPercentage}
+                  />
                 </Box>
               </MainCard>
             </Grid>

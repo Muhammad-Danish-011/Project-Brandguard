@@ -126,14 +126,19 @@ export default function CampaignTable() {
               value={selectedCampaign}
               onChange={handleCampaignChange}
               displayEmpty
+              color="primary"
+              sx={{
+                bgcolor: "#AFEEEE",
+              }}
             >
-              <MenuItem value="">Select Campaign</MenuItem>
+              <MenuItem value="">Filter Campaign</MenuItem>
               {data.map((item) => (
                 <MenuItem key={item.CampaignID} value={item.CampaignID}>
                   {item.CampaignName}
                 </MenuItem>
               ))}
             </Select>
+            <br></br>
           </FormControl>
 
           <TableContainer>
