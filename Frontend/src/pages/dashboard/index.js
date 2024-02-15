@@ -5,7 +5,15 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Box
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button
 } from "@mui/material";
 import MainCard from "components/MainCard";
 import BarChart from "./BarChart";
@@ -14,6 +22,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import AnalyticEcommerce from "components/cards/statistics/AnalyticEcommerce";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Link } from 'react-router-dom';
 
 const DashboardDefault = () => {
   const [data, setData] = useState(null);
@@ -23,6 +32,7 @@ const DashboardDefault = () => {
   const [totalCampaigns, setTotalCampaigns] = useState(0); // State to hold the total number of campaigns
   const [screenshotPercentage, setScreenshotPercentage] = useState(0);
   const [scrapingPercentage, setScrapingPercentage] = useState(0);
+  // const history = useHistory();
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -82,22 +92,19 @@ const DashboardDefault = () => {
   };
 
   return (
-    <Box>
-      <Grid container spacing={4}>
+    <Box p={4}>
+      <Grid container spacing={5}>
         <Grid item xs={12}>
           <Typography variant="h2">Dashboard</Typography>
         </Grid>
         <Grid item xs={12}>
-    
-          <FormControl sx={{ display: "flex", justifyContent: "center", alignItems: "center", Width: "70%" }}>
+          <FormControl sx={{ display: "flex", width: "70%" }}>
             <Select
               value={selectedCampaign}
               onChange={handleCampaignChange}
               displayEmpty
               color="primary"
-              sx={{
-                bgcolor: "#AFEEEE",
-              }}
+              sx={{ bgcolor: "#AFEEEE", width: "70%" }}
             >
               <MenuItem value="">
                 No Campaign
@@ -109,45 +116,81 @@ const DashboardDefault = () => {
               ))}
             </Select>
           </FormControl>
-          <br />
+          {/* Error message */}
           {selectedCampaign === "" && (
-            <Typography variant="h4" color="error" display="flex" justifyContent="center" alignItems="center">
+            <Typography variant="h4" color="error" mt={2}>
               Please select a campaign for individual visibility.
             </Typography>
           )}
+          <br />
         </Grid>
-      
         {/* Render overall data graph when no campaign is selected */}
         {selectedCampaign === "" && (
-          <Grid item xs={12}>
-              {/* Display total number of campaigns */}
-        <Grid item xs={12} sm={6} md={3}>
-          <AnalyticEcommerce title="Total Campaigns" count={totalCampaigns} />
-        </Grid>
-        <br></br>
-            <MainCard content={false}  sx={{ backgroundColor: '#e0ebeb' }}>
-            <Typography variant="h4"  display='flex' justifyContent='center'>
-                  Overall Campaign Trend
-                </Typography>
-              <Box sx={{ pt: 2, pr: 2 }}>
-                
-                {/* Render LineChart with aggregated data */}
-                <ResponsiveContainer width="100%" height={400}>
-                  <LineChart
-                    data={aggregateData()}
-                    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-                    
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="count" stroke="#8884d8" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            </MainCard>
+          <Grid container spacing={4}>
+            {/* Total Campaigns on top right corner */}
+            <Grid item xs={12} display='flex' justifyContent="center" >
+              <Grid item>
+                <AnalyticEcommerce title="Total Campaigns" count={totalCampaigns} />
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" display='flex' justifyContent='center' >
+                Table
+              </Typography>
+              <Grid item xs={12}>
+                <TableContainer component={Paper}>
+                  <Table aria-label="campaign data table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Campaign Name</TableCell>
+                        <TableCell>Start Date</TableCell>
+                        <TableCell>End Date</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {campaigns.slice(0, 7).map((campaign) => (
+                        <TableRow key={campaign.CampaignID}>
+                          <TableCell>{campaign.CampaignName}</TableCell>
+                          <TableCell>{campaign.StartDate}</TableCell>
+                          <TableCell>{campaign.EndDate}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer><br></br>
+                <Button
+  variant="contained"
+  color="primary"
+  component={Link}
+  to="/Scraping-Report"
+>
+  View More
+</Button>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" display='flex' justifyContent='center'>
+                Campaigns Trend
+              </Typography>
+              <MainCard content={false} sx={{ backgroundColor: '#e0ebeb' }}>
+                <Box pt={2} pr={2}>
+                  {/* Render LineChart with aggregated data */}
+                  <ResponsiveContainer width="100%" height={400}>
+                    <LineChart
+                      data={aggregateData()}
+                      margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="count" stroke="#8884d8" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </Box>
+              </MainCard>
+            </Grid>
           </Grid>
         )}
         {/* Render individual campaign data if a campaign is selected */}
@@ -171,10 +214,9 @@ const DashboardDefault = () => {
                 count={`${scrapingPercentage.toFixed(2)}%`}
               />
             </Grid>
-            {/* Include the BarChart component */}
             <Grid item xs={12}>
               <MainCard content={false}>
-                <Box sx={{ pt: 1, pr: 2 }}>
+                <Box pt={1} pr={2}>
                   <BarChart
                     screenshotPercentage={screenshotPercentage}
                     scrapingPercentage={scrapingPercentage}
@@ -182,10 +224,9 @@ const DashboardDefault = () => {
                 </Box>
               </MainCard>
             </Grid>
-            {/* Include the AreaChart component */}
             <Grid item xs={12}>
               <MainCard content={false}>
-                <Box sx={{ pt: 1, pr: 2 }}>
+                <Box pt={1} pr={2}>
                   <AreaChart
                     screenshotPercentage={screenshotPercentage}
                     scrapingPercentage={scrapingPercentage}
