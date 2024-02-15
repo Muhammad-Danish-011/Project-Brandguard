@@ -109,23 +109,27 @@ const DashboardDefault = () => {
             </Typography>
           )}
         </Grid>
-        {/* Display total number of campaigns */}
-        <Grid item xs={12} sm={6} md={3}>
-          <AnalyticEcommerce title="Total Campaigns" count={totalCampaigns} />
-        </Grid>
+      
         {/* Render overall data graph when no campaign is selected */}
         {selectedCampaign === "" && (
           <Grid item xs={12}>
-            <MainCard content={false}>
-              <Box sx={{ pt: 1, pr: 2 }}>
-                <Typography variant="h4">
+              {/* Display total number of campaigns */}
+        <Grid item xs={12} sm={6} md={3}>
+          <AnalyticEcommerce title="Total Campaigns" count={totalCampaigns} />
+        </Grid>
+        <br></br>
+            <MainCard content={false}  sx={{ backgroundColor: '#e0ebeb' }}>
+            <Typography variant="h4"  display='flex' justifyContent='center'>
                   Overall Campaign Trend
                 </Typography>
+              <Box sx={{ pt: 2, pr: 2 }}>
+                
                 {/* Render LineChart with aggregated data */}
                 <ResponsiveContainer width="100%" height={400}>
                   <LineChart
                     data={aggregateData()}
                     margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+                    
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />

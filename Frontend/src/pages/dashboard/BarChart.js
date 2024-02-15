@@ -25,9 +25,9 @@ const BarChart = ({ screenshotPercentage, scrapingPercentage }) => {
     },
     plotOptions: {
       bar: {
-        columnWidth: '50%', // Adjust the width of the bars
+        columnWidth: '25%', // Adjust the width of the bars
         borderRadius: 4,
-        horizontal: true // Display bars horizontally
+        horizontal: false // Display bars horizontally
       }
     },
     dataLabels: {
@@ -47,7 +47,9 @@ const BarChart = ({ screenshotPercentage, scrapingPercentage }) => {
         }
       }
     },
+   
     yaxis: {
+      max: 100 ,
       labels: {
         formatter: function(val) {
           return `${val}%`; // Format Y-axis labels as percentages
@@ -69,7 +71,7 @@ const BarChart = ({ screenshotPercentage, scrapingPercentage }) => {
 
   return (
     <div id="chart">
-      <Box sx={{ p: 4, bgcolor: '#E6F7FF', borderRadius: 0 }}>
+      <Box sx={{ p: 4, bgcolor: '#e0ebeb', borderRadius: 0 }}>
         <Typography variant="h3" sx={{ mb: 4 }}>BAR CHART REPRESENTATION:</Typography>
         <ReactApexChart options={options} series={series} type="bar" height={365} />
       </Box>

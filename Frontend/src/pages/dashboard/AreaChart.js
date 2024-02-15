@@ -47,6 +47,9 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
     xaxis: {
       type: 'category'
     },
+    yaxis: {
+      max: 100 // Set maximum value of y-axis to 100
+    },
     tooltip: {
       theme: 'light',
       x: {
@@ -116,7 +119,7 @@ const IncomeAreaChart = ({ screenshotPercentage, scrapingPercentage }) => {
 
   return (
     <>
-      <Box sx={{ p: 6, bgcolor: '#E6F7FF', borderRadius: 0 }}>
+      <Box sx={{ p: 6, bgcolor: '#e0ebeb', borderRadius: 0 }}>
         <Typography variant="h3" sx={{ mb: 4 }}>GRAPHICAL REPRESENTATION:</Typography>
         <ReactApexChart options={options} series={series} type="area" height={500} />
       </Box>
