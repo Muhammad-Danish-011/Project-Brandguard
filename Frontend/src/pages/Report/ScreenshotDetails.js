@@ -129,7 +129,7 @@ const DetailPage = () => {
                     )
                   )
                   ) : (
-                    "No Ad Positions"
+                    "No Screenshots Data"
                   )}
               </TableBody>
             </Table>
@@ -167,7 +167,7 @@ const DetailPage = () => {
                     )
                   )
                   ) : (
-                    "No Ad Positions"
+                    "No Scraped Data"
                   )}
               </TableBody>
             </Table>
