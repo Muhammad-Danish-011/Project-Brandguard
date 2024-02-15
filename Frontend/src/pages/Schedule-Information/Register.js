@@ -92,7 +92,7 @@ const Register = () => {
 
       const campaignResult = await campaignResponse.json();
       console.log("Campaign data saved successfully:", campaignResult);
-     
+
 
       const campaignId = campaignResult.CampaignID;
 
@@ -169,7 +169,7 @@ const Register = () => {
           style={{ backgroundColor: "#E3F2FD", color: "#1976D2" }}
         >
           <Typography variant="h2" className="header" gutterBottom>
-            AD Scheduling
+            Advertisement Scheduling
           </Typography>
           <CardHeader />
           <CardContent>
@@ -272,7 +272,7 @@ const Register = () => {
                     color="primary"
                     onClick={handleSaveClick}
                     fullWidth
-                    
+
                   >
                     Save
                   </Button>

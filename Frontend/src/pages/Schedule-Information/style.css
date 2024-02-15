@@ -5,21 +5,21 @@ body {
     font-family: 'Arial', sans-serif;
     /* overflow: hidden; */
   }
-  
+
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 1vh; /* Adjusted min-height value for better visibility */
     margin-top: 0;
-    background: linear-gradient(180deg, #f0f0f0 0%, #fff8f8 100%);
-    /* background-image: url("../../assets/images/brandguard_logo_black.png"); */
-    background-size: 70vh 40vh; 
+    /* background: linear-gradient(180deg, #f0f0f0 0%, #fff8f8 100%);
+    background-image: url("../../assets/images/brandguard_logo_black.png");
+    background-size: 70vh 40vh;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; */
   }
-  
-  
+
+
   .card {
     width: 80%;
     max-width: 600px;
@@ -30,11 +30,11 @@ body {
     background: rgba(255, 255, 255, 0.8); /* Adjust the alpha value (0.8) for transparency */
 
   }
-  
+
   .form {
     padding: 20px;
   }
-  
+
   .header {
     text-align: center;
     border-bottom: 2px solid #ddd;
@@ -42,12 +42,12 @@ body {
     margin-bottom: 0px;
     color: #333;
   }
-  
+
   .button {
     margin-top: 20px 0;
     color: #ff3131;
   }
-  
+
   .popup {
     position: fixed;
     top: 50%;
@@ -62,23 +62,22 @@ body {
     background: rgba(199, 194, 194, 0.8); /* Adjust the alpha value (0.8) for transparency */
 
   }
-  
+
   /* Responsive Styles */
-  
+
   @media (max-width: 768px) {
     .container {
       min-height: 70vh;
     }
-  
+
     .card {
       width: 90%;
       max-width: none; /* Remove max-width for smaller screens */
     }
   }
-  
+
   @media (max-width: 600px) {
     .button {
       margin-top: 15px;
     }
   }
-  
