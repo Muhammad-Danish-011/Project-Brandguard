@@ -1,16 +1,28 @@
-import { useState, React ,useEffect } from "react";
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
-import { useParams } from "../../../node_modules/react-router-dom/dist/index";
+import { useState, React, useEffect } from "react";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Modal,
+  Typography,
+} from "@mui/material";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const DetailPage = () => {
-  const {campaignId}=useParams();
+  const { campaignId } = useParams();
   const [campaignDetails, setCampaignDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showScreenshotDetails, setScreenshotDetails] = useState(true)
+  const [showScreenshotDetails, setScreenshotDetails] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedFilePath, setSelectedFilePath] = useState("");
   const navigate = useNavigate();
-
 
   const fetchData = async (name) => {
     try {
@@ -29,19 +41,28 @@ const DetailPage = () => {
     }
   };
 
-
   useEffect(() => {
-
-    if(showScreenshotDetails) {
-      setCampaignDetails(null)
-      fetchData('screenshot_report');
+    if (showScreenshotDetails) {
+      setCampaignDetails(null);
+      fetchData("screenshot_report");
+    } else {
+      setCampaignDetails(null);
+      fetchData("scraping_report");
     }
-    else {
-      setCampaignDetails(null)
-      fetchData('scraping_report');
-    }
-
   }, [showScreenshotDetails]);
+
+  const handleFilePathClick = (filePath) => {
+    // Replace backward slashes (\) with forward slashes (/) in the file path
+    const normalizedPath = filePath.replace(/\\/g, '/'); 
+    setSelectedFilePath(normalizedPath);
+    setModalOpen(true);
+  };
+  
+
+  const handleCloseModal = () => {
+    setSelectedFilePath("");
+    setModalOpen(false);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -53,19 +74,6 @@ const DetailPage = () => {
 
   return (
     <div>
-      {/* <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          navigate(`/ScrapingDetails/${campaignId}`);
-        }}
-        style={{
-          position: 'absolute',
-          right: '56px',
-        }}
-      >
-        Scraping Details
-      </Button> */}
       <h2>Details Page for Campaign {campaignId}</h2>
 
       <div>
@@ -74,107 +82,111 @@ const DetailPage = () => {
           color="primary"
           disabled={showScreenshotDetails}
           onClick={() => {
-            setScreenshotDetails(true)
+            setScreenshotDetails(true);
           }}
-          style={{}}
         >
           Screenshot Details
         </Button>
         <Button
-        variant="contained"
-        color="primary"
-        disabled={!showScreenshotDetails}
-        onClick={() => {
-          setScreenshotDetails(false)
-        }}
-        style={{}}
-      >
-        Scraping Details
-      </Button>
+          variant="contained"
+          color="primary"
+          disabled={!showScreenshotDetails}
+          onClick={() => {
+            setScreenshotDetails(false);
+          }}
+        >
+          Scraping Details
+        </Button>
       </div>
 
-      {showScreenshotDetails ?
-        (campaignDetails && <div>
-          <h1>Screenshot Details</h1>
-          <p>Campaign ID: {campaignDetails.CampaignID}</p>
-          <p>Website URL: {campaignDetails.WebsiteURL}</p>
-          <p>Campaign Name: {campaignDetails.CampaignName}</p>
+      {showScreenshotDetails ? (
+        campaignDetails && (
+          <div>
+            <h1>Screenshot Details</h1>
+            <p>Campaign ID: {campaignDetails.CampaignID}</p>
+            <p>Website URL: {campaignDetails.WebsiteURL}</p>
+            <p>Campaign Name: {campaignDetails.CampaignName}</p>
 
-          <TableContainer component={Paper}>
-            <Table style={{ backgroundColor: '#E3F2FD', color: '#1976D2' }}>
-              <TableHead>
-                <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
-                  <TableCell>Capture Date Time</TableCell>
-                  <TableCell>File Path</TableCell>
-                  <TableCell>Found Status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {campaignDetails.AdPositions?.length > 0 ? (
-                  campaignDetails.AdPositions?.map(({Capture_DateTime, FilePath, Found_Status}) => (
-                      <>
-                      <TableRow>
-                      <TableCell>
-                      {Capture_DateTime}
-                      </TableCell>
-                      <TableCell>
-                      {FilePath}
-                      </TableCell>
-                      <TableCell>
-                      {Found_Status}
-                      </TableCell>
+            <TableContainer component={Paper}>
+              <Table style={{ backgroundColor: "#E3F2FD", color: "#1976D2" }}>
+                <TableHead>
+                  <TableRow style={{ backgroundColor: "#BBDEFB", color: "#1976D2" }}>
+                    <TableCell>Capture Date Time</TableCell>
+                    <TableCell>File Path</TableCell>
+                    <TableCell>Found Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {campaignDetails.AdPositions?.length > 0 ? (
+                    campaignDetails.AdPositions?.map(({ Capture_DateTime, FilePath, Found_Status }) => (
+                      <TableRow key={Capture_DateTime}>
+                        <TableCell>{Capture_DateTime}</TableCell>
+                        <TableCell>
+                          <Button color="primary" onClick={() => handleFilePathClick(FilePath)}>
+                            {FilePath}
+                          </Button>
+                        </TableCell>
+                        <TableCell>{Found_Status}</TableCell>
                       </TableRow>
-
-                      </>
-                    )
-                  )
+                    ))
                   ) : (
-                    "No Screenshots Data"
+                    <TableRow>
+                      <TableCell>No Screenshots Data</TableCell>
+                    </TableRow>
                   )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )
+      ) : (
+        campaignDetails && (
+          <div>
+            <h1>Scraping Details</h1>
+            <p>Campaign ID: {campaignDetails.CampaignID}</p>
+            <p>Website URL: {campaignDetails.WebsiteURL}</p>
+            <p>Campaign Name: {campaignDetails.CampaignName}</p>
 
-        </div>) :
-        (campaignDetails && <div>
-          <h1>Scraping Details</h1>
-          <p>Campaign ID: {campaignDetails.CampaignID}</p>
-          <p>Website URL: {campaignDetails.WebsiteURL}</p>
-          <p>Campaign Name: {campaignDetails.CampaignName}</p>
-
-          <TableContainer component={Paper}>
-            <Table style={{ backgroundColor: '#E3F2FD', color: '#1976D2' }}>
-              <TableHead>
-                <TableRow style={{ backgroundColor: '#BBDEFB', color: '#1976D2' }}>
-                  <TableCell>Capture Date Time</TableCell>
-                  <TableCell>Found Status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {campaignDetails.ScrapeImageStatus?.length > 0 ? (
-                  campaignDetails.ScrapeImageStatus?.map(({DateTime, Found_Status}) => (
-                      <>
-                      <TableRow>
-                      <TableCell>
-                      {DateTime}
-                      </TableCell>
-                      <TableCell>
-                      {Found_Status}
-                      </TableCell>
+            <TableContainer component={Paper}>
+              <Table style={{ backgroundColor: "#E3F2FD", color: "#1976D2" }}>
+                <TableHead>
+                  <TableRow style={{ backgroundColor: "#BBDEFB", color: "#1976D2" }}>
+                    <TableCell>Capture Date Time</TableCell>
+                    <TableCell>Found Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {campaignDetails.ScrapeImageStatus?.length > 0 ? (
+                    campaignDetails.ScrapeImageStatus?.map(({ DateTime, Found_Status }) => (
+                      <TableRow key={DateTime}>
+                        <TableCell>{DateTime}</TableCell>
+                        <TableCell>{Found_Status}</TableCell>
                       </TableRow>
-
-                      </>
-                    )
-                  )
+                    ))
                   ) : (
-                    "No Scraped Data"
+                    <TableRow>
+                      <TableCell>No Scraped Data</TableCell>
+                    </TableRow>
                   )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )
+      )}
 
-        </div>)
-      }
+<Modal open={modalOpen} onClose={handleCloseModal}>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
+    <Typography variant="h6">File Preview</Typography>
+    <img src={selectedFilePath} alt="File Preview" style={{ maxWidth: '100%', maxHeight: '80vh', marginTop: '20px' }} />
+  </div>
+</Modal>
+    </div>
+  );
+};
+
+export default DetailPage;
+
 
       {/* {campaignDetails && (
         <div>
@@ -220,8 +232,5 @@ const DetailPage = () => {
           </TableContainer>
         </div>
       )} */}
-    </div>
-  );
-};
-
-export default DetailPage;
+   
+ 

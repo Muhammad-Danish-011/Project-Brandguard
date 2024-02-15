@@ -139,8 +139,8 @@ const DashboardDefault = () => {
               </Typography>
               <Grid item xs={12}>
                 <TableContainer component={Paper}>
-                  <Table aria-label="campaign data table">
-                    <TableHead>
+                  <Table aria-label="campaign data table" style={{ backgroundColor: "#E3F2FD", color: "#1976D2" }}>
+                    <TableHead style={{ backgroundColor: "#BBDEFB" }}>
                       <TableRow>
                         <TableCell>Campaign Name</TableCell>
                         <TableCell>Start Date</TableCell>
