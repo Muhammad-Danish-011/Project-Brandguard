@@ -41,10 +41,10 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
 
     # Check if a match was found
     if best_match is None:
-        save_found_status(campaignID, found='no')
+        save_found_status(campaignID, found='no', img_position='NA')
         return "Reference image not found."
 
-    save_found_status(campaignID, found='yes')
+    # save_found_status(campaignID, found='yes')
 
     # Calculate the position of the best match
     ref_image_height, ref_image_width = reference_image_gray.shape[:2]
@@ -67,9 +67,10 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
     result_string = "Reference image found at "
     for position, value in position_names.items():
         if value:
+            position += position
             result_string += position + " "
 
-    print(result_string)
+    save_found_status(campaignID, found='yes', img_position=position)
     return result_string
 
 
@@ -94,7 +95,7 @@ def get_refrence_image(campaignID):
         print("Image not found for the given Campaign ID.")
 
 
-def save_found_status(campaignID, found):
+def save_found_status(campaignID, found, img_position):
     # Create a new visibility record and add it to the database
     screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
         Screenshots.Timestamp.desc()).first()
@@ -104,7 +105,8 @@ def save_found_status(campaignID, found):
     new_AdPositions = AdPositions(
         ScreenshotID=screenshotID,
         CampaignID=campaignID,
-        Found_Status=found
+        Found_Status=found,
+        Ad_Position=img_position
     )
     db.session.add(new_AdPositions)
     db.session.commit()
