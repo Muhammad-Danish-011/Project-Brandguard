@@ -68,26 +68,41 @@ const DashboardDefault = () => {
     setScrapingPercentage(0);
   };
 
-  // Aggregate data from all campaigns
-  const aggregateData = () => {
-    const aggregatedData = [];
-    // Aggregate data based on date
+  // Aggregate data for start dates of campaigns
+  const aggregateStartDateData = () => {
+    const startDateData = {};
+
+    // Aggregate data based on start dates of campaigns
     campaigns.forEach((campaign) => {
-      const startDate = new Date(campaign.StartDate);
-      const endDate = new Date(campaign.EndDate);
-      const duration = (endDate - startDate) / (1000 * 60 * 60 * 24); // Duration in days
-      for (let i = 0; i <= duration; i++) {
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + i);
-        const formattedDate = date.toISOString().split('T')[0];
-        const existingData = aggregatedData.find((item) => item.date === formattedDate);
-        if (existingData) {
-          existingData.count++;
-        } else {
-          aggregatedData.push({ date: formattedDate, count: 1 });
-        }
-      }
+      const startDate = new Date(campaign.StartDate).toISOString().split('T')[0];
+      startDateData[startDate] = startDateData[startDate] ? startDateData[startDate] + 1 : 1;
     });
+
+    // Convert data to array format for plotting
+    const aggregatedData = Object.entries(startDateData).map(([date, count]) => ({
+      date,
+      count
+    }));
+
+    return aggregatedData;
+  };
+
+  // Aggregate data for end dates of campaigns
+  const aggregateEndDateData = () => {
+    const endDateData = {};
+
+    // Aggregate data based on end dates of campaigns
+    campaigns.forEach((campaign) => {
+      const endDate = new Date(campaign.EndDate).toISOString().split('T')[0];
+      endDateData[endDate] = endDateData[endDate] ? endDateData[endDate] + 1 : 1;
+    });
+
+    // Convert data to array format for plotting
+    const aggregatedData = Object.entries(endDateData).map(([date, count]) => ({
+      date,
+      count
+    }));
+
     return aggregatedData;
   };
 
@@ -159,25 +174,50 @@ const DashboardDefault = () => {
                   </Table>
                 </TableContainer><br></br>
                 <Button
-  variant="contained"
-  color="primary"
-  component={Link}
-  to="/Scraping-Report"
->
-  View More
-</Button>
+                  variant="contained"
+                  color="primary"
+                  component={Link}
+                  to="/Scraping-Report"
+                >
+                  View More
+                </Button>
               </Grid>
             </Grid>
+            {/* Render the LineChart for start dates */}
             <Grid item xs={12} md={6}>
               <Typography variant="h4" display='flex' justifyContent='center'>
-                Campaigns Trend
+                Start Dates Trend
               </Typography>
               <MainCard content={false} sx={{ backgroundColor: '#e0ebeb' }}>
                 <Box pt={2} pr={2}>
                   {/* Render LineChart with aggregated data */}
                   <ResponsiveContainer width="100%" height={400}>
                     <LineChart
-                      data={aggregateData()}
+                      data={aggregateStartDateData()}
+                      margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="count" stroke="#8884d8" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </Box>
+              </MainCard>
+            </Grid>
+            {/* Render the LineChart for end dates */}
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" display='flex' justifyContent='center'>
+                End Dates Trend
+              </Typography>
+              <MainCard content={false} sx={{ backgroundColor: '#e0ebeb' }}>
+                <Box pt={2} pr={2}>
+                  {/* Render LineChart with aggregated data */}
+                  <ResponsiveContainer width="100%" height={400}>
+                    <LineChart
+                      data={aggregateEndDateData()}
                       margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
