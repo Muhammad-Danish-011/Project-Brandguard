@@ -35,10 +35,6 @@ class Images(db.Model):
     Extension = db.Column(db.String)  # Add an Extension column
     ImagePath = db.Column(db.String)
 
-    # def generate_image_path(self, local_directory):
-    #     filename = f"{str(self.CampaignID).zfill(3)}_{str(self.ImageID).zfill(3)}.{self.Extension}"
-    #     return os.path.join(local_directory, filename)
-
 
 class Screenshots(db.Model):
     __tablename__ = 'screenshots'
@@ -49,9 +45,6 @@ class Screenshots(db.Model):
     Extension = db.Column(db.String)  # Add an Extension column
     Timestamp = db.Column(db.String)  # Add a Timestamp column
     FilePath = db.Column(db.String)
-
-    # def generate_screenshot_path(self):
-    #     return f"{str(self.CampaignID).zfill(3)}_{str(self.ScreenshotID).zfill(3)}_{self.Timestamp}.{self.Extension}"
 
 
 class AdPositions(db.Model):
