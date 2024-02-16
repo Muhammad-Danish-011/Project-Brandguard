@@ -35,10 +35,6 @@ class Images(db.Model):
     Extension = db.Column(db.String)  # Add an Extension column
     ImagePath = db.Column(db.String)
 
-    # def generate_image_path(self, local_directory):
-    #     filename = f"{str(self.CampaignID).zfill(3)}_{str(self.ImageID).zfill(3)}.{self.Extension}"
-    #     return os.path.join(local_directory, filename)
-
 
 class Screenshots(db.Model):
     __tablename__ = 'screenshots'
@@ -49,9 +45,6 @@ class Screenshots(db.Model):
     Extension = db.Column(db.String)  # Add an Extension column
     Timestamp = db.Column(db.String)  # Add a Timestamp column
     FilePath = db.Column(db.String)
-
-    # def generate_screenshot_path(self):
-    #     return f"{str(self.CampaignID).zfill(3)}_{str(self.ScreenshotID).zfill(3)}_{self.Timestamp}.{self.Extension}"
 
 
 class AdPositions(db.Model):
@@ -65,7 +58,7 @@ class AdPositions(db.Model):
     # Website = db.Column(db.String, ForeignKey('websites.WebsiteURL'), nullable=False)
     Capture_DateTime = db.Column(db.DateTime, default=datetime.now)
     Found_Status = db.Column(db.String)
-    Image_Position = db.Column(db.String)
+
     # Additional columns for data from related tables
     campaign_name = column_property(Campaigns.CampaignName, deferred=True)
     start_date = column_property(Campaigns.StartDate, deferred=True)
