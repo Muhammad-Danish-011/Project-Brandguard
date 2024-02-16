@@ -34,11 +34,11 @@ def fullpage_screenshot(driver, folder, file):
         # Wait for 10 seconds before starting to scroll
         # time.sleep(30)
 
-
         # Scroll to the bottom of the page to load all content
         js_scroll_to_bottom = "window.scrollTo(0, document.body.scrollHeight);"
         driver.execute_script(js_scroll_to_bottom)
-        time.sleep(10)  # Wait for lazy-loading content to load (adjust as needed)
+        # Wait for lazy-loading content to load (adjust as needed)
+        time.sleep(10)
 
         # Calculate the total scroll height of the page
         js_get_scroll_height = (
@@ -55,14 +55,15 @@ def fullpage_screenshot(driver, folder, file):
         # Wait for an element with a specific XPath to become clickable
         try:
             WebDriverWait(driver, 50).until(
-                EC.element_to_be_clickable((By.XPATH, "//*[@id='maincontent']/div[2]/div/div[2]/div[9]/div[7]"))
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//*[@id='maincontent']/div[2]/div/div[2]/div[9]/div[7]"))
             )
 
             # Scroll back to the top of the page
             driver.execute_script("window.scrollTo(0, 0)")
             time.sleep(2)  # Optional: Wait for any animations to finish
 
-             # Create subfolder if it doesn't exist
+            # Create subfolder if it doesn't exist
             if not os.path.exists(folder):
                 os.makedirs(folder)
 
@@ -78,10 +79,11 @@ def fullpage_screenshot(driver, folder, file):
         finally:
             driver.quit()
     elif current_url == 'https://www.vegas.pk/':
-         # Scroll to the bottom of the page to load all content
+        # Scroll to the bottom of the page to load all content
         js_scroll_to_bottom = "window.scrollTo(0, document.body.scrollHeight);"
         driver.execute_script(js_scroll_to_bottom)
-        time.sleep(10)  # Wait for lazy-loading content to load (adjust as needed)
+        # Wait for lazy-loading content to load (adjust as needed)
+        time.sleep(10)
 
         # Calculate the total scroll height of the page
         js_get_scroll_height = (
@@ -98,14 +100,15 @@ def fullpage_screenshot(driver, folder, file):
         # Wait for an element with a specific XPath to become clickable
         try:
             WebDriverWait(driver, 60).until(
-                EC.element_to_be_clickable((By.XPATH, "//*[@id='outlet-section']"))
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//*[@id='outlet-section']"))
             )
 
             # Scroll back to the top of the page
             driver.execute_script("window.scrollTo(0, 0)")
             time.sleep(2)  # Optional: Wait for any animations to finish
 
-             # Create subfolder if it doesn't exist
+            # Create subfolder if it doesn't exist
             if not os.path.exists(folder):
                 os.makedirs(folder)
 
@@ -124,7 +127,8 @@ def fullpage_screenshot(driver, folder, file):
     elif current_url == 'https://cozmetica.pk/':
         js_scroll_to_bottom = "window.scrollTo(0, document.body.scrollHeight);"
         driver.execute_script(js_scroll_to_bottom)
-        time.sleep(60)  # Wait for lazy-loading content to load (adjust as needed)
+        # Wait for lazy-loading content to load (adjust as needed)
+        time.sleep(60)
 
         # Calculate the total scroll height of the page
         js_get_scroll_height = (
@@ -142,14 +146,15 @@ def fullpage_screenshot(driver, folder, file):
 
         try:
             WebDriverWait(driver, 30).until(
-                EC.element_to_be_clickable((By.XPATH, "//*[@id='shopify-section-sections--16399863414945__footer-1']/footer/div/div/div/div[3]/div/h2"))
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//*[@id='shopify-section-sections--16399863414945__footer-1']/footer/div/div/div/div[3]/div/h2"))
             )
 
-             # # Scroll back to the top of the page
+            # # Scroll back to the top of the page
             driver.execute_script("window.scrollTo(0,0)")
             time.sleep(5)  # Optional: Wait for any animations to finish
 
-             # Create subfolder if it doesn't exist
+            # Create subfolder if it doesn't exist
             if not os.path.exists(folder):
                 os.makedirs(folder)
 
@@ -164,7 +169,6 @@ def fullpage_screenshot(driver, folder, file):
 
         finally:
             driver.quit()
-
 
     else:
         js = (
@@ -210,7 +214,8 @@ def capture_screenshots(driver, folder, campaign_id, screenshot_id):
     timestamp = time.strftime("%Y-%m-%d---%H-%M-%S")
     file_name = f"{campaign_id_str}_{screenshot_id_str}_{timestamp}.png"
     fullpage_screenshot(driver, folder, file_name)
-    logging.info(f"Capturing screenshots for CampaignID {campaign_id_str} and ScreenshotID {screenshot_id_str}")
+    logging.info(
+        f"Capturing screenshots for CampaignID {campaign_id_str} and ScreenshotID {screenshot_id_str}")
     return file_name
 
 
@@ -244,16 +249,20 @@ def get_website(campaign_id):
         traceback.print_exc()  # Log the exception traceback
         return jsonify({"error": str(e)}), 500
 
+
 def get_last_screenshot_id(campaign_id):
-    last_screenshot = Screenshots.query.filter_by(CampaignID=campaign_id).order_by(Screenshots.ScreenshotID.desc()).first()
+    last_screenshot = Screenshots.query.filter_by(
+        CampaignID=campaign_id).order_by(Screenshots.ScreenshotID.desc()).first()
     if last_screenshot:
         return last_screenshot.ScreenshotID
     else:
         return 0
 
+
 def generate_screenshot_id(campaign_id):
     last_screenshot_id = get_last_screenshot_id(campaign_id)
     return last_screenshot_id + 1
+
 
 def capture_screenshot_by_campaignid(campaignID):
     # try:
@@ -315,7 +324,8 @@ def capture_screenshot_by_campaignid(campaignID):
         # Open the URL
         driver.get(website_url)
         # Capture screenshots at the specified interval for the given duration
-        c_sc = capture_screenshots(driver, screenshots_dir, campaignID, screenshot_id)
+        c_sc = capture_screenshots(
+            driver, screenshots_dir, campaignID, screenshot_id)
 
         screenshot_path = os.path.join(screenshots_dir, c_sc)
 

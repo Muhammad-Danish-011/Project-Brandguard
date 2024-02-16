@@ -28,6 +28,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @bp.route('/campaign_details', methods=['POST'])
 def add_campaign_details():
     try:
@@ -165,7 +166,8 @@ def save_image_path():
             # Validate campaign_id (optional, depending on your requirements)
             # campaign = Campaign.query.get_or_404(campaign_id)
 
-            new_image = Images(CampaignID=campaign_id, ImagePath=new_image_path)
+            new_image = Images(CampaignID=campaign_id,
+                               ImagePath=new_image_path)
 
             db.session.add(new_image)
             db.session.commit()
@@ -179,6 +181,7 @@ def save_image_path():
     except Exception as e:
         traceback.print_exc()  # This will print the stack trace to the console
         return jsonify({"error": f"Error saving image path: {str(e)}"}), 500
+
 
 @bp.route('/general_report', methods=['GET'])
 def get_general_report():

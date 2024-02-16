@@ -22,14 +22,16 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
     # Iterate over the scales
     for scale in scales:
         # Resize the reference image according to the current scale
-        resized_reference = cv2.resize(reference_image_gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+        resized_reference = cv2.resize(
+            reference_image_gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
 
         # Check if the resized reference image is smaller than the screenshot
         if resized_reference.shape[0] > screenshot_gray.shape[0] or resized_reference.shape[1] > screenshot_gray.shape[1]:
             continue
 
         # Perform template matching
-        result = cv2.matchTemplate(screenshot_gray, resized_reference, cv2.TM_CCOEFF_NORMED)
+        result = cv2.matchTemplate(
+            screenshot_gray, resized_reference, cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
         # Update best match if a better one is found
@@ -49,7 +51,8 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
     # Calculate the position of the best match
     ref_image_height, ref_image_width = reference_image_gray.shape[:2]
     top_left = best_location
-    bottom_right = (top_left[0] + int(ref_image_width * best_scale), top_left[1] + int(ref_image_height * best_scale))
+    bottom_right = (top_left[0] + int(ref_image_width * best_scale),
+                    top_left[1] + int(ref_image_height * best_scale))
 
     # Calculate midpoints
     mid_x = (top_left[0] + bottom_right[0]) // 2
@@ -61,7 +64,8 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
     position_names['bottom'] = mid_y > 2 * screen_height / 3
     position_names['left'] = mid_x < screen_width / 3
     position_names['right'] = mid_x > 2 * screen_width / 3
-    position_names['mid'] = not any([position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
+    position_names['mid'] = not any(
+        [position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
 
     # Construct the result string
     result_string = "Reference image found at "
@@ -110,23 +114,3 @@ def save_found_status(campaignID, found, img_position):
     )
     db.session.add(new_AdPositions)
     db.session.commit()
-
-
-# def calculate_success_rate(campaignID):
-#     # Query the visibility table to get counts
-#     total_count = visibility.query.filter_by(CampaignID=campaignID).count()
-#     success_count = visibility.query.filter(func.lower(
-#         visibility.Found_Status) == 'yes', visibility.CampaignID == campaignID).count()
-
-    # if total_count > 0:
-    #     success_rate = (success_count / total_count) * 100
-    #     print("\n\n")
-    #     print(f"campaignID: {campaignID}")
-    #     print(f"yes count: {success_count}")
-    #     print(f"total count: {total_count}")
-    #     print(f"Success Rate: {success_rate}%")
-    #     print("\n\n")
-    # else:
-    #     print("\n\n")
-    #     print("No detection results in the database.")
-    #     print("\n\n")
