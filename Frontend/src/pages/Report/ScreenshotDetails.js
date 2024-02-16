@@ -21,11 +21,12 @@ const DetailPage = () => {
   const [error, setError] = useState(null);
   const [showScreenshotDetails, setScreenshotDetails] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedFilePath, setSelectedFilePath] = useState('');
   const navigate = useNavigate();
 
   const fetchData = async (name) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/${name}/${campaignId}`);
+      const response = await fetch(`http://localhost:5000/${name}/${campaignId}`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch data. Status: ${response.status}`);
@@ -50,9 +51,10 @@ const DetailPage = () => {
     }
   }, [showScreenshotDetails]);
 
-
-
-  
+  const handleFilePathClick = (filePath) => {
+    setSelectedFilePath(filePath);
+    setModalOpen(true);
+  };
 
   const handleCloseModal = () => {
     setSelectedFilePath("");
@@ -66,6 +68,14 @@ const DetailPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  // Function to extract folder name and file name from file path
+  const extractFolderAndFile = (filePath) => {
+    const parts = filePath.split(/[\\\/]/); // Split by directory separator
+    const fileName = parts.pop(); // Get the last part (file name)
+    const folderName = parts.pop(); // Get the second last part (folder name)
+    return { folderName, fileName };
+  };
 
   return (
     <div>
@@ -118,7 +128,7 @@ const DetailPage = () => {
                         <TableCell>{Capture_DateTime}</TableCell>
                         <TableCell>
                           <Button color="primary" onClick={() => handleFilePathClick(FilePath)}>
-                            {FilePath}
+                            View
                           </Button>
                         </TableCell>
                         <TableCell>{Found_Status}</TableCell>
@@ -170,11 +180,24 @@ const DetailPage = () => {
         )
       )}
 
+      <Modal open={modalOpen} onClose={handleCloseModal}>
+        <div>
+          {selectedFilePath && (
+            <img src={`http://localhost:5000/image?folder=${encodeURIComponent(extractFolderAndFile(selectedFilePath).folderName)}&file=${encodeURIComponent(extractFolderAndFile(selectedFilePath).fileName)}`} alt="Screenshot" style={{ maxWidth: "100%" }} />
+          )}
+          <Button onClick={handleCloseModal}>Close</Button>
+        </div>
+      </Modal>
     </div>
   );
 };
 
 export default DetailPage;
+
+
+
+
+
 
 
       {/* {campaignDetails && (
