@@ -21,7 +21,6 @@ const DetailPage = () => {
   const [error, setError] = useState(null);
   const [showScreenshotDetails, setScreenshotDetails] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedFilePath, setSelectedFilePath] = useState("");
   const navigate = useNavigate();
 
   const fetchData = async (name) => {
@@ -51,12 +50,8 @@ const DetailPage = () => {
     }
   }, [showScreenshotDetails]);
 
-  const handleFilePathClick = (filePath) => {
-    // Replace backward slashes (\) with forward slashes (/) in the file path
-    const normalizedPath = filePath.replace(/\\/g, '/'); 
-    setSelectedFilePath(normalizedPath);
-    setModalOpen(true);
-  };
+
+
   
 
   const handleCloseModal = () => {
@@ -175,12 +170,6 @@ const DetailPage = () => {
         )
       )}
 
-<Modal open={modalOpen} onClose={handleCloseModal}>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
-    <Typography variant="h6">File Preview</Typography>
-    <img src={selectedFilePath} alt="File Preview" style={{ maxWidth: '100%', maxHeight: '80vh', marginTop: '20px' }} />
-  </div>
-</Modal>
     </div>
   );
 };

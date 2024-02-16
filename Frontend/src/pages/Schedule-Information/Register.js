@@ -115,7 +115,7 @@ const Register = () => {
           setShowSuccessPopup(true);
           setnew_image_path(imagePath);
           console.log("All API calls completed successfully!");
-          window.location.reload();
+         
         } else {
           console.error("Image upload failed");
         }
@@ -151,6 +151,7 @@ const Register = () => {
 
   const closeSuccessPopup = () => {
     setShowSuccessPopup(false);
+    window.location.reload();
   };
 
   const closeErrorPopup = () => {
