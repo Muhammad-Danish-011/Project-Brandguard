@@ -1,12 +1,10 @@
 
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
+
 from app.extensions import db
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import column_property
 
-# db = SQLAlchemy()
-    
 
 class Campaigns(db.Model):
     __tablename__ = 'campaigns'
@@ -16,9 +14,11 @@ class Campaigns(db.Model):
     EndDate = db.Column(db.DateTime)
     IntervalTime = db.Column(db.Integer)
     Status = db.Column(db.String, nullable=True)
-    UserEmail = db.Column(db.String)
     websites = db.relationship('Websites', backref='campaign', lazy=True)
     images = db.relationship('Images', backref='campaign', lazy=True)
+    __table_args__ = (
+        UniqueConstraint('CampaignName'),
+    )
 
 
 class Websites(db.Model):
@@ -65,7 +65,7 @@ class AdPositions(db.Model):
     # Website = db.Column(db.String, ForeignKey('websites.WebsiteURL'), nullable=False)
     Capture_DateTime = db.Column(db.DateTime, default=datetime.now)
     Found_Status = db.Column(db.String)
-
+    Image_Position = db.Column(db.String)
     # Additional columns for data from related tables
     campaign_name = column_property(Campaigns.CampaignName, deferred=True)
     start_date = column_property(Campaigns.StartDate, deferred=True)

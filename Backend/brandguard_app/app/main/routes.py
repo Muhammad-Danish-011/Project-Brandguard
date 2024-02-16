@@ -1,6 +1,6 @@
 import os
 from datetime import datetime  # Corrected import statement
-import traceback
+
 from app.extensions import db
 from app.main import bp
 from app.models.models import *
@@ -9,21 +9,14 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, current_app, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from app.utils.webhooks import send_email
-
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
+
 scheduler = BackgroundScheduler()
 scheduler.start()
 CORS(bp)
-
-# Your email configuration
-smtp_server = 'smtp.gmail.com'
-smtp_port = 587
-sender_email = 'aqsat1506@gmail.com'
-sender_password = 'wykx edvn sgkl atfj'
 
 UPLOAD_FOLDER = os.path.abspath('./reference_images')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -35,69 +28,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bp.route('/ad-expiration', methods=['POST'])
-def receive_Ad_Tracking_Data():
-    try:
-        if request.method == 'POST':
-            data = request.json
-            CampaignID = data.get('CampaignID')
-            EndDate = data.get('EndDate')
-            UserEmail = data.get('UserEmail')
-
-            if CampaignID is not None and EndDate is not None and UserEmail is not None:
-                EndDate = datetime.strptime(EndDate, '%Y-%m-%d')
-                campaign = Campaigns.query.get(CampaignID)
-
-                if campaign:
-                    campaign.EndDate = EndDate
-                    campaign.UserEmail = UserEmail
-                    db.session.commit()
-                    return jsonify({'message': f'Ad {CampaignID} expiration duration saved.'}), 201
-                else:
-                    return jsonify({'message': f'Ad {CampaignID} not found.'}), 404
-            else:
-                return jsonify({'message': 'Invalid data.'}), 400
-        else:
-            return jsonify({'message': 'Invalid request method.'}), 405
-    except Exception as e:
-        current_app.logger.error(f"Error in receive_Ad_Tracking_Data: {e}")
-        traceback.print_exc()  # Print the stack trace to the console
-        return jsonify({"error": str(e)}), 500
-
-@bp.route('/check-ad-expiration', methods=['GET'])
-def check_ad_expiration():
-    try:
-        today = datetime.now()
-        campaigns = Campaigns.query.all()
-
-        if campaigns is None:
-            return jsonify({'message': 'No campaigns found.'}), 404
-
-        for campaign in campaigns:
-            expiration_date = campaign.EndDate
-
-            if expiration_date is None:
-                return jsonify({'message': 'Campaign missing Expiration_Date.'}), 400
-
-            days_until_expiration = (expiration_date - today).days
-
-            if days_until_expiration <= 0:
-                # Notify the user via email about the expired ad
-                if campaign.UserEmail:
-                    send_email(sender_email, sender_password, f'Ad {campaign.CampaignID} has expired', f'Ad {campaign.CampaignID} has expired!', campaign.UserEmail, smtp_server, smtp_port)
-            elif days_until_expiration <= 3:
-                # Notify the user via email about the nearing expiration
-                if campaign.UserEmail:
-                    send_email(sender_email, sender_password, f'Ad {campaign.CampaignID} is nearing expiration', f'Ad {campaign.CampaignID} is nearing expiration!', campaign.UserEmail, smtp_server, smtp_port)
-
-        return jsonify({'message': 'Expiration checked and notifications sent.'}), 200
-
-    except Exception as e:
-        current_app.logger.error(f"Error in check_ad_expiration: {e}")
-        return jsonify({"error": str(e)}), 500
-
-
-
 @bp.route('/campaign_details', methods=['POST'])
 def add_campaign_details():
     try:
@@ -108,7 +38,6 @@ def add_campaign_details():
             data.get('StartDate'), '%Y-%m-%d %H:%M:%S')
         end_date = datetime.strptime(data.get('EndDate'), '%Y-%m-%d %H:%M:%S')
         interval_time = int(data.get('IntervalTime'))
-        user_email = data.get('UserEmail')
         websites = data.get('Websites')
         images = data.get('Images')
         current_datetime = datetime.now()
@@ -121,7 +50,6 @@ def add_campaign_details():
             CampaignName=campaign_name,
             StartDate=start_date,
             EndDate=end_date,
-            UserEmail=user_email,
             IntervalTime=interval_time,
             Status=status
         )
@@ -233,23 +161,30 @@ def save_image_path():
     try:
         data = request.get_json()
 
-        # Make sure the key matches the JSON you're sending
+        # Make sure the keys match the JSON you're sending
         new_image_path = data.get('new_image_path', '')
-        new_campaign_id = data.get('campaign_id', '')
+        campaign_id = data.get('campaign_id', '')
+
         print("Received file path:", new_image_path)
 
-        if new_image_path:  # Check if the path is not empty
-            new_image = Images(CampaignID=new_campaign_id,
-                               ImagePath=new_image_path)
+        if new_image_path and campaign_id:  # Check if both the path and campaign_id are provided
+            # Validate campaign_id (optional, depending on your requirements)
+            # campaign = Campaign.query.get_or_404(campaign_id)
+
+            new_image = Images(CampaignID=campaign_id, ImagePath=new_image_path)
+
             db.session.add(new_image)
             db.session.commit()
-            return jsonify({"message": "Image path saved successfully"})
+
+            # Extract the CampaignID from the new_image object
+            saved_campaign_id = new_image.CampaignID
+
+            return jsonify({"message": "Image path saved successfully", "campaign_id": saved_campaign_id})
         else:
-            return jsonify({"error": "No image path provided"}), 400
+            return jsonify({"error": "Invalid data provided"}), 400
     except Exception as e:
         traceback.print_exc()  # This will print the stack trace to the console
         return jsonify({"error": f"Error saving image path: {str(e)}"}), 500
-
 
 @bp.route('/general_report', methods=['GET'])
 def get_general_report():
@@ -394,7 +329,3 @@ def get_screenshot_report(campaignID):
     except Exception as e:
         current_app.logger.error(f"Error in get_screenshot_report: {e}")
         return jsonify({"error": str(e)}), 500
-    
-
-if __name__ == '__main__':
-    app.run(debug=True)

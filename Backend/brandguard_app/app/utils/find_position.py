@@ -3,68 +3,109 @@ import numpy as np
 from app.models.models import *
 
 
-def find_image_position(screenshot_path, reference_image_path, campaignID):
+def find_image_position(screenshot_path, reference_image_path, campaignID, scales=np.linspace(0.5, 1.5, 20), threshold=0.7):
     # Read the screenshot and reference image
     screenshot = cv2.imread(screenshot_path)
     reference_image = cv2.imread(reference_image_path)
-
-    # Convert images to grayscale
     screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
     reference_image_gray = cv2.cvtColor(reference_image, cv2.COLOR_BGR2GRAY)
 
-    # Use template matching to find the location of the reference image
-    result = cv2.matchTemplate(
-        screenshot_gray, reference_image_gray, cv2.TM_CCOEFF_NORMED)
+    # Get screen dimensions
+    screen_height, screen_width = screenshot_gray.shape
 
-    # Define a threshold
-    threshold = 0.8
-    locations = np.where(result >= threshold)
-    # Switch x and y coordinates to (x, y)
-    locations = list(zip(*locations[::-1]))
+    # Variables to keep track of the best match
+    best_match = None
+    best_match_value = threshold  # Initial threshold
+    best_scale = 1
+    best_location = (0, 0)
 
-    # if not locations:
-    #     return "Reference image not found."
+    # Iterate over the scales
+    for scale in scales:
+        # Resize the reference image according to the current scale
+        resized_reference = cv2.resize(reference_image_gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
 
-    if not locations:
-        # Reference image not found
+        # Check if the resized reference image is smaller than the screenshot
+        if resized_reference.shape[0] > screenshot_gray.shape[0] or resized_reference.shape[1] > screenshot_gray.shape[1]:
+            continue
+
+        # Perform template matching
+        result = cv2.matchTemplate(screenshot_gray, resized_reference, cv2.TM_CCOEFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+        # Update best match if a better one is found
+        if max_val > best_match_value:
+            best_match_value = max_val
+            best_match = result
+            best_scale = scale
+            best_location = max_loc
+
+    # Check if a match was found
+    if best_match is None:
         save_found_status(campaignID, found='no')
-        # calculate_success_rate(campaignID)
-        return "Reference image not found."
-     # Reference image found
+        update_image_position(campaignID, "Position Not Identified")
+        return "Position Not Identified."
+
     save_found_status(campaignID, found='yes')
-    # calculate_success_rate(campaignID)
 
-    # For simplicity, take the first location found above the threshold
-    max_loc = locations[0]
+    # Calculate the position of the best match
+    ref_image_height, ref_image_width = reference_image_gray.shape[:2]
+    top_left = best_location
+    bottom_right = (top_left[0] + int(ref_image_width * best_scale), top_left[1] + int(ref_image_height * best_scale))
 
-    # Determine the position of the reference image
-    height, width = reference_image_gray.shape
-    mid_x, mid_y = max_loc[0] + width // 2, max_loc[1] + height // 2
+    # Calculate midpoints
+    mid_x = (top_left[0] + bottom_right[0]) // 2
+    mid_y = (top_left[1] + bottom_right[1]) // 2
 
-    # Initialize positions based on relative location
-    position_names = {
-        'top': False,
-        'bottom': False,
-        'left': False,
-        'right': False,
-        'mid': False
-    }
-
-    # Update positions based on relative location
-    screen_width, screen_height = screenshot.shape[1], screenshot.shape[0]
+    # Determine the position names
+    position_names = {}
     position_names['top'] = mid_y < screen_height / 3
     position_names['bottom'] = mid_y > 2 * screen_height / 3
     position_names['left'] = mid_x < screen_width / 3
     position_names['right'] = mid_x > 2 * screen_width / 3
-    position_names['mid'] = not any(
-        [position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
+    position_names['mid'] = not any([position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
 
-    # Print only the true positions
-    true_positions = [key for key, value in position_names.items() if value]
-    print("Reference image position: " + ', '.join(true_positions))
-    return "Reference image position: " + ', '.join(true_positions)
+    # Construct the result string
+    # image_position = "Reference image found at "
+    image_position = ""
+    for position, value in position_names.items():
+        if value:
+            image_position = position 
+            break
 
+    update_image_position(campaignID, image_position)
 
+    print(image_position)
+    return {image_position}
+
+def update_image_position(campaignID, image_position):
+    # Retrieve the latest AdPositions record for the given campaignID
+    latest_ad_position = AdPositions.query.filter_by(CampaignID=campaignID).order_by(
+        AdPositions.Capture_DateTime.desc()).first()
+
+    if latest_ad_position:
+        # Update the Image_Position column
+        latest_ad_position.Image_Position = image_position
+        db.session.commit()
+        return True
+    else:
+        return False
+
+# def update_image_position(campaignID, image_position):
+#     # Split the image_position string to extract the position name
+#     position_name = image_position.split()[4]  # Assuming the position is always the first word
+
+#     # Retrieve the latest AdPositions record for the given campaignID
+#     latest_ad_position = AdPositions.query.filter_by(CampaignID=campaignID).order_by(
+#         AdPositions.Capture_DateTime.desc()).first()
+
+#     if latest_ad_position:
+#         # Update the Image_Position column with the position name
+#         latest_ad_position.Image_Position = position_name
+#         db.session.commit()
+#         return True
+#     else:
+#         return False
+    
 def get_screenshot_path(campaignID):
     latest_screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
         Screenshots.Timestamp.desc()).first()
@@ -91,15 +132,18 @@ def save_found_status(campaignID, found):
     screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
         Screenshots.Timestamp.desc()).first()
     if screenshot:
-        screenshotID = screenshot.ScreenshotID
 
-    new_AdPositions = AdPositions(
-        ScreenshotID=screenshotID,
-        CampaignID=campaignID,
-        Found_Status=found
-    )
-    db.session.add(new_AdPositions)
-    db.session.commit()
+        screenshotID = screenshot.ScreenshotID
+        new_AdPositions = AdPositions(
+            ScreenshotID=screenshotID,
+            CampaignID=campaignID,
+            Found_Status=found
+        )
+        db.session.add(new_AdPositions)
+        db.session.commit()
+    else:
+        print("No screenshot found for the given Campaign ID.")
+
 
 
 # def calculate_success_rate(campaignID):

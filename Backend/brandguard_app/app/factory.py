@@ -1,7 +1,6 @@
 from app.extensions import db, migrate
 from config import Config
 from flask import Flask
-# from app.utils.webhooks import webhook_bp
 
 
 def create_app(config_class=Config):
@@ -13,9 +12,6 @@ def create_app(config_class=Config):
 
     with app.app_context():
         from app.main import bp as main_bp
-        from app.utils.webhooks import webhook_bp
         app.register_blueprint(main_bp)
-        app.register_blueprint(webhook_bp, url_prefix='/webhooks')
-        # app.register_blueprint(webhook_bp, url_prefix='/webhooks')
 
     return app
