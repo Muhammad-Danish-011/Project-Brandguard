@@ -116,12 +116,6 @@ def schedule_campaign(campaignID, interval_time):
     )
 
 
-# @bp.route('/image_position/<int:campaignID>', methods=['GET'])
-# def img_position(campaignID):
-#     result = image_position(campaignID)
-#     return jsonify(result)
-
-
 @bp.route('/upload', methods=['POST'])
 def upload_image():
     # Check if the post request has the file part

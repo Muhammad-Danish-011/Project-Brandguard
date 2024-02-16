@@ -69,6 +69,7 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
         if value:
             result_string += position + " "
 
+    print(result_string)
     return result_string
 
 

@@ -22,13 +22,15 @@ def get_root_domain(url):
     # Extract the main part of the URL (domain) using urlparse
     parsed_url = urlparse(url)
     domain = parsed_url.netloc
+    current_datetime = datetime.now().strftime("%Y-%m-%d---%H-%M-%S")
+    folder_name = f"{url.replace('https://', '').replace('/', '')}---{current_datetime}"
 
-    # Extract specific part (e.g., daraz) based on your requirement
-    parts = domain.split('.')
-    if len(parts) >= 2:
-        return parts[1]  # Return the second-to-last part of the domain
-    else:
-        return domain
+    # # Extract specific part (e.g., daraz) based on your requirement
+    # parts = domain.split('.')
+    # if len(parts) >= 2:
+    #     return parts[1]  # Return the second-to-last part of the domain
+    # else:
+    return folder_name
 
 
 def get_script_directory():
@@ -371,7 +373,7 @@ def analyze_images(url, main_image_path, campaignID):
 
     # Create a unique subfolder for each analysis to avoid file name conflicts
     download_folder = os.path.join(
-        main_download_folder, f'{file_name}_{datetime.now().strftime("%Y%m%d_%H%M%S")}')
+        main_download_folder, f'{file_name}')
     os.makedirs(download_folder, exist_ok=True)
 
     # print(f'Shahzaib Khan Prints {download_folder}')

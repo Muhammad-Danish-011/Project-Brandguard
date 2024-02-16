@@ -136,7 +136,7 @@ def fullpage_screenshot(driver, folder, file):
         print(scroll_height)
 
         # Set window size to capture the entire page
-        driver.set_window_size(1920, scroll_height)
+        driver.set_window_size(3000, 12800)
 
         # Wait for an element with a specific XPath to become clickable
 
@@ -204,11 +204,13 @@ def fullpage_screenshot(driver, folder, file):
 # Function to capture screenshots at intervals
 
 
-def capture_screenshots(driver, folder):
-    timestamp = time.strftime("%Y%m%d%H%M%S")
-    file_name = f"screenshot_{timestamp}.png"
+def capture_screenshots(driver, folder, campaign_id, screenshot_id):
+    campaign_id_str = f"{campaign_id:03d}"
+    screenshot_id_str = f"{screenshot_id:03d}"
+    timestamp = time.strftime("%Y-%m-%d---%H-%M-%S")
+    file_name = f"{campaign_id_str}_{screenshot_id_str}_{timestamp}.png"
     fullpage_screenshot(driver, folder, file_name)
-    logging.info(f"Capturing screenshots for CampaignID ")
+    logging.info(f"Capturing screenshots for CampaignID {campaign_id_str} and ScreenshotID {screenshot_id_str}")
     return file_name
 
 
@@ -242,6 +244,16 @@ def get_website(campaign_id):
         traceback.print_exc()  # Log the exception traceback
         return jsonify({"error": str(e)}), 500
 
+def get_last_screenshot_id(campaign_id):
+    last_screenshot = Screenshots.query.filter_by(CampaignID=campaign_id).order_by(Screenshots.ScreenshotID.desc()).first()
+    if last_screenshot:
+        return last_screenshot.ScreenshotID
+    else:
+        return 0
+
+def generate_screenshot_id(campaign_id):
+    last_screenshot_id = get_last_screenshot_id(campaign_id)
+    return last_screenshot_id + 1
 
 def capture_screenshot_by_campaignid(campaignID):
     # try:
@@ -274,6 +286,8 @@ def capture_screenshot_by_campaignid(campaignID):
         campaign = Campaigns.query.filter_by(CampaignID=campaignID).first()
         print(campaign)
 
+        screenshot_id = generate_screenshot_id(campaignID)
+
         if campaign:
             website_url = Websites.query.filter_by(
                 CampaignID=campaignID).first()
@@ -292,8 +306,8 @@ def capture_screenshot_by_campaignid(campaignID):
         domain = parsed_url.netloc.replace('www.', '').replace('.', '_')
 
         # Create a subfolder for each capture
-        current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-        folder_name = f"{website_url.replace('https://', '').replace('/', ' ')} - {current_datetime}"
+        current_datetime = datetime.now().strftime("%Y-%m-%d---%H-%M-%S")
+        folder_name = f"{website_url.replace('https://', '').replace('/', '')}---{current_datetime}"
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
         screenshots_dir = os.path.join(base_dir, "screenshots", folder_name)
@@ -301,7 +315,7 @@ def capture_screenshot_by_campaignid(campaignID):
         # Open the URL
         driver.get(website_url)
         # Capture screenshots at the specified interval for the given duration
-        c_sc = capture_screenshots(driver, screenshots_dir)
+        c_sc = capture_screenshots(driver, screenshots_dir, campaignID, screenshot_id)
 
         screenshot_path = os.path.join(screenshots_dir, c_sc)
 
@@ -331,29 +345,11 @@ def capture_screenshot_by_campaignid(campaignID):
         return {"status": "Screenshots captured successfully"}
 
 
-# def image_position(campaignID):
-#     from app.factory import create_app
-
-#     with create_app().app_context():
-#         screenshots_path = get_screenshot_path(campaignID)
-#         print(screenshots_path)
-#         refrence_image = get_refrence_image(campaignID)
-#         print(refrence_image)
-#         if screenshots_path and refrence_image:
-#             position_result = find_image_position(
-#                 screenshots_path, refrence_image, campaignID)
-#             logging.info(f"Image Position Result {position_result}")
-#             return position_result
-
-
 def schedule_screenshot_capture(campaignID, Interval_time):
     # Interval_time = get_interval_time(campaignID)
     print(f'Campaign ID is {campaignID} and its interval is {Interval_time}')
     scheduler.add_job(capture_screenshot_by_campaignid,
                       'interval', minutes=Interval_time, args=[campaignID], max_instances=5)
-
-    # scheduler.add_job(image_position, 'interval',
-    #                   minutes=Interval_time, args=[campaignID])
 
     scheduler.add_job(image_scraping, 'interval',
                       minutes=Interval_time, args=[campaignID])
