@@ -42,7 +42,8 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
     # Check if a match was found
     if best_match is None:
         save_found_status(campaignID, found='no')
-        return "Reference image not found."
+        update_image_position(campaignID, "Position Not Identified")
+        return "Position Not Identified."
 
     save_found_status(campaignID, found='yes')
 
@@ -64,14 +65,30 @@ def find_image_position(screenshot_path, reference_image_path, campaignID, scale
     position_names['mid'] = not any([position_names['top'], position_names['bottom'], position_names['left'], position_names['right']])
 
     # Construct the result string
-    result_string = "Reference image found at "
+    # image_position = "Reference image found at "
+    image_position = ""
     for position, value in position_names.items():
         if value:
-            result_string += position + " "
+            image_position = position 
+            break
 
-    print(result_string)
-    return result_string
+    update_image_position(campaignID, image_position)
 
+    print(image_position)
+    return {image_position}
+
+def update_image_position(campaignID, image_position):
+    # Retrieve the latest AdPositions record for the given campaignID
+    latest_ad_position = AdPositions.query.filter_by(CampaignID=campaignID).order_by(
+        AdPositions.Capture_DateTime.desc()).first()
+
+    if latest_ad_position:
+        # Update the Image_Position column
+        latest_ad_position.Image_Position = image_position
+        db.session.commit()
+        return True
+    else:
+        return False
 
 def get_screenshot_path(campaignID):
     latest_screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
@@ -99,15 +116,18 @@ def save_found_status(campaignID, found):
     screenshot = Screenshots.query.filter_by(CampaignID=campaignID).order_by(
         Screenshots.Timestamp.desc()).first()
     if screenshot:
-        screenshotID = screenshot.ScreenshotID
 
-    new_AdPositions = AdPositions(
-        ScreenshotID=screenshotID,
-        CampaignID=campaignID,
-        Found_Status=found
-    )
-    db.session.add(new_AdPositions)
-    db.session.commit()
+        screenshotID = screenshot.ScreenshotID
+        new_AdPositions = AdPositions(
+            ScreenshotID=screenshotID,
+            CampaignID=campaignID,
+            Found_Status=found
+        )
+        db.session.add(new_AdPositions)
+        db.session.commit()
+    else:
+        print("No screenshot found for the given Campaign ID.")
+
 
 
 # def calculate_success_rate(campaignID):
