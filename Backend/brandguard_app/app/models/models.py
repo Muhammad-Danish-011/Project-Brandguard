@@ -58,6 +58,7 @@ class AdPositions(db.Model):
     # Website = db.Column(db.String, ForeignKey('websites.WebsiteURL'), nullable=False)
     Capture_DateTime = db.Column(db.DateTime, default=datetime.now)
     Found_Status = db.Column(db.String)
+    Ad_Position = db.Column(db.String)
 
     # Additional columns for data from related tables
     campaign_name = column_property(Campaigns.CampaignName, deferred=True)
