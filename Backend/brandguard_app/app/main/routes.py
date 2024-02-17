@@ -199,7 +199,9 @@ def get_general_report():
                 'EndDate': campaign.EndDate.strftime('%Y-%m-%d %H:%M:%S'),
                 'WebsiteURL': [],
                 'Found_Status_Screenshot': 0,  # Initialize to 0, will be calculated later
-                'Found_Status_Scraping': 0  # Initialize to 0, will be calculated later
+                'Found_Status_Scraping': 0,  # Initialize to 0, will be calculated later
+                'Screenshot_Attempts': 0,
+                'Scraping_Attempts': 0
             }
 
             # Fetch associated websites for the campaign
@@ -216,10 +218,10 @@ def get_general_report():
             total_positions = len(ad_positions)
             found_positions_screenshot = sum(
                 1 for ad_position in ad_positions if ad_position.Found_Status == 'yes')
+            campaign_data['Screenshot_Attempts'] = total_positions
 
             if total_positions > 0:
-                campaign_data['Found_Status_Screenshot'] = found_positions_screenshot / \
-                    total_positions * 100
+                campaign_data['Found_Status_Screenshot'] = round(found_positions_screenshot / total_positions * 100, 2)
 
             # Fetch Scrape_Image_Status for the campaign
             scrape_image_statuses = Scrape_Image_Status.query.filter_by(
@@ -231,8 +233,8 @@ def get_general_report():
                 1 for scrape_status in scrape_image_statuses if scrape_status.Found_Status == 'yes')
 
             if total_scrape_statuses > 0:
-                campaign_data['Found_Status_Scraping'] = found_scrape_statuses / \
-                    total_scrape_statuses * 100
+                campaign_data['Found_Status_Scraping'] = round(found_scrape_statuses / total_scrape_statuses * 100, 2)
+            campaign_data['Scraping_Attempts'] = total_scrape_statuses
 
             general_report.append(campaign_data)
 
@@ -317,7 +319,8 @@ def get_screenshot_report(campaignID):
             screenshot_data = {
                 'Capture_DateTime': ad_position.Capture_DateTime.strftime('%Y-%m-%d %H:%M:%S'),
                 'FilePath': screenshot.FilePath if screenshot else None,
-                'Found_Status': ad_position.Found_Status
+                'Found_Status': ad_position.Found_Status,
+                'Ad_Position': ad_position.Ad_Position
             }
             screenshot_report['AdPositions'].append(screenshot_data)
 
