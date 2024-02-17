@@ -358,18 +358,27 @@ def capture_screenshot_by_campaignid(campaignID):
 def schedule_screenshot_capture(campaignID, Interval_time):
     # Interval_time = get_interval_time(campaignID)
     print(f'Campaign ID is {campaignID} and its interval is {Interval_time}')
-    scheduler.add_job(capture_screenshot_by_campaignid,
-                      'interval', minutes=Interval_time, args=[campaignID], max_instances=5)
+    # scheduler.add_job(capture_screenshot_by_campaignid,
+    #                   'interval', minutes=Interval_time, args=[campaignID], max_instances=5)
 
-    scheduler.add_job(image_scraping, 'interval',
-                      minutes=Interval_time, args=[campaignID])
+    # scheduler.add_job(image_scraping, 'interval',
+    #                   minutes=Interval_time, args=[campaignID])
+
+
+    capture_screenshot_by_campaignid(campaignID)
+    image_scraping(campaignID)
 
     return "Screenshots will be captured as scheduled"
 
-
-def schedule_active_campaigns(app):
-    with app.app_context():
-        active_campaigns = Campaigns.query.filter_by(Status='active').all()
-        for campaign in active_campaigns:
-            schedule_screenshot_capture(
-                campaign.CampaignID, campaign.IntervalTime)
+def stop_screenshot_capture(job_id):
+    try:
+        scheduler.remove_job(job_id)
+        print(f"\n\n\nJob '{job_id}' stopped")
+    except Exception as e:
+        print(f"Error stopping job '{job_id}': {e}")
+# def schedule_active_campaigns(app):
+#     with app.app_context():
+#         active_campaigns = Campaigns.query.filter_by(Status='active').all()
+#         for campaign in active_campaigns:
+#             schedule_screenshot_capture(
+#                 campaign.CampaignID, campaign.IntervalTime)
