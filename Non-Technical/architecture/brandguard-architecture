@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" modified="2024-01-22T08:33:14.630Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="kQeP9LeQBUGN58rpMEVz" version="22.1.18" type="device">
+  <diagram name="Page-1" id="hAZbRKeB85QO0UxpWoNt">
+    <mxGraphModel dx="1911" dy="1133" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-28" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="baRpBZlQsYhz3_Edrobr-1" target="baRpBZlQsYhz3_Edrobr-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-29" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="baRpBZlQsYhz3_Edrobr-1" target="baRpBZlQsYhz3_Edrobr-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="baRpBZlQsYhz3_Edrobr-1" target="XCt0g4M_qsk6KpPnRsJE-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-31" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="baRpBZlQsYhz3_Edrobr-1" target="XCt0g4M_qsk6KpPnRsJE-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-1" value="Web URL*&lt;br style=&quot;font-size: 13px;&quot;&gt;Exact Page URL&lt;br style=&quot;font-size: 13px;&quot;&gt;Choose Ad Image&lt;br style=&quot;font-size: 13px;&quot;&gt;Time Interval&lt;br style=&quot;font-size: 13px;&quot;&gt;Start/End Date" style="rounded=1;html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry y="320" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-2" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;User Input Fields&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="10" y="265" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="baRpBZlQsYhz3_Edrobr-3" target="XCt0g4M_qsk6KpPnRsJE-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-3" value="Take Screenshots after interval time until x Days&lt;br style=&quot;font-size: 13px;&quot;&gt;Save SS in a folder" style="html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="240" y="80" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="baRpBZlQsYhz3_Edrobr-5" target="XCt0g4M_qsk6KpPnRsJE-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-5" value="Scrape Images from Web after interval time until x Days&lt;br style=&quot;font-size: 13px;&quot;&gt;&amp;nbsp;Save Locally" style="html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="240" y="240" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-6" value="Compared" style="rhombus;html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="960" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-33" value="Yes/No" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1050" y="310" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" target="baRpBZlQsYhz3_Edrobr-37">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1040" y="360" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="baRpBZlQsYhz3_Edrobr-37" value="Report&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;Ad Visibility Time in %&lt;br style=&quot;font-size: 13px;&quot;&gt;Device Visibility (Mobile, Desktop)&lt;br style=&quot;font-size: 13px;&quot;&gt;Ad Size Verification&lt;br style=&quot;font-size: 13px;&quot;&gt;Ad Position" style="html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="290" width="160" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="XCt0g4M_qsk6KpPnRsJE-1" target="XCt0g4M_qsk6KpPnRsJE-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-1" value="Compare Image with Ad Image" style="rounded=1;html=1;glass=0;shadow=0;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-33" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="XCt0g4M_qsk6KpPnRsJE-6" target="baRpBZlQsYhz3_Edrobr-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-6" value="Compare Image with Ad Image" style="rounded=1;html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="240" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-32" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="XCt0g4M_qsk6KpPnRsJE-9" target="baRpBZlQsYhz3_Edrobr-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-9" value="Find the Ad Position" style="html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="720" y="80" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="XCt0g4M_qsk6KpPnRsJE-13" target="XCt0g4M_qsk6KpPnRsJE-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-13" value="Scrape Slider Images from Web after interval time until x Days&lt;br style=&quot;font-size: 13px;&quot;&gt;&amp;nbsp;Save Locally" style="html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="240" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-27" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="XCt0g4M_qsk6KpPnRsJE-14" target="baRpBZlQsYhz3_Edrobr-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-14" value="Compare Image with Ad Image" style="rounded=1;html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="480" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;spacing=10;sketch=1;curveFitting=1;jiggle=2;fontSize=13;" edge="1" parent="1" source="XCt0g4M_qsk6KpPnRsJE-17" target="baRpBZlQsYhz3_Edrobr-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XCt0g4M_qsk6KpPnRsJE-17" value="Compare Web URL with Image/Image URL after interval time until x Days&lt;br style=&quot;font-size: 13px;&quot;&gt;&amp;nbsp;Save Locally" style="html=1;whiteSpace=wrap;spacing=10;sketch=1;curveFitting=1;jiggle=2;rounded=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="240" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
