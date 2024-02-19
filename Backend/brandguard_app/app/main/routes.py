@@ -6,7 +6,7 @@ from app.main import bp
 from app.models.models import *
 from app.utils.img_grabber import *
 from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, current_app, jsonify, request
+from flask import Flask, current_app, jsonify, request, send_file
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
@@ -28,6 +28,19 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@bp.route('/image')
+def serve_image():
+    # Get folder and file names from query parameters
+    folder_name = request.args.get('folder')
+    file_name = request.args.get('file')
+
+# /home/mufaddal/Work/Projects/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots
+    # Construct the file path
+    image_path = os.path.join('/home/mufaddal/Work/Projects/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
+    
+    # Sending the file in the response
+    return send_file(image_path, mimetype='image/png')
+    # http://localhost:5000/image?folder=www.daraz.pk%20%20-%2020240206145858&file=screenshot_20240206145915.png
 
 @bp.route('/campaign_details', methods=['POST'])
 def add_campaign_details():
