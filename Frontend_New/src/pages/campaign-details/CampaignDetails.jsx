@@ -5,6 +5,10 @@ import useSWR from 'swr';
 import Layout from '../../layouts/Layout';
 import axios from 'axios';
 import RadialPlot from '../../components/RadialPlot/RadialPlot';
+import { ReactComponent as DateIcon } from '../../assets/cards/calendar-day_9586284.svg'
+import { ReactComponent as ScrapingIcon } from '../../assets/cards/icons8-web-scraper.svg'
+import { ReactComponent as ScreenshotIcon } from '../../assets/cards/screenshot_scissors_cut_icon_207353.svg'
+import screenshotImage from '../../assets/cards/4306405.webp'
 
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -28,7 +32,7 @@ const screenshotColumns = [
     key: 'FilePath',
     render: (value) => {
 
-      const image = <Image height={100} src={`http://localhost:5000/image?folder=${encodeURIComponent(extractFolderAndFile(value).folderName)}&file=${encodeURIComponent(extractFolderAndFile(value).fileName)}`}/>
+      const image = <Image height={100} src={process.env.REACT_APP_API_BASEURL+`/image?folder=${encodeURIComponent(extractFolderAndFile(value).folderName)}&file=${encodeURIComponent(extractFolderAndFile(value).fileName)}`}/>
       return image
     }
   },
@@ -56,6 +60,15 @@ const scrapingColumns = [
     key: 'Found_Status',
   }
 ]
+
+const svgStyles = { 
+  position: 'absolute', 
+  height: '150px', 
+  width: '140px', 
+  top: '16', 
+  right: '30', 
+  opacity: 0.2  
+}
 
 
 const CampaignDetails = () => {
@@ -122,24 +135,26 @@ const CampaignDetails = () => {
         </Space>
         <Row gutter={[36, 36]} style={{ marginTop: '48px' }}>
           <Col span={12}>
-            <div style={{ borderRadius: '20px', height: '185px', padding: '24px',
-              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
+            <div style={{ borderRadius: '20px', height: '185px', padding: '36px', paddingTop: '24px',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', position: 'relative',  overflow: 'hidden'
             }}>
               <Typography.Title level={2} style={{ marginTop: '0' }}>Campaign Start Date</Typography.Title>
               <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.StartDate}</Typography.Text>
+              <DateIcon style={{...svgStyles, height: '130px', width: '130px', top: 25}} />
             </div>
           </Col>
           <Col span={12}>
-            <div style={{ borderRadius: '20px', height: '185px', padding: '24px',
-              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
+            <div style={{ borderRadius: '20px', height: '185px', padding: '36px', paddingTop: '24px',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', position: 'relative',  overflow: 'hidden'
             }}>
               <Typography.Title level={2} style={{ marginTop: '0' }}>Campaign End Date</Typography.Title>
               <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.EndDate}</Typography.Text>
+              <DateIcon style={{...svgStyles, height: '130px', width: '130px', top: 25}} />
             </div>
           </Col>
           <Col span={12}>
-            <div style={{ borderRadius: '20px', height: '185px', padding: '24px',
-              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
+            <div style={{ borderRadius: '20px', height: '185px', padding: '36px', paddingTop: '24px',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', position: 'relative',  overflow: 'hidden'
             }}>
               <Typography.Title level={2} style={{ marginTop: '0' }}>Screenshot Details</Typography.Title>
               <Space direction='vertical'>
@@ -152,11 +167,12 @@ const CampaignDetails = () => {
                   <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.Found_Status_Screenshot}</Typography.Text>
                 </Space>
               </Space>
+              <img src={screenshotImage} style={{...svgStyles, height: '130px', width: '130px', top: 25, right: 30}}/>
             </div>
           </Col>
           <Col span={12}>
-            <div style={{ borderRadius: '20px', height: '185px', padding: '24px',
-              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
+            <div style={{ borderRadius: '20px', height: '185px', padding: '36px', paddingTop: '24px',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', position: 'relative',  overflow: 'hidden'
             }}>
               <Typography.Title level={2} style={{ marginTop: '0' }}>Scraping Details</Typography.Title>
               <Space direction='vertical'>
@@ -169,11 +185,12 @@ const CampaignDetails = () => {
                   <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.Found_Status_Scraping}</Typography.Text>
                 </Space>
               </Space>
+              <ScrapingIcon style={{...svgStyles, height: '150px', width: '150px', top: 16}}/>
             </div>
           </Col>
         </Row>
         {/* <RadialPlot/> */}
-        <div style={{ marginTop: '48px' }}>
+        <div style={{ marginTop: '60px' }}>
           <Radio.Group defaultValue={details} buttonStyle="solid" onChange={handleTabChange}>
             <Radio.Button value="screenshot">Screenshot Details</Radio.Button>
             <Radio.Button value="scraping">Scraping Details</Radio.Button>

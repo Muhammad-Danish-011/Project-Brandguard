@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import {
+  DashboardOutlined,
+  LineChartOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  PlusOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
@@ -15,6 +18,7 @@ const { Header, Sider, Content, Footer } = AntLayout;
 const pathMappings = new Map()
 pathMappings.set('/', 'dashboard')
 pathMappings.set('/campaigns', 'campaigns')
+pathMappings.set('/campaigns/create', 'create-campaign')
 
 const Layout = ({ children }) => {
 
@@ -36,22 +40,24 @@ const Layout = ({ children }) => {
         <Menu
           theme="light"
           mode="vertical"
+          style={{ padding: '0 10px', marginTop: '15px' }}
           defaultSelectedKeys={[pathMappings.get(pathname)]}
           items={[
             {
               key: 'dashboard',
-              icon: <UserOutlined />,
+              icon: <DashboardOutlined />,
               label: 'Dashboard',
               onClick: () => navigate('/')
             },
             {
               key: 'create-campaign',
-              icon: <VideoCameraOutlined />,
+              icon: <PlusOutlined />,
               label: 'Create Campaign',
+              onClick: () => navigate('/campaigns/create')
             },
             {
               key: 'campaigns',
-              icon: <UploadOutlined />,
+              icon: <LineChartOutlined />,
               label: 'Campaigns',
               onClick: () => navigate('/campaigns')
             },

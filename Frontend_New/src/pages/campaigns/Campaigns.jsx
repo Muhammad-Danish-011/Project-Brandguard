@@ -75,7 +75,10 @@ const Campaigns = () => {
     <>
       <Layout>
         <Typography.Title level={1} style={{ marginTop: '0' }}>Campaigns</Typography.Title>
-        <Table dataSource={campaignsData} columns={columns(navigate)} style={{ marginTop: '36px' }}/>
+        <Table 
+          style={{ marginTop: '36px', borderRadius: '20px', padding: '12px 20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }}
+          dataSource={campaignsData} columns={columns(navigate)}
+        />
       </Layout>
     </>
   )
