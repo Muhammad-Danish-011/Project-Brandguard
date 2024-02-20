@@ -6,7 +6,7 @@ from app.main import bp
 from app.models.models import *
 from app.utils.img_grabber import *
 from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, current_app, jsonify, request
+from flask import Flask, current_app, jsonify, request, send_file
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
@@ -28,6 +28,18 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@bp.route('/image')
+def serve_image():
+    # Get folder and file names from query parameters
+    folder_name = request.args.get('folder')
+    file_name = request.args.get('file')
+
+    # Construct the file path
+    image_path = os.path.join('/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
+
+    # Sending the file in the response
+    return send_file(image_path, mimetype='image/png')
+    # http://localhost:5000/image?folder=www.daraz.pk%20%20-%2020240206145858&file=screenshot_20240206145915.png
 
 @bp.route('/campaign_details', methods=['POST'])
 def add_campaign_details():
@@ -199,7 +211,9 @@ def get_general_report():
                 'EndDate': campaign.EndDate.strftime('%Y-%m-%d %H:%M:%S'),
                 'WebsiteURL': [],
                 'Found_Status_Screenshot': 0,  # Initialize to 0, will be calculated later
-                'Found_Status_Scraping': 0  # Initialize to 0, will be calculated later
+                'Found_Status_Scraping': 0,  # Initialize to 0, will be calculated later
+                'Screenshot_Attempts': 0,
+                'Scraping_Attempts': 0
             }
 
             # Fetch associated websites for the campaign
@@ -216,10 +230,10 @@ def get_general_report():
             total_positions = len(ad_positions)
             found_positions_screenshot = sum(
                 1 for ad_position in ad_positions if ad_position.Found_Status == 'yes')
+            campaign_data['Screenshot_Attempts'] = total_positions
 
             if total_positions > 0:
-                campaign_data['Found_Status_Screenshot'] = found_positions_screenshot / \
-                    total_positions * 100
+                campaign_data['Found_Status_Screenshot'] = round(found_positions_screenshot / total_positions * 100, 2)
 
             # Fetch Scrape_Image_Status for the campaign
             scrape_image_statuses = Scrape_Image_Status.query.filter_by(
@@ -231,8 +245,8 @@ def get_general_report():
                 1 for scrape_status in scrape_image_statuses if scrape_status.Found_Status == 'yes')
 
             if total_scrape_statuses > 0:
-                campaign_data['Found_Status_Scraping'] = found_scrape_statuses / \
-                    total_scrape_statuses * 100
+                campaign_data['Found_Status_Scraping'] = round(found_scrape_statuses / total_scrape_statuses * 100, 2)
+            campaign_data['Scraping_Attempts'] = total_scrape_statuses
 
             general_report.append(campaign_data)
 
@@ -317,7 +331,8 @@ def get_screenshot_report(campaignID):
             screenshot_data = {
                 'Capture_DateTime': ad_position.Capture_DateTime.strftime('%Y-%m-%d %H:%M:%S'),
                 'FilePath': screenshot.FilePath if screenshot else None,
-                'Found_Status': ad_position.Found_Status
+                'Found_Status': ad_position.Found_Status,
+                'Ad_Position': ad_position.Ad_Position
             }
             screenshot_report['AdPositions'].append(screenshot_data)
 
