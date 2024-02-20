@@ -82,8 +82,8 @@ class ScrapedImages(db.Model):
     Extension = db.Column(db.String)  # Add an Extension column
     FilePath = db.Column(db.String)
 
-    def generate_scraped_image_path(self):
-        return f"{str(self.ScreenshotID.CampaignID).zfill(3)}_{str(self.ScreenshotID.ScreenshotID).zfill(3)}_scraped_{str(self.ScrapedImageID).zfill(3)}.{self.Extension}"
+    # def generate_scraped_image_path(self):
+    #     return f"{str(self.ScreenshotID.CampaignID).zfill(3)}_{str(self.ScreenshotID.ScreenshotID).zfill(3)}_scraped_{str(self.ScrapedImageID).zfill(3)}.{self.Extension}"
 
 
 class URLS(db.Model):

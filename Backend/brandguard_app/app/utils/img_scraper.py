@@ -24,12 +24,6 @@ def get_root_domain(url):
     domain = parsed_url.netloc
     current_datetime = datetime.now().strftime("%Y-%m-%d---%H-%M-%S")
     folder_name = f"{url.replace('https://', '').replace('/', '')}---{current_datetime}"
-
-    # # Extract specific part (e.g., daraz) based on your requirement
-    # parts = domain.split('.')
-    # if len(parts) >= 2:
-    #     return parts[1]  # Return the second-to-last part of the domain
-    # else:
     return folder_name
 
 
@@ -55,30 +49,8 @@ def get_image_files(folder_name):
     ).endswith(('.png', '.jpg', '.jpeg', '.gif'))]
     return [os.path.join(download_images_path, f) for f in image_files]
 
-# def get_image_files(folder_path):
-
-#     image_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-#     return [os.path.join(folder_path, f) for f in image_files]
-
-
-# def calculate_similarity_percentage(main_image, other_image):
-#     # Feature-based matching using ORB
-#     orb = cv2.ORB_create()
-#     keypoints1, descriptors1 = orb.detectAndCompute(main_image, None)
-#     keypoints2, descriptors2 = orb.detectAndCompute(other_image, None)
-
-#     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-#     matches = bf.match(descriptors1, descriptors2)
-
-#     # Calculate similarity percentage based on the number of matches
-#     similarity_percentage = len(
-#         matches) / max(len(keypoints1), len(keypoints2)) * 100
-
-#     return similarity_percentage
 
 def calculate_similarity_percentage(main_image, other_image):
-    # print(f"Type of main_image: {type(main_image)}")
-    # print(f"Type of other_image: {type(other_image)}")                testing
 
     # Check if either main_image or other_image is None
     if main_image is None or other_image is None:
@@ -106,21 +78,6 @@ def calculate_similarity_percentage(main_image, other_image):
 
 
 def get_slider_images(url):
-    # Create Chrome options
-    # chrome_options = Options()
-    # chrome_options.add_argument("--start-maximized")
-    # # This line makes Chrome run in headless mode
-    # chrome_options.add_argument("--headless")
-
-    # # Initialize a webdriver (e.g., Chrome)
-    # # driver = webdriver.Chrome(options=chrome_options)
-
-    # chrome_driver_path = ChromeDriverManager().install()
-    # # chrome_driver_path='./chromedriver'
-    # service = Service(chrome_driver_path)
-
-    # # Initialize WebDriver
-    # driver = webdriver.Chrome(options=chrome_options, service=service)
 
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
@@ -210,13 +167,6 @@ def get_slider_images(url):
 
 
 def scrape_images_from_url(url):
-    # Create Chrome options
-    # chrome_options = Options()
-    # chrome_options.add_argument("--start-maximized")
-    # # This line makes Chrome run in headless mode
-    # chrome_options.add_argument("--headless")
-    # # chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36")
-    # driver = webdriver.Chrome(options=chrome_options)
 
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
@@ -250,14 +200,6 @@ def scrape_images_from_url(url):
     finally:
         driver.quit()
 
-
-# def scroll_full_page(driver):
-#     # Auto scroll to the middle of the page
-#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 2);")
-#     time.sleep(3)
-#     # Auto scroll to the bottom of the page
-#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-#     time.sleep(3)
 
 def scroll_full_page(driver):
     scroll_height = driver.execute_script(
@@ -313,37 +255,6 @@ def download_images_from_list(url_list, folder_path):
         except Exception as e:
             print(f"Error downloading {image_url}: {e}")
 
-# def download_images_from_list(url_list, output_folder):
-#     try:
-#         os.makedirs(output_folder, exist_ok=True)
-
-#         for image_url in url_list:
-#             try:
-#                 response = requests.get(image_url.strip())
-#                 response.raise_for_status()
-
-#                 # Extracting image name from the URL
-#                 parsed_url = urlparse(image_url)
-#                 image_name = os.path.basename(parsed_url.path)
-
-#                 # Remove invalid characters from the image name
-#                 image_name = ''.join(c for c in image_name if c.isalnum() or c in ('.', '_'))
-
-#                 # If the image name is still empty, generate a random name or handle it accordingly
-#                 if not image_name:
-#                     raise ValueError("Invalid image name")
-
-#                 file_path = os.path.join(output_folder, image_name)
-#                 with open(file_path, 'wb') as img_file:
-#                     img_file.write(response.content)
-#                     print(f"Image downloaded: {file_path}")
-
-#             except Exception as e:
-#                 print(f"Error downloading {image_url.strip()}: {e}")
-
-#     except Exception as e:
-#         print(f"Error creating folder {output_folder}: {e}")
-
 
 def close_popup(driver):
     try:
@@ -391,18 +302,6 @@ def analyze_images(url, main_image_path, campaignID):
     for image_url in other_images:
         image_url_list.append(image_url)
 
-    # Print or use image_url_list as needed
-    # print("Image URLs:", image_url_list)
-
-    # main_download_folder = 'download_images'
-    # os.makedirs(main_download_folder, exist_ok=True)
-
-    # download_folder = os.path.join(main_download_folder, f'{file_name}_{datetime.now().strftime("%Y%m%d_%H%M%S")}')
-    # os.makedirs(download_folder, exist_ok=True)
-
-    # base_dir = os.path.dirname(os.path.abspath(__file__))
-    # screenshots_dir = os.path.join(base_dir, download_folder)
-
     cleaned_urls = [url.split('?')[0] for url in image_url_list]
 
     # print(cleaned_urls)
@@ -429,13 +328,11 @@ def analyze_images(url, main_image_path, campaignID):
 
     for i, (ssim_score, image_name) in enumerate(zip(similarity_scores, image_names)):
         match_status = "Match" if ssim_score > 0.8 else "Not Match"
-        # print(f"Similarity Score with Image '{image_name}': {ssim_score:.5f} - {match_status}")
 
     threshold_score = 80.0
     is_score_above_threshold = any(
         score > threshold_score for score in similarity_scores)
     visibility = 'yes' if is_score_above_threshold else 'no'
-    # print(f"Shahzaib Prints campID:{campaignID}...Visibility Score: {visibility}")                testing
 
     new_Scrape_Image_Status = Scrape_Image_Status(
         CampaignID=campaignID,
@@ -443,20 +340,6 @@ def analyze_images(url, main_image_path, campaignID):
     )
     db.session.add(new_Scrape_Image_Status)
     db.session.commit()
-
-    # plt.figure(figsize=(10, 5))
-    # colors = ['green' if score > 80.0 else 'red' for score in similarity_scores]
-    # plt.bar(image_names, similarity_scores, color=colors)
-    # plt.xlabel('Other Images')
-    # plt.ylabel('Similarity Score')
-    # plt.title('Similarity Scores with Match/Not Match Status')
-    # plt.xticks(rotation=45, ha='right')
-
-    # for i, (ssim_score, color) in enumerate(zip(similarity_scores, colors)):
-    #     plt.text(i, ssim_score, f"{ssim_score:.5f}\n{'Match' if ssim_score > 0.8 else 'Not Match'}",
-    #              ha='center', va='bottom', color='black', fontsize=8)
-
-    # plt.show()
 
 
 def image_scraping(campaignID):
@@ -477,7 +360,4 @@ def image_scraping(campaignID):
 
         refrence_image = get_refrence_image(campaignID)
 
-        # main_image_path = r"/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/reference_images/50e3cb98-f34a-48b5-99aa-37e4e3dd413b.jpg"
-
-        # url = 'https://www.daraz.pk/'
         analyze_images(website_url, refrence_image, campaignID)

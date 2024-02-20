@@ -28,6 +28,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @bp.route('/image')
 def serve_image():
     # Get folder and file names from query parameters
@@ -35,11 +36,12 @@ def serve_image():
     file_name = request.args.get('file')
 
     # Construct the file path
-    image_path = os.path.join('/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
+    image_path = os.path.join(
+        '/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
 
     # Sending the file in the response
     return send_file(image_path, mimetype='image/png')
-    # http://localhost:5000/image?folder=www.daraz.pk%20%20-%2020240206145858&file=screenshot_20240206145915.png
+
 
 @bp.route('/campaign_details', methods=['POST'])
 def add_campaign_details():
@@ -233,7 +235,8 @@ def get_general_report():
             campaign_data['Screenshot_Attempts'] = total_positions
 
             if total_positions > 0:
-                campaign_data['Found_Status_Screenshot'] = round(found_positions_screenshot / total_positions * 100, 2)
+                campaign_data['Found_Status_Screenshot'] = round(
+                    found_positions_screenshot / total_positions * 100, 2)
 
             # Fetch Scrape_Image_Status for the campaign
             scrape_image_statuses = Scrape_Image_Status.query.filter_by(
@@ -245,7 +248,8 @@ def get_general_report():
                 1 for scrape_status in scrape_image_statuses if scrape_status.Found_Status == 'yes')
 
             if total_scrape_statuses > 0:
-                campaign_data['Found_Status_Scraping'] = round(found_scrape_statuses / total_scrape_statuses * 100, 2)
+                campaign_data['Found_Status_Scraping'] = round(
+                    found_scrape_statuses / total_scrape_statuses * 100, 2)
             campaign_data['Scraping_Attempts'] = total_scrape_statuses
 
             general_report.append(campaign_data)
