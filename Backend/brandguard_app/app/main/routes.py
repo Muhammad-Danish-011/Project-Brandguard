@@ -34,10 +34,9 @@ def serve_image():
     folder_name = request.args.get('folder')
     file_name = request.args.get('file')
 
-# /home/mufaddal/Work/Projects/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots
     # Construct the file path
-    image_path = os.path.join('/home/mufaddal/Work/Projects/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
-    
+    image_path = os.path.join('/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
+
     # Sending the file in the response
     return send_file(image_path, mimetype='image/png')
     # http://localhost:5000/image?folder=www.daraz.pk%20%20-%2020240206145858&file=screenshot_20240206145915.png

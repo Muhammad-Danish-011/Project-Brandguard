@@ -10,7 +10,7 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout as AntLayout, Menu, Button, theme, Flex } from 'antd';
-import logo from '../assets/brandguard_logo_black.png'
+import logo from '../assets/brandguard_logo.png'
 import { useLocation, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content, Footer } = AntLayout;
 
@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
     <AntLayout>
       <Sider trigger={null} collapsible collapsed={collapsed} theme='light' width={260}>
         <Flex style={{ height: '64px' }} justify={collapsed ? 'center' : 'flex-start'} align='center'>
-          {collapsed? <strong>BG</strong> : <img src={logo} alt='logo' style={{ width: '180px', marginLeft: '24px' }} />}
+          {collapsed? <strong>BG</strong> : <img src={logo} alt='logo' style={{ width: '130px', marginLeft: '50px', marginTop: '25px' }} />}
         </Flex>
         <Menu
           theme="light"
