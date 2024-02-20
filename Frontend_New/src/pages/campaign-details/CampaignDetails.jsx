@@ -61,13 +61,13 @@ const scrapingColumns = [
   }
 ]
 
-const svgStyles = { 
-  position: 'absolute', 
-  height: '150px', 
-  width: '140px', 
-  top: '16', 
-  right: '30', 
-  opacity: 0.2  
+const svgStyles = {
+  position: 'absolute',
+  height: '150px',
+  width: '140px',
+  top: '16',
+  right: '30',
+  opacity: 0.2
 }
 
 
@@ -75,7 +75,7 @@ const CampaignDetails = () => {
 
   const { campaignId } = useParams()
   const navigate = useNavigate()
-  
+
   const { search } = useLocation()
   const searchParams = new URLSearchParams(search)
   const details = searchParams.get('details')
@@ -97,7 +97,7 @@ const CampaignDetails = () => {
     navigate(`/campaigns/${campaignId}?details=${e.target.value}`)
   }
 
-  useEffect(() => {    
+  useEffect(() => {
     if(details === 'screenshot') {
       mutateScreenshot()
       setShowScreenshotDetails(true)
@@ -164,7 +164,7 @@ const CampaignDetails = () => {
                 </Space>
                 <Space>
                   <Typography.Text strong style={{ fontSize: '20px' }}>Found Rate:</Typography.Text>
-                  <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.Found_Status_Screenshot}</Typography.Text>
+                  <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.Found_Status_Screenshot} %</Typography.Text>
                 </Space>
               </Space>
               <img src={screenshotImage} style={{...svgStyles, height: '130px', width: '130px', top: 25, right: 30}}/>
@@ -182,7 +182,7 @@ const CampaignDetails = () => {
                 </Space>
                 <Space>
                   <Typography.Text strong style={{ fontSize: '20px' }}>Found Rate:</Typography.Text>
-                  <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.Found_Status_Scraping}</Typography.Text>
+                  <Typography.Text style={{ fontSize: '20px' }}>{campaignData?.Found_Status_Scraping} %</Typography.Text>
                 </Space>
               </Space>
               <ScrapingIcon style={{...svgStyles, height: '150px', width: '150px', top: 16}}/>

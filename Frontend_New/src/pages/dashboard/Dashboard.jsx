@@ -34,12 +34,12 @@ const columns = (navigate) => [
     render: (value) => value.join('')
   },
   {
-    title: 'Found Status (Screenshot)',
+    title: 'Screenshot Found (%)',
     dataIndex: 'Found_Status_Screenshot',
     key: 'Found_Status_Screenshot',
   },
   {
-    title: 'Found Status (Scraping)',
+    title: 'Scraping Found (%)',
     dataIndex: 'Found_Status_Scraping',
     key: 'Found_Status_Scraping',
   },
@@ -94,7 +94,7 @@ const Dashboard = () => {
         </Row>
         <div style={{ marginTop: '48px' }}>
           <Flex align='center' gap={24}><Typography.Title level={1}>Campaigns</Typography.Title><Button onClick={() => navigate('/campaigns')}>View All</Button></Flex>
-          <Table 
+          <Table
             style={{ marginTop: '18px', borderRadius: '20px', padding: '12px 20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }}
             dataSource={campaignsData.slice(0, 3)} columns={columns(navigate)} pagination={false}
           />

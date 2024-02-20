@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const columns = (navigate) => [
   {
-    title: 'Campaign Id',
+    title: 'Campaign ID',
     dataIndex: 'CampaignID',
     key: 'CampaignID',
   },
@@ -33,12 +33,12 @@ const columns = (navigate) => [
     render: (value) => value.join('')
   },
   {
-    title: 'Found Status (Screenshot)',
+    title: 'Screenshot Found (%)',
     dataIndex: 'Found_Status_Screenshot',
     key: 'Found_Status_Screenshot',
   },
   {
-    title: 'Found Status (Scraping)',
+    title: 'Scraping Found (%)',
     dataIndex: 'Found_Status_Scraping',
     key: 'Found_Status_Scraping',
   },
@@ -75,7 +75,7 @@ const Campaigns = () => {
     <>
       <Layout>
         <Typography.Title level={1} style={{ marginTop: '0' }}>Campaigns</Typography.Title>
-        <Table 
+        <Table
           style={{ marginTop: '36px', borderRadius: '20px', padding: '12px 20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }}
           dataSource={campaignsData} columns={columns(navigate)}
         />
