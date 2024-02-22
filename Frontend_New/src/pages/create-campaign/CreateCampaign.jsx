@@ -74,7 +74,7 @@ const CreateCampaign = () => {
       .then((response) => {
         const { CampaignID } = response?.data
         console.log(response)
-        
+
         sendImage({ image: ImageFile, campaign_id: CampaignID })
           .then((response) => {
             const { file_path } = response?.data
@@ -148,12 +148,12 @@ const CreateCampaign = () => {
             <DatePicker showTime={{ defaultOpenValue: moment(form.getFieldValue('StartDate')) }} disabledDate={disableEndDate} format='YYYY-MM-DD HH:mm:ss' style={{ width: '100%' }}/>
           </Form.Item>
           <Form.Item label='Interval' name='IntervalTime' rules={[{ required: true }]}>
-            <InputNumber placeholder='3 (Minutes)' style={{ width: '100%' }}/>
+            <InputNumber placeholder='3 (in Minutes)' style={{ width: '100%' }}/>
           </Form.Item>
           <Form.Item label='Website URL' name='Websites' rules={[{ required: true }]}>
             <Input placeholder='https://www.google.com/' />
           </Form.Item>
-          <Form.Item label="Image to track" name='ImageFile' valuePropName='file' getValueFromEvent={getFile}
+          <Form.Item label="Reference Image" name='ImageFile' valuePropName='file' getValueFromEvent={getFile}
             rules={[{ required: true }]}
           >
             <Upload
