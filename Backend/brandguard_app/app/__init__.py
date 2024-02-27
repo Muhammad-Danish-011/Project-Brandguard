@@ -1,6 +1,6 @@
 from app.extensions import scheduler
 from app.factory import create_app
-# from app.utils.img_grabber import schedule_active_campaigns
+# from app.utils.img_grabber import schedule_screenshot_capture
 from app.models.models import *
 from app.utils.campaign_status_manager import check_and_update_campaign_status,schedule_active_campaigns
 
@@ -19,7 +19,7 @@ if not scheduler.running:
         schedule_active_campaigns(app)
         # active_campaigns = Campaigns.query.filter_by(Status='active').all()
         # for campaign in active_campaigns:
-        #     schedule_campaign(campaign)
+        #     schedule_screenshot_capture(campaign.CampaignID, campaign.IntervalTime)
     except Exception as e:
         app.logger.error(f"Error occurred: {e}")
 

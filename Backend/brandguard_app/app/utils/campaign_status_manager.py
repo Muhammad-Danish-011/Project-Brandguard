@@ -70,3 +70,4 @@ def remove_jobs():
 
 # # Scheduling the status check to run periodically
 # scheduler.add_job(check_and_update_campaign_status, 'interval', minutes=5)
+

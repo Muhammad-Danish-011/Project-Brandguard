@@ -5,7 +5,9 @@ from datetime import datetime
 from urllib.parse import urlparse
 
 import cv2
+import concurrent.futures
 import requests
+import logging
 from app.models.models import *
 from app.utils.find_position import *
 from selenium import webdriver
@@ -124,7 +126,7 @@ def get_slider_images(url):
 
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     options.add_experimental_option(
         "excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
@@ -220,7 +222,7 @@ def scrape_images_from_url(url):
 
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     options.add_experimental_option(
         "excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
@@ -298,20 +300,34 @@ def extract_iframe_img_urls(driver, content):
     return url_content
 
 
+def download_image(image_url, folder_path):
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()
+        image_name = image_url.split('/')[-1]
+
+        os.makedirs(folder_path, exist_ok=True)
+
+        file_path = os.path.join(folder_path, image_name)
+        with open(file_path, 'wb') as file:
+            file.write(response.content)
+    except Exception as e:
+        print(f"Error downloading {image_url}: {e}")
+
 def download_images_from_list(url_list, folder_path):
-    for image_url in url_list:
-        try:
-            response = requests.get(image_url)
-            response.raise_for_status()
-            image_name = image_url.split('/')[-1]
-
-            os.makedirs(folder_path, exist_ok=True)
-
-            file_path = os.path.join(folder_path, image_name)
-            with open(file_path, 'wb') as file:
-                file.write(response.content)
-        except Exception as e:
-            print(f"Error downloading {image_url}: {e}")
+    # Calculate the number of threads based on the number of links
+    num_links = len(url_list)
+    max_threads = max(50, num_links)  # Use at most 40 threads
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
+        futures = []
+        for image_url in url_list:
+            futures.append(executor.submit(download_image, image_url, folder_path))
+        
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                future.result()  # This will raise an exception if the download function encountered an error
+            except Exception as e:
+                print(f"An error occurred: {e}")
 
 # def download_images_from_list(url_list, output_folder):
 #     try:
@@ -378,9 +394,14 @@ def analyze_images(url, main_image_path, campaignID):
 
     # print(f'Shahzaib Khan Prints {download_folder}')
 
-    slider_images = get_slider_images(url)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Submit both tasks to the executor
+        slider_future = executor.submit(get_slider_images, url)
+        other_future = executor.submit(scrape_images_from_url, url)
 
-    other_images = scrape_images_from_url(url)
+        # Get the results when ready
+        slider_images = slider_future.result()
+        other_images = other_future.result()
 
    # List to store image URLs
     image_url_list = []
@@ -460,6 +481,7 @@ def analyze_images(url, main_image_path, campaignID):
 
 
 def image_scraping(campaignID):
+    start_time = time.time()  # Record the start time
     from app.factory import create_app
 
     with create_app().app_context():
@@ -481,3 +503,7 @@ def image_scraping(campaignID):
 
         # url = 'https://www.daraz.pk/'
         analyze_images(website_url, refrence_image, campaignID)
+
+    end_time = time.time()  # Record the end time
+    completion_time = end_time - start_time  # Calculate the completion time
+    logging.info(f"campaignID:{campaignID}....Image scraping completed in {completion_time} seconds.")

@@ -35,7 +35,7 @@ def serve_image():
     file_name = request.args.get('file')
 
     # Construct the file path
-    image_path = os.path.join('/home/shahzaibkhan/work/Project-Brandguard/Backend/brandguard_app/app/utils/screenshots', folder_name, file_name)
+    image_path = os.path.join('C:\\Users\\HammadIrshad\\Desktop\\heckloop\\git\\upload copy\\Backend\\brandguard_app\\app\\utils\\screenshots', folder_name, file_name)
 
     # Sending the file in the response
     return send_file(image_path, mimetype='image/png')
